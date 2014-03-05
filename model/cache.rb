@@ -7,9 +7,14 @@ class Cache
    include Singleton
     
    def initialize 
-       $logger.debug("starting redis connection")
-       @redis = Redis.new({ :db => 0, :timeout => 300})
-       @semaphore = Mutex.new
+      $logger.debug("starting redis connection")
+      @redis = Redis.new({ :db => 0, :timeout => 300})
+      @semaphore = Mutex.new
+   end
+   
+   def reconnect
+     @redis.client.disconnect 
+     @redis = Redis.new({ :db => 0, :timeout => 300}) 
    end
    
    #set a lock for a period of time, for example for rate limiting a function

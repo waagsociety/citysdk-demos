@@ -13,9 +13,47 @@ FileUtils.mkdir_p "log"
 $logger = Logger.new("log/dashboard.log") #dashboard.log 
 $logger.level = Logger::INFO
 $indicators = Hash.new 
-$scheduler = Rufus::Scheduler.new   
+  
+    
+def on_init
+  
+  PtIndicator::init
+  
+  #do initial scheduled calls
+  Thread.new do
+    on_history_schedule 
+  end
+  
+  #do initial prepare
+  Thread.new do
+    on_prepare 
+  end
+ 
+  #do initial daily
+  Thread.new do
+    on_daily 
+  end   
+  
+  #setup schedule
+  $scheduler = Rufus::Scheduler.new
+  $scheduler.cron '30 6 * * *' do
+    puts "daily cron" 
+    on_daily  
+  end  
 
-PtIndicator::init 
+  #every hour
+  $scheduler.cron '0 * * * *' do
+    puts "******* cron" 
+    on_history_schedule  
+  end     
+
+  #every 5 minutes
+  $scheduler.every '5m' do 
+    puts "******* prepare"
+    on_prepare  
+  end 
+
+end
 
 #called hourly add a history records for all indicators
 def on_history_schedule
@@ -47,28 +85,9 @@ end
 
 def on_daily
   PtIndicator::__get_schedules "admr.nl.amsterdam"
-  
-  #make sure cache gets cleared!!  
-  
-  #PtIndicator::update_schedules
 end
    
-$scheduler.cron '30 6 * * *' do
-  puts "daily cron" 
-  on_daily  
-end  
      
-#every hour
-$scheduler.cron '0 * * * *' do
-  puts "******* cron" 
-  on_history_schedule  
-end     
-  
-#every 5 minutes
-$scheduler.every '5m' do 
-  puts "******* prepare"
-  on_prepare  
-end     
 
 #add to header
 before do 
@@ -92,22 +111,23 @@ configure do
      id = instance.get_id
      $indicators[id] = instance 
      puts "indicator loaded:#{id}"
+  end 
+  
+  if defined?(PhusionPassenger)
+    PhusionPassenger.on_event(:starting_worker_process) do |forked|
+      if forked
+        $logger.info "reconnecting Redis"
+        Client.instance.reconnect
+        on_init        
+      else
+        # We're in conservative spawning mode. We don't need to do anything.
+      end
+    end
+  else
+    on_init                             
   end
                      
-  #do initial history
-  Thread.new do
-    on_history_schedule 
-  end
   
-  #do initial prepare
-  Thread.new do
-    on_prepare 
-  end
- 
-  #do initial daily
-  Thread.new do
-    on_daily 
-  end
 
 end
 

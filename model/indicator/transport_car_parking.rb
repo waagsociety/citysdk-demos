@@ -52,13 +52,13 @@ class TrafficCarParking < Indicator
      c_s = self.accumulate capicity_short
      c_l = self.accumulate capicity_long
       
-     
-     #puts "free_s #{free_short}"
-     #puts "caps #{capicity_short}" 
-      
      #do calculations
+     result = nil
+     if (c_s.to_f + c_l.to_f) > 0
+       result = (1 - (f_s.to_f + f_l.to_f) / (c_s.to_f + c_l.to_f)) * 100
+     end
      
-     return (1 - (f_s.to_f + f_l.to_f) / (c_s.to_f + c_l.to_f)) * 100
+     return result
    end
   
 end

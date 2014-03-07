@@ -1,0 +1,91 @@
+
+
+.bar {
+  fill: #666;
+  stroke-width:1px;
+}
+
+.bar:hover {
+  fill: #333;
+}
+
+.axis {
+  font-family: 'Gudea', sans-serif;
+  color:#333;
+  font-size: 0.5em;
+  
+  /*font: 10px sans-serif;*/
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+path {
+  fill: white;
+  stroke: #999;
+  stroke-width: 0.1px;  
+}
+
+
+.line {
+  fill: none;
+  stroke: #666;
+  stroke-width: 0.5px;
+}
+
+.lineNow {
+  fill: none;
+  stroke: #666;
+  stroke-width: 0.5px;
+}
+
+.lineHistory {
+  fill: none;
+  stroke: #666;
+  stroke-width: 0.5px;
+}
+
+.area {
+  fill: #666;
+}
+
+.dot {
+  fill: #666;
+  stroke: #666;
+  stroke-width: 2px;
+  
+}
+.arc path {
+  stroke: #fff;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  stroke:#666;
+  stroke-width:1;
+}
+
+.legend {
+    padding: 5px;
+    font-family: 'Gudea', sans-serif;
+    color:#333;
+    font-size: 0.5em
+    box-shadow: 2px 2px 1px #888;
+  }
+
+#label_sck {
+    fill: #666;
+    stroke: #666;
+    stroke-width: 10px;
+}
+
+

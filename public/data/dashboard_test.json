@@ -1,0 +1,59 @@
+ [environment: [
+                sck: {
+                temperature: {
+                kci: "environment.sck.temperature",
+                name: "temperature",
+                description: "average temperature of in this region as measured by the crowd",
+                range: [
+                        -20,
+                        40
+                        ],
+                unit: "&deg;"
+                },
+                noise: {
+                kci: "environment.sck.noise",
+                name: "noise",
+                description: "average noise of in this region as measured by the crowd",
+                range: [
+                        -20,
+                        40
+                        ],
+                unit: "DB"
+                }
+                ],
+  
+  transport:
+  [
+   car: {
+   pressure: {
+   kci: "transport.car.pressure",
+   name: "road pressure",
+   description: "average road pressure of cars in this region",
+   range: [
+           0,
+           100
+           ],
+   unit: "%"
+   },
+   speed: {
+   kci: "transport.car.speed",
+   name: "average speed",
+   description: "average speed of cars in this region",
+   range: [
+           0,
+           80
+           ],
+   unit: "km/h"
+   }
+   },
+   pt: {
+   delay: {
+   kci: "transport.pt.delay",
+   name: "delay",
+   description: "not implemented",
+   range: "not implemented",
+   unit: "not implemented"
+   }
+   }
+   ]
+  ]

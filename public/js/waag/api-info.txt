@@ -1,0 +1,49 @@
+====================== API ===========================
+
+* alle indicatoren opvragen:
+
+http://loosecontrol.tv:4567/indicator
+
+* info voor indicator
+
+http://loosecontrol.tv:4567/transport.car.pressure/info 
+
+* live data voor indicator binnen regio amsterdam
+
+http://loosecontrol.tv:4567/transport.car.pressure/admr.nl.amsterdam/live
+
+* history voor indicator binnen regio amsterdam
+
+http://loosecontrol.tv:4567/transport.car.pressure/admr.nl.amsterdam/history
+
+* letterlijk call doorsturen naar city sdk met een cache van een uur (3600 seconden)
+
+http://loosecontrol.tv:4567/cache/3600/nodes?layer=osm&per_page=1000
+
+(i.p.v http://api.citysdk.waag.org/nodes?layer=osm&per_page=1000)
+
+========================================================
+
+* tourism.events.nexthour
+
+aantal events dat het komende uur gaat beginnen (artsholland)
+
+* transport.car.parking
+
+percentage van de capaciteit in parkeergarages bezet
+
+* transport.pt.running
+
+aantal lijnen dat nu rijdt
+
+* transport.pt.ontime
+
+percentage van aantal stops waar een pt op tijd is aangekomen
+
+* transport.pt.delay
+
+aantal seconden gemiddelde vertraging 
+
+* emergency.p2000.alarms
+
+het aantal p2000 meldingen in het afgelopen uur

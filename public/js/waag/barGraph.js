@@ -93,12 +93,12 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 	  	  	  
 	  var range=getRange(data);
 	  
-	  data.forEach(function(d){ 
-	      if(isNaN(d.value)) d.value=range.min;
-	      if(!d.value) d.value=range.min;
-	      //console.log(d.value);
-  
-	  });
+    // data.forEach(function(d, i){      
+    //         if(isNaN(d.value)) d.value=range.min;
+    //         if(!d.value) d.value=range.min;
+    //         console.log(d.value);
+    //   
+    // });
 	  
 	  y.domain([range.min, range.max]); 
 	  //y.domain([0, max]); 
@@ -132,30 +132,21 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
         .attr("width", x.rangeBand())
         //.attr("y", function(d) {  return y(0); })
         .attr("y", 0)
-        .attr("height", function(d) { 
-            //console.log("heigth ="+height - y(0))
-            if(d.value==range.min){
-              //console.log(d);
-            }
-            
-            if(height - y(0)<0){
-              return height-0;
-            }else{
-              return height - y(0); 
-            }  
-          })
-          
-          
-        .style("fill", function(d) { if(d.hour>hNow) return domainColor })
+        .attr("height", height)
         .style("stroke-width", function(d) { if(d.hour>hNow) return 0.25+"px" })
-        //.style("shape-rendering", function(d) { if(d.hour>hNow) return "crispEdges" })
         .style("stroke", function(d) { if(d.hour>hNow) return "#666" })
         .on("mouseover", function(d) {
-          
+             var label;
+             if(isNaN(d.value) || !d.value || d.value==null){
+               label=noDataLabel;
+             }else{
+               label=d.realTimestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
+             }
+             
               toolTip.transition()        
                   .duration(100)      
                   .style("opacity", .9);
-              toolTip.html(d.realTimestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units)  
+              toolTip.html(label)  
                   .style("left", (d3.event.pageX) + 10+"px")     
                   .style("top", (d3.event.pageY - 28 - 10) + "px");    
               })                  
@@ -172,8 +163,34 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
         
     vis.transition()
         .duration(time)
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); });
+        .attr("y", function(d) {
+          if(isNaN(d.value) || !d.value || d.value==null){
+            return y(range.max);
+          }else{
+            return y(d.value);
+          } 
+        })
+        .attr("height", function(d) { 
+          if(isNaN(d.value) || !d.value || d.value==null){
+            return height - y(range.max); 
+          }else{
+            return height - y(d.value); 
+          }
+        })
+        .style("fill", function(d) { 
+          if(isNaN(d.value) || !d.value || d.value==null || d.hour>hNow){
+            return domainColor
+          } 
+        })
+        .style("stroke", function(d) { 
+          if(isNaN(d.value) || !d.value || d.value==null ){
+            return domainColor
+          }else if(d.hour>hNow) {
+            return "#666"
+          } 
+        })
+        
+
         
     vis.exit().transition()
         .duration(time)

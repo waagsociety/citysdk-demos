@@ -15,6 +15,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
 
   function init(){
     
+    
     var data = properties.tickerData.data[0].kciData;
     
     data.forEach(function(d){
@@ -62,7 +63,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
          
         if(d.value==null){
           d.value=data[0].value;
-          console.log(d);
+          //console.log(d);
         }
         d.active=false;
         //dataNow.push(d);
@@ -82,6 +83,11 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
             return {
               name: name,
               values: dataNow.map(function(d) {
+                if(isNaN(d.value[name]) || !d.value[name] || d.value[name]==null){
+                    //console.log("value nan :"+name)
+                    d.value[name]=0;
+                };
+                
                 return {timestamp:d.timestamp, hour: d.hour, value: +d.value[name]};
               })
             };
@@ -91,6 +97,11 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
               return {
                 name: name,
                 values: dataHistory.map(function(d) {
+                  if(isNaN(d.value[name]) || !d.value[name] || d.value[name]==null){
+                      d.value[name]=0;
+                  };
+                  
+                  //console.log(d.value[name]);
                   return {timestamp:d.timestamp, hour: d.hour, value: +d.value[name]};
                 })
               };
@@ -104,6 +115,8 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
         }else{
           max=max2;
         }
+        
+        
         
         x = d3.time.scale()
             .range([0, width]);
@@ -237,6 +250,8 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
 
 	function updateGraph(dataNow, dataHistory, data){
 
+    //return;
+
 	  var time=250+(Math.random()*750);
 
       var visLineNow = svgDomain.selectAll("path.lineNow").data(dataNow, function(d, i) { return i; });
@@ -253,10 +268,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
           .on("mouseover", function(d) {
                 toolTip.transition()        
                     .duration(100)      
-                    .style("opacity", .9);      
-                toolTip.html("name "+d.name+ "<br/>value: "  + parseInt(d.value))  
-                    .style("left", (d3.event.pageX) + 10+"px")     
-                    .style("top", (d3.event.pageY - 28 - 10) + "px");    
+                    .style("opacity", .9);         
                 })                  
            .on("mouseout", function(d) {       
               toolTip.transition()        
@@ -293,11 +305,8 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
           .on("mouseover", function(d) {
                 toolTip.transition()        
                     .duration(100)      
-                    .style("opacity", .9);      
-                toolTip.html("name "+d.name+ "<br/>value: "  + parseInt(d.value))  
-                    .style("left", (d3.event.pageX) + 10+"px")     
-                    .style("top", (d3.event.pageY - 28 - 10) + "px");    
-                })                  
+                    .style("opacity", .9);         
+            })                  
            .on("mouseout", function(d) {       
               toolTip.transition()        
                   .duration(250)      

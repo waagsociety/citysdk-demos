@@ -233,7 +233,7 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 
           })
         .on("mousemove", function(){
-          mouseMove(x, y, d3.mouse(this)[0], data, focus);
+          mouseMove(x, y, d3.mouse(this)[0], data, focus, range.min);
         });
     
     

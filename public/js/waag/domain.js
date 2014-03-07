@@ -178,7 +178,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
 	  
 	  if(_properties.tickerData.live ){
 
-      d3.json("http://loosecontrol.tv:4567/"+kci+"/"+admr+"/history", function(results){
+      d3.json(apiUrlDB+kci+"/"+admr+"/history", function(results){
         //console.log("loosecontrol results ="+results.length);
         var i=0;
         var dTemp=new Date();

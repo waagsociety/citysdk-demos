@@ -12,6 +12,8 @@ var timeNow=dNow.getTime();
 var hNow = dNow.getHours();
 var mNow = dNow.getMinutes();
 
+var noDataLabel="Data source interupted :-(";
+
 
 //var initialTickerData=[];
 var admrData=[];
@@ -21,7 +23,7 @@ var dashBoardData=[];
 function getInitialData(){
   var apiCall="transport.car.pressure";
 
-  d3.json("http://loosecontrol.tv:4567/dashboard", function(results){
+  d3.json(apiUrlDB+"dashboard", function(results){
 
     var domains=d3.entries(results);
 
@@ -106,8 +108,8 @@ function createDomains(){
     tickerData:tickerData, 
     graphType:"bar",
     mapLayers:[
-      {url:apiUrlDB+"cache/3600/nodes?layer=divv.traffic&geom&per_page=1000", type:"static", id:"traffic", label:"Traffic", userCallBacks:false, sdkPath:"layers:divv.traffic:data"},
-      {url:apiUrlDB+"cache/3600/nodes?layer=divv.parking.capacity&geom&per_page=1000", type:"static", id:"parking", label:"Parking", userCallBacks:false, sdkPath:"layers:divv.parking.capacity:data"}
+      {url:apiUrlDB+"cache/300/nodes?layer=divv.traffic&geom&per_page=1000", type:"static", id:"traffic", label:"Traffic", userCallBacks:false, sdkPath:"layers:divv.traffic:data"},
+      {url:apiUrlDB+"cache/300/nodes?layer=divv.parking.capacity&geom&per_page=1000", type:"static", id:"parking", label:"Parking", userCallBacks:false, sdkPath:"layers:divv.parking.capacity:data"}
     ]
   };
   
@@ -125,7 +127,7 @@ function createDomains(){
     tickerData:tickerData, 
     graphType:"bar",
     mapLayers:[
-      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/ptstops?geom&per_page=1000", type:"realtime", id:"ptstops", label:"Public transport", userCallBacks:"/select/now", sdkPath:false}
+      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/ptstops?geom&per_page=1000", type:"realtime", id:"ptstops", label:"Public transport", userCallBacks:"/select/now", sdkPath:false}
     ]
   
     };
@@ -146,8 +148,8 @@ function createDomains(){
   var tickerData = {
       live:true,
       data:[
-      {bullet:">", description: "no2", value: "", units:"&#181g/m&#179", kci:"environment.sck.no2"},
-      {bullet:"+", description: "co", value: "", units:"K&#937", kci:"environment.sck.co"},
+      {bullet:">", description: "no2 (nitrogen dioxide)", value: "", units:"&#181g/m&#179", kci:"environment.sck.no2"},
+      {bullet:"+", description: "co (carbon monoxide)", value: "", units:"K&#937", kci:"environment.sck.co"},
       {bullet:"+", description: "Noise level", value: "", units:"dB", kci:"environment.sck.noise"},
       {bullet:"+", description: "Light", value: "", units:"lux", kci:"environment.sck.light"}
       //{bullet:">", description: "Temperature", value: "", units:"&#176C", kci:"environment.sck.temperature"},
@@ -160,7 +162,7 @@ function createDomains(){
     tickerData:tickerData, 
     graphType:"line",
     mapLayers:[
-      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000", type:"static", id:"sck", label:"Smart citizens", userCallBacks:false, sdkPath:"layers:sck:data"}
+      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000", type:"static", id:"sck", label:"Smart citizens", userCallBacks:false, sdkPath:"layers:sck:data"}
     ]
 
   };
@@ -169,8 +171,8 @@ function createDomains(){
   var tickerData = {
       live:true,
       data:[
-      {bullet:">", description: "no2", value: "", units:"&#181g/m&#179", kci:"environment.ggd.no2"},
-      {bullet:"+", description: "nh10", value: "", units:"&#181g/m&#179", kci:"environment.ggd.nh10"}
+      {bullet:">", description: "no2 (nitrogen dioxide)", value: "", units:"&#181g/m&#179", kci:"environment.ggd.no2"},
+      {bullet:"+", description: "nh10 (fine particles)", value: "", units:"&#181g/m&#179", kci:"environment.ggd.nh10"}
       
       
   ]};
@@ -278,7 +280,7 @@ function createDomains(){
     tickerData:tickerData, 
     graphType:"sunburst",
     mapLayers:[
-      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000", id:"artsholland", type:"static", label:"Arts Holland Events", userCallBacks:false, sdkPath:"layers:artsholland:data"}
+      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000", id:"artsholland", type:"static", label:"Arts Holland Events", userCallBacks:false, sdkPath:"layers:artsholland:data"}
     ]
 
   };

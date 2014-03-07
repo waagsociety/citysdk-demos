@@ -308,6 +308,9 @@ WAAG.Map = function Map(domains) {
   }
   
   function getGeoData(layer){
+      
+
+    
     
       d3.json(layer.url+"&page="+layer.page, function(results){
     		//console.log("results :"+results.results.length);
@@ -322,14 +325,13 @@ WAAG.Map = function Map(domains) {
     		  return;
     		}
         // rewrite results to geojson and prepare v=isualisation values
- 
- 
- 
+
         layer.sdkData.forEach(function(d){
                    
           // redefine data structure for d3.geom
           if(d.geom){
-
+              d.label="";
+            
             	d.type="Feature";
         			d.geometry=d.geom;
         			delete d.geom;
@@ -340,16 +342,41 @@ WAAG.Map = function Map(domains) {
                 d.value=8;
               }else if(layer.sdkPath=="layers:divv.parking.capacity:data"){
                 d.value= (d.layers["divv.parking.capacity"].data.FreeSpaceShort+d.layers["divv.parking.capacity"].data.FreeSpaceLong)/(d.layers["divv.parking.capacity"].data.ShortCapacity+d.layers["divv.parking.capacity"].data.LongCapacity)
-                //console.log("adding parking values "+d.value);
+                console.log("parking value ="+d.value);
+              }else if(layer.sdkPath=="layers:divv.traffic:data"){
+                  var g= d.layers["divv.traffic"];
+                  var tt=parseInt(g.data.traveltime);
+                  var tt_ff=parseInt(g.data.traveltime_freeflow);
+                  d.value=tt/tt_ff;            
+                  d.velocity=g.data.velocity;
+                  d.maxVelocity=Math.round(d.value*tt_ff);
+              }else if(layer.id=="ptstops"){
+                  d.value=0.1;
+                                    
               }else{
                 d.value=0.1+(Math.random()*0.9);
               }
+              
+              //console.log("trafel perc ="+d.value);
+              if(d.value<0 || isNaN(d.value) || d.value=="Infinity" || d.value==null){
+                d.value=0.1+(Math.random()*0.9);
+              };
 
-            }
-
+          }
+           
       	  });
 
           layer.range=getRange(layer);
+          
+          // get the dalyed stops
+          if(layer.id=="ptstops"){
+            d3.json(apiUrlDB+"/transport.pt.stopsdelayed/admr.nl.amsterdam/live", function(results){
+                comparePTstops(results["transport.pt.stopsdelayed:admr.nl.amsterdam"]);
+                //console.log("results ptstops live "+results);
+            });
+            
+            
+          }
 
           setMap(layer);
 
@@ -357,6 +384,30 @@ WAAG.Map = function Map(domains) {
       
 
   };
+  
+  function comparePTstops(data){
+    
+    for(var i=0; i<cachedLayers.length; i++){
+      if(cachedLayers[i].mapId=="map_transport_ptstops"){
+        cachedLayers[i].sdkData.forEach(function(d){
+          for(var j=0; j<data.length; j++){
+            if(d.cdk_id==data[j].cdk_id){
+              d.value=parseInt(data[j].delay);
+              //console.log("changing value --> delayed:"+d.cdk_id);
+            }            
+          }
+
+        });        
+        cachedLayers[i].range=getRange(cachedLayers[i]);
+            
+        setMap(cachedLayers[i]);
+        
+        return;
+        
+      }
+    
+    };    
+  }
   
   function getRange(layer){
     
@@ -369,14 +420,12 @@ WAAG.Map = function Map(domains) {
       }
     });
 
-
     var max=d3.max(data, function(d) { 
       if(d.value!=null && isNaN(d.value)==false && d.value){
         return d.value; 
       }
 
     });
-
   	var range = max-min;
   	var values={min:min, max:max, range:range};
 	  return values;
@@ -477,29 +526,13 @@ WAAG.Map = function Map(domains) {
     var data=layer.mapData;
     var layerId=layer.mapId;
 
-  	//console.log("setting traffic map "+layerId);
-  	
-  	data.forEach(function(d){
-	     var g= d.layers["divv.traffic"];
-	     var tt=parseInt(g.data.traveltime);
-	     var tt_ff=parseInt(g.data.traveltime_freeflow);
-       d.value=tt/tt_ff;
-       
-       //console.log("trafel perc ="+d.value);
-       if(d.value<0 || isNaN(d.value) || d.value=="Infinity"){
-            d.value=0.1;
-        }
-        
-        d.visLabel=g.data.velocity;
-    });
     
-    var max =  d3.max(data, function(d) { return d.value; });
-    var min =  d3.min(data, function(d) { return d.value; }); 
-    var quantizeBrewer = d3.scale.quantile().domain([min, max]).range(d3.range(rangeCB));
+    var quantizeBrewer = d3.scale.quantile().domain([layer.range.min, layer.range.max]).range(d3.range(9));
+    var scalingGeo = d3.scale.linear().domain([layer.range.min, layer.range.max]).range(d3.range(100));
 	  
-	  var color = d3.scale.linear()
-            .domain([1, max])
-            .range(['#333', '#F16912']);
+    // var color = d3.scale.linear()
+    //             .domain([1, max])
+    //             .range(['#333', '#F16912']);
 
   	var visMap=d3.select("#"+layerId);
     var vis=visMap.selectAll("path").data(data, function(d, i){return d.cdk_id});
@@ -511,10 +544,13 @@ WAAG.Map = function Map(domains) {
   			  .style("stroke-width", function(d){return 0})
   			  .style("stroke", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
   			  .on("mouseover", function(d){
+  			    label = setToolTipLabel(d, layer.sdkPath);
+  			    
   			    toolTip.transition()        
                 .duration(100)      
-                .style("opacity", .9);      
-            toolTip.html(d.name+"<br> value: "+d.visLabel+" km/u")  
+                .style("opacity", .9);
+            //toolTip.html(d.name+"<br> value: "+d.velocity+" km/u")            
+            toolTip.html(label)  
                 .style("left", (d3.event.pageX) + 5+"px")     
                 .style("top", (d3.event.pageY - 28 - 5) + "px");    
             })
@@ -549,15 +585,9 @@ WAAG.Map = function Map(domains) {
 	  
 	  var data=layer.mapData;
     var layerId=layer.mapId;
-    
-    //console.log("setting traffic map "+layerId);
-    //http://loosecontrol.tv:4567/transport.pt.stopsdelayed/admr.nl.amsterdam/live
 
-    var min =  d3.min(data, function(d) { return d.value; });
-    var max =  d3.max(data, function(d) { return d.value; });
-    
-    var quantizeBrewer = d3.scale.quantile().domain([min, max]).range(d3.range(9));
-    var scalingGeo = d3.scale.linear().domain([min, max]).range(d3.range(100));
+    var quantizeBrewer = d3.scale.quantile().domain([layer.range.min, layer.range.max]).range(d3.range(9));
+    var scalingGeo = d3.scale.linear().domain([layer.range.min, layer.range.max]).range(d3.range(100));
 
   	var visPointMap=d3.select("#"+layerId);
     var vis = visPointMap.selectAll("path").data(data, function(d, i){return d.cdk_id});
@@ -583,7 +613,8 @@ WAAG.Map = function Map(domains) {
               if(layer.sdkPath=="dummy"){
                   label+="value : (dummy) "+d.value.toFixed(2);  
               }else if(layer.type=="realtime"){
-                  label="Name :"+d.name+"<br>Click to load realtime schedule";
+                 d3.select("body").style("cursor", "pointer");
+                  label="Name :"+d.name+"<br>avg. delay:"+d.value+" sec.<br>Click to load realtime schedule";
               }else{
                   label = setToolTipLabel(d, layer.sdkPath);
                 
@@ -594,6 +625,7 @@ WAAG.Map = function Map(domains) {
                   .style("top", (d3.event.pageY - 28 - 5) + "px");    
               })
       		.on("mouseout", function(d){
+      		  d3.select("body").style("cursor", "default");
             toolTip.transition()        
                 .duration(250)      
                 .style("opacity", 0);			  
@@ -637,11 +669,15 @@ WAAG.Map = function Map(domains) {
             .style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
             .attr("d", function(d){
               if(d.layer=="divv.parking.capacity"){
-    			      path.pointRadius(3);
+    			      path.pointRadius(3+d.value*4);
+    			    }else if(d.layer=="gtfs"){
+    			      //path.pointRadius=(1+(d.value/layer.range.max))
+    			      //path.pointRadius(1+(d.value/layer.range.max))
+    			      path.pointRadius(0.5+(d.value/layer.range.max));
     			    }else{
     			      path.pointRadius(d.value);
     			    }
-              //path.pointRadius(d.value);
+              
               return path(d);
             })
 

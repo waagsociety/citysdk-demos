@@ -1,6 +1,6 @@
 var bisectDate = d3.bisector(function(d) { return d.timestamp; }).left;
 var ticksYaxis=2;
-function mouseMove(x, y, mouse, data, focus) {
+function mouseMove(x, y, mouse, data, focus, minValue) {
     
     var x0 = x.invert(mouse),
         i = bisectDate(data, x0, 1),
@@ -13,9 +13,15 @@ function mouseMove(x, y, mouse, data, focus) {
         .duration(100)      
         .style("opacity", 0.9);
         
-    var timeLabel=formatDate(d.realTimestamp);    
+    var timeLabel=formatDate(d.realTimestamp);
+    if(d.value==minValue){
+      label=noDataLabel;
+    }else{
+      label= "Time : "+d.realTimestamp+ "<br/>Value "+d.description+" : "  +d.value.toFixed(2)+" "+d.units;
+    }
+    
 
-    toolTip.html("Time : "+d.realTimestamp+ "<br/>Value "+d.description+" : "  +d.value.toFixed(2)+" "+d.units)  
+    toolTip.html(label)  
         .style("left", (d3.event.pageX) + 10+"px")     
         .style("top", (d3.event.pageY - 28 - 10) + "px");
     
@@ -33,10 +39,18 @@ function mouseMoveMultiGraph(x, y, mouse, data, focus) {
         .duration(100)      
         .style("opacity", 0.9);
     var label="";
-    var v=d.value;  
-    for(var key in v) {
-			label+=key+": "+v[key]+"<br>"
-		};    
+    var v=d.value;
+    var entries=d3.entries(d.value); 
+    entries.sort(function(b, a) { return d3.ascending(a["value"], b["value"])});
+    //console.log(entries);
+      
+
+		
+		entries.forEach(function(d){
+		  
+		  label+=d.key+": "+d.value+"<br>"
+		  
+		})    
     
     var timeLabel=formatDate(d.realTimestamp);
      

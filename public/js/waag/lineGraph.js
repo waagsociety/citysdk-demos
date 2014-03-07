@@ -125,7 +125,7 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
         d.description=description; 
 	      if(isNaN(d.value)) d.value=range.min;
 	      if(!d.value) d.value=range.min;
-	      //console.log(d.value);
+	      //console.log(d.valui
 	  });
 	  
 	  y.domain([range.min, range.max]);
@@ -213,7 +213,8 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
 
           })
         .on("mousemove", function(){
-          mouseMove(x, y, d3.mouse(this)[0], data, focus);
+          //in d3-utils.js
+          mouseMove(x, y, d3.mouse(this)[0], data, focus, range.min);
         });
 
 

@@ -42,20 +42,41 @@
 			<div class="hLine" style="width:210px"></div>
 			<h2>Amsterdam</h2>
 			<div class="vLine" style="left:260px"></div>
-			<div id="btn_menu">
-				<img src="images/svg/icon_menu.svg" width="64" height="64" />
-				<h3>menu</h3>
+			<div id="btn_menu" onclick="setInfoPage()">
+				<img style="position:relative; top:0.5em;" src="images/svg/icon_info.svg" width="48" height="48" />
+				<h3 style="position:relative; left:0.5em; top:0.5em;">info</h3>
 		</div>
 		<div class="vLine" style="left:600px"></div>
 		
 	</div>
+		
+</div>
+<div id="info_page">
+  <div id="info_content">
+	<h2>CitySDK</h2>
+	<p>CitySDK
+		
+	Open Data (and Big Data) are hot: citizens and (government) agencies create and collect a lot of data: data that may be very valuable for social change and innovation. However, much of this information is not, or only partially available and released data comes in many forms, making it difficult to combine and reuse. The CitySDK API standardizes the data at the European level and makes the information searchable and available on demand. In this way, developers and researchers have easy access to the information.
 
+	The CitySDK Linked Open Data Distribution API is a linked data distribution platform. Developed by Waag Society, the distribution API is a component of the CitySDK toolkit. This toolkit supports the development of open and interoperable interfaces for open data and city services in eight European cities (Amsterdam, Helsinki, Manchester, Lisbon, Istanbul, Lamia, Rome and Barcelona). The CitySDK Linked Open Data Distribution API enables the distribution and linking of open data sets and city services. This website explains the distribution API. For a comprehensive overview of the complete CitySDK toolkit have a look at the CitySDK project homepage.
+	</p>
+	<div class="hLine" style="width:100%"></div>
 	
+	</div>
+
 </div>
 
 	<script type="text/javascript">
+		
 		var execute = function () {
-		getInitialData(); 
+			var el   = document.getElementById("info_page"); // or other selector like querySelector()
+		  var rect = el.getBoundingClientRect(); // get the bounding rectangle
+
+			var infoPage = d3.select("#info_page");
+			
+			infoPage.style("top", menuHeight-rect.height-32+"px");
+						
+			getInitialData(); 
 		//alert("executing code");    
 		};
 
@@ -64,10 +85,6 @@
 		else // MSIE
 		window.attachEvent("onload", execute)
 		
-		
-		
-		
-	
 		// $(document).bind("ready", function() { initDashboard(); });
 		// $(document).bind("ready", function() { 
 		// 	getInitialData(); 

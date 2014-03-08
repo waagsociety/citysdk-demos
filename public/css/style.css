@@ -17,6 +17,7 @@ html, body {
   top:0em;
   left:0em;
   width:48em; /*768px*/
+  height:100%;
   
 }
 
@@ -107,6 +108,26 @@ input[type=checkbox]:checked + label:before {
   box-shadow: 0px 4px 8px -4px black;
   
 }
+#info_page {
+  position:absolute;
+  top:8em;
+  width:100%;
+/*  background-color:#FEE6CE;*/
+  background-color:#fff3e8;
+  z-index:50;
+  -webkit-box-shadow: 0px 4px 8px -4px black;
+  -moz-box-shadow: 0px 4px 8px -4px black;
+  box-shadow: 0px 4px 8px -4px black;
+
+
+  
+}
+#info_content {
+
+  margin:1.5em;
+
+  
+}
 
 .menu_container #menu_bar {
   position:absolute;
@@ -121,6 +142,14 @@ input[type=checkbox]:checked + label:before {
   left:640px;
   width:64px;
   height:64px;
+}
+
+.menu_container #btn_info{
+  position:relative;
+  top:1em;
+  left:640px;
+  width:48px;
+  height:48px;
 }
 
 #menu_bar h1 {

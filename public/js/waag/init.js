@@ -10,12 +10,13 @@ var map;
 var colorScheme="Oranges";
 
 var rangeCB=9; //range colorbrewer
+var infoActive=false;
 
 
 function initDashboard(){
 
 	console.log("kick off dashboard");
-	
+			
 	toolTip = d3.select("body").append("div")   
       .attr("class", "tooltip")               
       .style("opacity", 1);
@@ -52,8 +53,34 @@ function initDashboard(){
       .attr("id", "logo-cc")
       .attr("data", "images/svg/icon_logo-cc.svg")
       .attr("type", "image/svg+xml")
-	
+
 };
+
+function setInfoPage(){
+  
+  var el   = document.getElementById("info_page"); // or other selector like querySelector()
+  var rect = el.getBoundingClientRect(); // get the bounding rectangle
+	var infoPage = d3.select("#info_page");
+	//infoPage.style("top", menuHeight-rect.height-32+"px");
+
+  var infoPage = d3.select("#info_page");
+
+  if(infoActive){
+    infoPage.transition()
+        .duration(500)
+        .style("top", menuHeight-rect.height-32+"px");
+    
+    infoActive=false;
+  
+  }else{
+  	infoPage.transition()
+        .duration(500)
+        .style("top", 128+"px");
+        
+    infoActive=true;  
+  }
+
+}
 
 function change() {
   console.log("value ="+this.value);

@@ -2,7 +2,8 @@ WAAG.Domain = function Domain(_propertiesAll) {
   var properties=_propertiesAll;
   var container;
   var subDomianA, subDomianB;
-  
+  var domainInfo;
+  var infoActive=false;
   var margin = {top: 20, right: 40, bottom: 30, left: 20},
       width = 350 - margin.left - margin.right,
       height = 90 - margin.top - margin.bottom;
@@ -12,8 +13,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
 
 	function init(){
 	      
-	  var stage = d3.select("#stage")
-	      
+	  var stage = d3.select("#stage")  
     container = stage.append("div")
       .attr("class", "domain_container")
       .attr("id", properties.id)
@@ -22,16 +22,43 @@ WAAG.Domain = function Domain(_propertiesAll) {
         return domainColor;
       })
       .style("top", menuHeight+(properties.index*widgetHeight)+"px")
-      
-      //.attr("class", "q" + quantizeBrewer(d.value) + "-9"; }) //colorBrewer
-      //.Oranges .q0-3{fill:rgb(254,230,206)}
+      .style("z-index", 100-properties.index);
     
-    
-    // header setup  
+      domainInfo=container.append("div")
+        .attr("id", "domainInfo")
+        .style("background-color", domainColor)
+        .style("position", "absolute")
+        .style("top", -widgetHeight+"px")
+        .style("height", widgetHeight+"px")
+        .style("width", 100+"%")
+        .style("z-index", -1)
+        .style("opacity", 0) 
+        
+    domainInfo.append("div")
+         .attr("class", "domainInfo")
+         .attr("id", "infoDomainA")
+         .style("position", "absolute")
+         .style("top", 76+"px")
+         .style("left", 16+"px")
+         .style("width", 368-16+"px")
+         .style("height",130+"px")
+         .html("test text blaat domainA")
+         
+   domainInfo.append("div")
+        .attr("id", "infoDomainA")
+        .attr("class", "domainInfo")
+        .style("position", "relative")
+        .style("top", 76+"px")
+        .style("left", 768/2+16+"px")
+        .style("width", 368-16+"px")
+        .style("height",130+"px")
+        .html("test text blaat")
+
+     
     var header=container.append("div")
       .attr("id", "header")
-      .style("padding", 1+"em")
-      //not correct hit area
+      .style("background-color", domainColor)
+      .style("z-index", 0)
 
     header.append("object")
         .attr("class", "domainIcon")
@@ -63,7 +90,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
         .attr("type", "image/svg+xml")    
     
     
-    var hit=header.append("div")
+    header.append("div")
       .attr("class", "mapIcon")
       .on("click", function(){
          activateMap(properties);
@@ -75,6 +102,24 @@ WAAG.Domain = function Domain(_propertiesAll) {
           d3.select("body").style("cursor", "default");
         });
       }
+      
+      
+    header.append("object")
+      .attr("class", "domain-infoIcon")
+      .attr("data", "images/svg/icon_info-domain.svg")
+      .attr("type", "image/svg+xml")    
+    
+      header.append("div")
+        .attr("class", "domain-infoIcon")
+        .on("click", function(){
+           setInfo(properties);
+          })
+        .on("mouseover", function(d) {
+            d3.select("body").style("cursor", "pointer");
+          })                  
+         .on("mouseout", function(d) {       
+            d3.select("body").style("cursor", "default");
+          });
 
     if(properties.subDomains[0]!=false){
       setDomainA(properties.subDomains[0]);
@@ -82,8 +127,27 @@ WAAG.Domain = function Domain(_propertiesAll) {
     if(properties.subDomains[1]!=false){
       setDomainB(properties.subDomains[1]);
     }
-   
+
 	};
+	
+	function setInfo(properties){
+	  if(infoActive){
+	    domainInfo.transition()
+          .duration(250)
+          .style("opacity", 0)
+          .style("top", -widgetHeight+"px");
+          
+	    infoActive=false;
+	  }else{
+	    domainInfo.transition()
+          .duration(250)
+          .style("opacity", 1)
+          .style("top", 0+"px");
+      infoActive=true;    
+	  }
+
+
+	}
 
 	
 	function setDomainA(_properties){
@@ -95,6 +159,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
     subDomainA=container.append("div")
       .attr("class", "subDomainA")
       .attr("id", _properties.id);
+
     
     subDomainA.append("object")
         .attr("class", "subDomainIcon")
@@ -142,6 +207,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
     subDomainB=container.append("div")
       .attr("class", "subDomainB")
       .attr("id", _properties.id)
+
 
       
     subDomainB.append("object")

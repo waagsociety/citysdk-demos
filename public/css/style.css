@@ -102,7 +102,7 @@ input[type=checkbox]:checked + label:before {
   height: 8em;
   width:100%;
   background-color:#FEE6CE;
-  z-index:100;
+  z-index:150;
   -webkit-box-shadow: 0px 4px 8px -4px black;
   -moz-box-shadow: 0px 4px 8px -4px black;
   box-shadow: 0px 4px 8px -4px black;
@@ -128,6 +128,14 @@ input[type=checkbox]:checked + label:before {
 
   
 }
+
+#info_content #partners{
+  position:relative;
+  left:56px;
+  
+}
+
+
 
 .menu_container #menu_bar {
   position:absolute;
@@ -177,7 +185,14 @@ input[type=checkbox]:checked + label:before {
   height: 14em;
   width:100%;
   /*background-color:#FDD0A2; dynamic set by domain class*/
-  z-index:10;
+  /*z-index:10;*/
+
+}
+
+.domain_container #header{
+  padding:1em;
+  padding-bottom:0em;
+
 
 }
 
@@ -203,12 +218,23 @@ input[type=checkbox]:checked + label:before {
   height:2em;
 }
 
+.domain_container .domain-infoIcon{
+  position:absolute;
+  left:42.25em;
+  top:0.94em;
+  width:2em;
+  height:2em;
+  
+}
+
 .domain_container .subDomainA{
   position:absolute;
   top:5.5em;
   padding-left:1em;
   padding-right:1em;
   width:50%;
+  z-index:-5;
+
 
 }
 
@@ -219,6 +245,8 @@ input[type=checkbox]:checked + label:before {
   padding-left:1em;
   padding-right:1em;
   width:50%;
+  z-index:-5;
+
 
 }
 .subDomainIcon{

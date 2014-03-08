@@ -482,13 +482,23 @@ WAAG.Domain = function Domain(_propertiesAll) {
     var data=_properties.tickerData.layers;
     var domain=_domain;
       
-    var layerSelector = domain.append("div").attr("class", "layerSelector");
+    var layerSelector = domain.append("div")
+      .attr("class", "layerSelector")
+
     
-    var select = layerSelector.append("select").attr("class", "select")
-                      .on("change", function() { 
-                        console.log("change :"+this.value) 
-                        _class.updateDataSet(_properties, this.value, _class);
-                        });
+    var select = layerSelector.append("select")
+                    .attr("class", "select")
+                    .on("change", function() { 
+                      console.log("change :"+this.value) 
+                      _class.updateDataSet(_properties, this.value, _class);
+                      })
+                      .on("mouseover", function(d) {
+                             d3.select("body").style("cursor", "pointer");
+                         })                  
+                        .on("mouseout", function(d) {       
+                           d3.select("body").style("cursor", "default");
+                         });  
+                         
       
      select.selectAll("option")
         .data(data)
@@ -496,6 +506,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
         .append("option")
           .attr("value", function(d){return d.value})
           .text(function(d) {return d.description})
+          
           
     
   };

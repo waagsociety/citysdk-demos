@@ -1,4 +1,4 @@
-WAAG.PieGraphStacked = function PieGraphStacked(properties, _subDomain, donutType) {
+WAAG.PieGraphStacked = function PieGraphStacked(properties, _subDomain, donutType, domainColor) {
 
   var width=150;
   var height=150;    

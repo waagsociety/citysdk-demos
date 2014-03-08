@@ -235,7 +235,7 @@ input[type=checkbox]:checked + label:before {
     /*border-radius: 1px;*/
     overflow: hidden;
     background: transparent;
-    background: url("../images/icon_plus-10.png") no-repeat 0% 50%;
+    background: url("../images/icon_down-16.png") no-repeat 0% 50%;
 }
 
 .layerSelector select {

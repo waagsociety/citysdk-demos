@@ -79,16 +79,18 @@ WAAG.Map = function Map(domains) {
            .attr("in", "SourceGraphic");
            
        d3.xml("images/svg/label_sck.svg", "image/svg+xml", function(xml) {
-          labelSCK = document.importNode(xml.documentElement, true);
-           d3.select("#map_container").node().appendChild(labelSCK);
+          var label = document.importNode(xml.documentElement, true);
+           d3.select("#map_container").node().appendChild(label);
 
        });
 
        d3.xml("images/svg/label_parking-building.svg", "image/svg+xml", function(xml) {
-          labelSCK = document.importNode(xml.documentElement, true);
-           d3.select("#map_container").node().appendChild(labelSCK);
+          var label = document.importNode(xml.documentElement, true);
+           d3.select("#map_container").node().appendChild(label);
 
        });
+
+
 
        createMapMenu();    
      		   
@@ -308,10 +310,7 @@ WAAG.Map = function Map(domains) {
   }
   
   function getGeoData(layer){
-      
 
-    
-    
       d3.json(layer.url+"&page="+layer.page, function(results){
     		//console.log("results :"+results.results.length);
     		layer.sdkData=layer.sdkData.concat(results.results);
@@ -342,7 +341,11 @@ WAAG.Map = function Map(domains) {
                 d.value=8;
               }else if(layer.sdkPath=="layers:divv.parking.capacity:data"){
                 d.value= (d.layers["divv.parking.capacity"].data.FreeSpaceShort+d.layers["divv.parking.capacity"].data.FreeSpaceLong)/(d.layers["divv.parking.capacity"].data.ShortCapacity+d.layers["divv.parking.capacity"].data.LongCapacity)
-                console.log("parking value ="+d.value);
+                if(d.value<0 || isNaN(d.value) || d.value=="Infinity" || d.value==null){
+                  d.value=Math.random();
+                };
+                
+                //console.log("parking value ="+d.value);
               }else if(layer.sdkPath=="layers:divv.traffic:data"){
                   var g= d.layers["divv.traffic"];
                   var tt=parseInt(g.data.traveltime);
@@ -351,15 +354,17 @@ WAAG.Map = function Map(domains) {
                   d.velocity=g.data.velocity;
                   d.maxVelocity=Math.round(d.value*tt_ff);
               }else if(layer.id=="ptstops"){
-                  d.value=0.1;
+                  d.value=0.5;
                                     
+              }else if(layer.id=="sck"){
+                d.value=0.25;
               }else{
-                d.value=0.1+(Math.random()*0.9);
+                  d.value=0.1+(Math.random()*0.9);
               }
               
               //console.log("trafel perc ="+d.value);
               if(d.value<0 || isNaN(d.value) || d.value=="Infinity" || d.value==null){
-                d.value=0.1+(Math.random()*0.9);
+                d.value=0;
               };
 
           }
@@ -368,7 +373,7 @@ WAAG.Map = function Map(domains) {
 
           layer.range=getRange(layer);
           
-          // get the dalyed stops
+          // get the delayed stops
           if(layer.id=="ptstops"){
             d3.json(apiUrlDB+"/transport.pt.stopsdelayed/admr.nl.amsterdam/live", function(results){
                 comparePTstops(results["transport.pt.stopsdelayed:admr.nl.amsterdam"]);
@@ -376,9 +381,11 @@ WAAG.Map = function Map(domains) {
             });
             
             
+          }else{
+            setMap(layer);
           }
 
-          setMap(layer);
+          
 
     		});
       
@@ -578,7 +585,9 @@ WAAG.Map = function Map(domains) {
 	
 	updatePointMap = function(layer){
 	  
-	  if(layer.id=="sck" ){
+
+	  
+	  if(layer.id=="sck" || layer.id=="parking"){
 	    updateLabelsMap(layer);
 	    return;
 	  };
@@ -596,12 +605,12 @@ WAAG.Map = function Map(domains) {
 		     //.filter(function(d){ return d.value > 2; })
   			  .attr("id", function(d, i){return d.cdk_id})
   			  .attr("d", function(d){
-            path.pointRadius(d.value);
+            path.pointRadius(1);
             return path(d);
           })
-  			  .style("fill-opacity", 1)
+  			  //.style("fill-opacity", 1)
   			  .style("stroke-width", 0.1+"px")
-  			  .style("opacity", 0)
+  			  //.style("opacity", 0)
   			  .style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
           .on("mouseover", function(d){
             
@@ -614,7 +623,13 @@ WAAG.Map = function Map(domains) {
                   label+="value : (dummy) "+d.value.toFixed(2);  
               }else if(layer.type=="realtime"){
                  d3.select("body").style("cursor", "pointer");
-                  label="Name :"+d.name+"<br>avg. delay:"+d.value+" sec.<br>Click to load realtime schedule";
+                  if(d.value>0.5){
+                    label="Name :"+d.name+"<br>avg. delay:"+d.value+" sec.<br>Click to load realtime schedule";
+                  }else{
+                    label="Name :"+d.name+"<br>Trips on schedule<br>Click to load realtime schedule";
+                  }
+                 
+                  
               }else{
                   label = setToolTipLabel(d, layer.sdkPath);
                 
@@ -661,19 +676,37 @@ WAAG.Map = function Map(domains) {
                   }
   			        			    
     			})
-    		
-  	    
+    		  	    
   	    vis.transition()
             .duration(1000)
-            .style("opacity", 1)
-            .style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
+            //.style("opacity", 1)
+            .style("fill", function(d){ 
+                if(d.layer=="divv.parking.capacity"){
+                    return colorbrewer[colorScheme]['9'][0];
+                 }else{
+                   return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])]
+                 }
+              })
+            .style("stroke-width", function(d){ 
+                if(d.layer=="divv.parking.capacity"){
+                    return 0.5+"px";
+                 }
+              })  
             .attr("d", function(d){
               if(d.layer=="divv.parking.capacity"){
-    			      path.pointRadius(3+d.value*4);
+    			      var v= d.value;
+    			      if(d.value!=null || isNaN(d.value)==false){
+                  v=Math.random();
+                }
+    			      path.pointRadius(3+(v*4));
     			    }else if(d.layer=="gtfs"){
-    			      //path.pointRadius=(1+(d.value/layer.range.max))
-    			      //path.pointRadius(1+(d.value/layer.range.max))
-    			      path.pointRadius(0.5+(d.value/layer.range.max));
+
+    			      var v=0.5+(d.value/60);
+    			      if(v<0.5) v=0.5;
+    			      if(d.value==null || isNaN(d.value) ){
+                  v=0.5;
+                }
+    			      path.pointRadius(v);
     			    }else{
     			      path.pointRadius(d.value);
     			    }
@@ -689,7 +722,19 @@ WAAG.Map = function Map(domains) {
   
 	};
 	
+	updatePieCharts = function (layer){
+	  
+	}
+	
 	updateLabelsMap = function(layer){
+	  
+	  var labelId;
+	  if(layer.id=="sck"){
+	    labelId="#label_sck";
+	  }else if(layer.id=="parking"){
+	    labelId="#label_parking-building";
+    }
+	  
 	  
 	  var data=layer.mapData;
     var layerId=layer.mapId;
@@ -698,13 +743,21 @@ WAAG.Map = function Map(domains) {
     //var vis = visPointMap.selectAll("path").data(data, function(d, i){return d.cdk_id});
 	  
 	  
+	  
 	  var labels = visPointMap.selectAll("use").data(data, function(d, i){return d.cdk_id}); 
     
+    var s=0.25;
+    var wLabel=32;
+    
     labels.enter().append("use")
-          .attr("transform", function(d) { return "translate(" + ((d.centroid[0])-4) + "," + ((d.centroid[1])-4) + ")scale("+ 0.25 +")"; })
+          .attr("transform", function(d) { 
+            var s=d.value/2;
+            if(s<0.25) s=0.25;
+            var w=(wLabel/2)*s;
+            return "translate(" + ( (d.centroid[0])- w ) + "," + ( (d.centroid[1])- w )+ ")scale("+ s +")"; })
           .attr("width", 10+"px")
           .attr("height", 10+"px")
-          .attr("xlink:href","#label_sck")
+          .attr("xlink:href", labelId)
           .style("fill", "#666")
           .on("mouseover", function(d){
             

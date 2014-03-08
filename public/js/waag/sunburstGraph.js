@@ -79,7 +79,7 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
           .attr("display", function(d) { 
             return d.depth ? null : "none"; }) // hide inner ring
           .attr("d", arc)
-          .style("stroke", "#666")
+          .style("stroke", domainColor)
           .style("fill", function(d){
               return colorbrewer[colorScheme]['9'][quantizeBrewer((d.children ? d : d.parent).hour)]  
               // if((d.children ? d : d.parent).hour>hNow){

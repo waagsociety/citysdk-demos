@@ -43,9 +43,7 @@ function mouseMoveMultiGraph(x, y, mouse, data, focus) {
     var entries=d3.entries(d.value); 
     entries.sort(function(b, a) { return d3.ascending(a["value"], b["value"])});
     //console.log(entries);
-      
 
-		
 		entries.forEach(function(d){
 		  
 		  label+=d.key+": "+d.value+"<br>"

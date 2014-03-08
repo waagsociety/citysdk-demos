@@ -27,10 +27,21 @@
 
 path {
   fill: white;
-  stroke: #999;
+  stroke: #666;
   stroke-width: 0.1px;  
 }
 
+#label_parking-building path{
+  fill: #fdd0a2;
+  stroke: #666;
+  stroke-width: 0.25px;
+}
+
+#label_sck path{
+  fill: #fdd0a2;
+  stroke: #666;
+  stroke-width: 0.25px;
+}
 
 .line {
   fill: none;

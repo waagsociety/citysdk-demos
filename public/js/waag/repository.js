@@ -12,6 +12,8 @@ var timeNow=dNow.getTime();
 var hNow = dNow.getHours();
 var mNow = dNow.getMinutes();
 
+
+
 var noDataLabel="Data source interupted :-(";
 
 
@@ -127,7 +129,7 @@ function createDomains(){
     tickerData:tickerData, 
     graphType:"bar",
     mapLayers:[
-      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/ptstops?geom&per_page=1000", type:"realtime", id:"ptstops", label:"Public transport", userCallBacks:"/select/now", sdkPath:false}
+      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/ptstops?geom&per_page=1000", type:"realtime", id:"ptstops", label:"Public transport", userCallBacks:"/select/now", sdkPath:false}
     ]
   
     };
@@ -160,7 +162,7 @@ function createDomains(){
     label:"Smartcitizen", 
     icon:"images/svg/icon_environment.sck.svg", 
     tickerData:tickerData, 
-    graphType:"line",
+    graphType:"area",
     mapLayers:[
       {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000", type:"static", id:"sck", label:"Smart citizens", userCallBacks:false, sdkPath:"layers:sck:data"}
     ]
@@ -180,7 +182,7 @@ function createDomains(){
     label:"GGD airquality", 
     icon:"images/svg/icon_environment.ggd-airquality.svg", 
     tickerData:tickerData, 
-    graphType:"area",
+    graphType:"line",
     mapLayers:false
   };
   var properties={
@@ -267,36 +269,6 @@ function createDomains(){
 	};
 	list.push(properties);
 	
-	
-	// domain cultural  
-  var tickerData = {
-      live:true,
-      data:[
-      {bullet:">", description: "Events at this moment", value: "20.27 ", units:"events",  kci:"tourism.events.nexthour"}
-  ]};
-  subDomainA={id:"events",
-    label:"Events", 
-    icon:"images/svg/icon_tourism.events.svg", 
-    tickerData:tickerData, 
-    graphType:"sunburst",
-    mapLayers:[
-      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000", id:"artsholland", type:"static", label:"Arts Holland Events", userCallBacks:false, sdkPath:"layers:artsholland:data"}
-    ]
-
-  };
-
-  var properties={
-    id:"cultural",
-    label:"Cultural",
-	  icon:"images/svg/icon_tourism.svg", 
-	  color:"#FFB27D",
-	  map:true,
-    subDomains:[subDomainA, false]
-
-	};
-	list.push(properties);
-
-	
 	// domain social
 	var tickerData = {
       live:true,
@@ -336,7 +308,37 @@ function createDomains(){
     subDomains:[subDomainA, subDomainB]
 
 	};
+	list.push(properties);	
+	
+	
+	// domain cultural  
+  var tickerData = {
+      live:true,
+      data:[
+      {bullet:">", description: "Events at this moment", value: "20.27 ", units:"events",  kci:"tourism.events.nexthour"}
+  ]};
+  subDomainA={id:"events",
+    label:"Events", 
+    icon:"images/svg/icon_tourism.events.svg", 
+    tickerData:tickerData, 
+    graphType:"sunburst",
+    mapLayers:[
+      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000", id:"artsholland", type:"static", label:"Arts Holland Events", userCallBacks:false, sdkPath:"layers:artsholland:data"}
+    ]
+
+  };
+
+  var properties={
+    id:"cultural",
+    label:"Cultural",
+	  icon:"images/svg/icon_tourism.svg", 
+	  color:"#FFB27D",
+	  map:true,
+    subDomains:[false, subDomainA]
+
+	};
 	list.push(properties);
+
 	
   return list;
 }

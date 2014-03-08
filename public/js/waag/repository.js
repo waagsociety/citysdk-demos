@@ -76,7 +76,7 @@ function getAdmrData(){
     
 }
 
-
+var loremIpsumA, loremIpsumB;
 function createDomains(){
   
   // http://loosecontrol.tv:4567/transport.car.pressure/admr.nl.amsterdam/info
@@ -102,6 +102,8 @@ function createDomains(){
   //   }
   //   
   // }
+  loremIpsumA="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mauris nisi, viverra a dapibus eleifend, accumsan tempor risus. Ut nulla orci, placerat ac gravida volutpat, feugiat eu arcu. Integer ut consequat sapien. Nunc eget tincidunt sem. Nullam auctor eu ante egestas laoreet. Phasellus tincidunt a tellus quis posuere. Curabitur consectetur posuere lectus ut tincidunt. Etiam at sem lacus. Pellentesque leo quam, pellentesque eget molestie mattis, venenatis vitae mauris."
+  loremIpsumB="Quisque blandit viverra elit. Duis aliquet neque et imperdiet commodo. Aenean volutpat libero in sem auctor, vel vestibulum ligula ornare. Ut rhoncus nulla eget adipiscing tempor. Praesent vel posuere libero. Vivamus sagittis leo non tortor accumsan iaculis. Suspendisse fermentum elementum cursus. Mauris eu luctus nibh, euismod ornare ligula. Quisque pretium tempus nisl. Fusce congue, purus vitae euismod fermentum, massa magna venenatis massa, id eleifend nisl libero ac velit."
   
   // domain Transport
   var subDomainA={id:"traffic", 
@@ -335,6 +337,36 @@ function createDomains(){
 	  color:"#FFB27D",
 	  map:true,
     subDomains:[false, subDomainA]
+
+	};
+	list.push(properties);
+	
+	
+	// domain p2000  
+  var tickerData = {
+      live:true,
+      data:[
+      {bullet:">", description: "P2000 events", value: "0 ", units:"events",  kci:"emergency.p2000.alarms"}
+  ]};
+  subDomainA={id:"p2000",
+    label:"P2000 events", 
+    icon:"images/svg/icon_emergency.p2000.svg", 
+    tickerData:tickerData, 
+    graphType:"bar",
+    mapLayers:[
+      {url:apiUrlDB+"cache/3600/admr.nl.amsterdam/nodes?layer=2cm.p2000bag&geom&per_page=1000", id:"p2000", type:"static", label:"P2000 events", userCallBacks:false, sdkPath:"layers:2cm.p2000bag:data"}
+              
+    ]
+
+  };
+
+  var properties={
+    id:"security",
+    label:"Security (P2000)",
+	  icon:"images/svg/icon_emergency.svg", 
+	  color:"#FFB27D",
+	  map:true,
+    subDomains:[subDomainA, false]
 
 	};
 	list.push(properties);

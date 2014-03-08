@@ -93,6 +93,10 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 	  	  	  
 	  var range=getRange(data);
 	  
+    if(isNaN(range.min) || !range.min || range.min==null ) range.min=0;
+	  if(isNaN(range.max) || !range.max || range.max==null ) range.max=100;
+	  
+	  
     // data.forEach(function(d, i){      
     //         if(isNaN(d.value)) d.value=range.min;
     //         if(!d.value) d.value=range.min;

@@ -37,22 +37,15 @@ WAAG.Domain = function Domain(_propertiesAll) {
     domainInfo.append("div")
          .attr("class", "domainInfo")
          .attr("id", "infoDomainA")
-         .style("position", "absolute")
-         .style("top", 76+"px")
          .style("left", 16+"px")
-         .style("width", 368-16+"px")
-         .style("height",130+"px")
-         .html("test text blaat domainA")
+         .html(loremIpsumA)
          
    domainInfo.append("div")
         .attr("id", "infoDomainA")
         .attr("class", "domainInfo")
-        .style("position", "relative")
-        .style("top", 76+"px")
         .style("left", 768/2+16+"px")
         .style("width", 368-16+"px")
-        .style("height",130+"px")
-        .html("test text blaat")
+        .html(loremIpsumA)
 
      
     var header=container.append("div")
@@ -471,8 +464,12 @@ WAAG.Domain = function Domain(_propertiesAll) {
                     }else{
                       //console.log("live url ="+"http://loosecontrol.tv:4567/"+d.kci+"/admr.nl.amsterdam/live"); 
                       d3.json(apiUrlDB+d.kci+"/"+admr+"/live", function(result){
-
-                        if(result[d.kci+":"+admr]){
+                        
+                        if(result[d.kci+":"+admr]==null){
+                          console.log("no live data available");
+                          domain.select("#"+d.valueId).html("<img src=images/icon-broken-link.png>");
+                          //return "_/-";
+                        }else if(result[d.kci+":"+admr]){
                           if(result[d.kci+":"+admr].length>0){
                             if(d.kci=="transport.pt.stopsdelayed"){
                               var delay=0;
@@ -489,7 +486,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
                             }
                           }else{
                             var keys = d3.entries(result[d.kci+":"+admr]);
-                            //console.log("keys "+keys);
+
                             if(keys.length<=0){
                               domain.select("#"+d.valueId).html(Math.round(result[d.kci+":"+admr])+" "+d.units );
                             }else{
@@ -512,11 +509,12 @@ WAAG.Domain = function Domain(_propertiesAll) {
                     return d.value; 
                   }
                 })
+                
+               
                             
               .on("mouseover", function(d) {
-                  if(!d.active){
-                    d3.select("body").style("cursor", "pointer");
-                  }
+                  d3.select("body").style("cursor", "pointer");
+
                 })                  
                .on("mouseout", function(d) {       
                   d3.select("body").style("cursor", "default");

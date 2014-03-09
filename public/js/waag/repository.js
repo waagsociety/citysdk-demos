@@ -184,7 +184,7 @@ function createDomains(){
     label:"GGD airquality", 
     icon:"images/svg/icon_environment.ggd-airquality.svg", 
     tickerData:tickerData, 
-    graphType:"line",
+    graphType:"area",
     mapLayers:false
   };
   var properties={

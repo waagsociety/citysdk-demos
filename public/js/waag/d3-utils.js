@@ -1,6 +1,6 @@
 var bisectDate = d3.bisector(function(d) { return d.timestamp; }).left;
 var ticksYaxis=2;
-function mouseMove(x, y, mouse, data, focus, minValue) {
+function setLabelValueSingle(x, y, mouse, data, focus, minValue) {
     
     var x0 = x.invert(mouse),
         i = bisectDate(data, x0, 1),
@@ -8,11 +8,7 @@ function mouseMove(x, y, mouse, data, focus, minValue) {
         d1 = data[i],
         d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;
     focus.attr("transform", "translate(" + x(d.timestamp) + "," + y(d.value) + ")");
-    
-    toolTip.transition()        
-        .duration(100)      
-        .style("opacity", 0.9);
-        
+            
     var timeLabel=formatDate(d.realTimestamp);
     if(d.value==minValue){
       label=noDataLabel;
@@ -20,13 +16,38 @@ function mouseMove(x, y, mouse, data, focus, minValue) {
       label= "Time : "+d.realTimestamp+ "<br/>Value "+d.description+" : "  +d.value.toFixed(2)+" "+d.units;
     }
     
-
-    toolTip.html(label)  
-        .style("left", (d3.event.pageX) + 10+"px")     
-        .style("top", (d3.event.pageY - 28 - 10) + "px");
+  	toolTip.html(label)
+  	updateToolTipPosition(d3.event.pageX, d3.event.pageY);
     
 }
-function mouseMoveMultiGraph(x, y, mouse, data, focus) {
+
+function showToolTip(label){
+  // /console.log(label);
+  toolTip.html(label);
+  toolTip.transition()        
+      .duration(250)      
+      .style("opacity", 0.9);
+}
+
+function hideToolTip(){
+  toolTip.transition()        
+      .duration(250)      
+      .style("opacity", 0);
+}
+ 
+
+function updateToolTipPosition(x, y){
+  var el   = document.getElementById("toolTip"); // or other selector like querySelector()
+  var rect = el.getBoundingClientRect(); // get the bounding rectangle
+	var w=rect.width;
+  
+  
+  toolTip.style("left", x+10+"px")     
+      .style("top", y-28-10+"px");
+  
+}
+
+function setLabelValueMulti(x, y, mouse, data, focus) {
     
     var x0 = x.invert(mouse),
         i = bisectDate(data, x0, 1),
@@ -50,12 +71,10 @@ function mouseMoveMultiGraph(x, y, mouse, data, focus) {
 		  
 		})    
     
-    var timeLabel=formatDate(d.realTimestamp);
-     
-    toolTip.html("Time : "+d.realTimestamp+"<br/>"+label)  
-        .style("left", (d3.event.pageX) + 10+"px")     
-        .style("top", (d3.event.pageY - 28 - 10) + "px");
+    //var timeLabel=formatDate(d.realTimestamp);
     
+    toolTip.html(label)
+  	updateToolTipPosition(d3.event.pageX, d3.event.pageY);    
 }
 
 function formatDate(date){

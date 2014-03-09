@@ -87,20 +87,17 @@ WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor
         .style("opacity", 0.75)
         .style("stroke", "#666")
         .style("stroke-width", 0.1+"px")        
-        .on("mouseover", function(d) {
-              toolTip.transition()        
-                  .duration(100)      
-                  .style("opacity", .9);
-              //console.log(d);          
-              toolTip.html("name :"+d.data.name+"<br/>value: "  + parseInt(d.value))  
-                  .style("left", (d3.event.pageX) + 10+"px")     
-                  .style("top", (d3.event.pageY - 28 - 10) + "px");    
-              })                  
-         .on("mouseout", function(d) {       
-            toolTip.transition()        
-                .duration(250)      
-                .style("opacity", 0);   
+        .on("mouseover", function(d) {    
+            var label="name :"+d.data.name+"<br/>value: "  + parseInt(d.value);
+            showToolTip(label);
+          
+          })                  
+        .on("mouseout", function(d) {       
+          hideToolTip();
         })
+        .on("mousemove", function(d){
+            updateToolTipPosition(d3.event.pageX, d3.event.pageY);
+  			})
         .on("click", function(d){
             //updateDummySet(data);
         });

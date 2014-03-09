@@ -201,20 +201,21 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
         .attr("height", height)
         .on("mouseover", function() { 
           focus.style("display", null);
-          toolTip.transition()        
-              .duration(250)      
-              .style("opacity", 0); 
+          showToolTip();
         })
         .on("mouseout", function() { 
           focus.style("display", "none"); 
-          toolTip.transition()        
-              .duration(250)      
-              .style("opacity", 0);   
+          hideToolTip();
+        })
+        .on("mousemove", function(d){
 
-          })
+          toolTip.style("left", (d3.event.pageX) + 10+"px")     
+              .style("top", (d3.event.pageY - 28 - 12) + "px");
+
+  			})  
         .on("mousemove", function(){
           //in d3-utils.js
-          mouseMove(x, y, d3.mouse(this)[0], data, focus, range.min);
+          setLabelValueSingle(x, y, d3.mouse(this)[0], data, focus, range.min);
         });
 
 

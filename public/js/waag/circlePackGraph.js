@@ -88,18 +88,17 @@ WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
             .style("stroke", "#666")
             .style("stroke-width", 0.25+"px")
             .on("mouseover", function(d) {
+                var label="Name :"+d.name+"<br/>value: "  + parseInt(d.value);
+                showToolTip(label);    
+            })
+            .on("mousemove", function(d){
 
-                  toolTip.transition()        
-                      .duration(100)      
-                      .style("opacity", .9);      
-                  toolTip.html("Name :"+d.name+"<br/>value: "  + parseInt(d.value))  
-                      .style("left", (d3.event.pageX) + 10+"px")     
-                      .style("top", (d3.event.pageY - 28 - 10) + "px");    
-                  })                  
-             .on("mouseout", function(d) {       
-                toolTip.transition()        
-                    .duration(250)      
-                    .style("opacity", 0);   
+              toolTip.style("left", (d3.event.pageX) + 10+"px")     
+                  .style("top", (d3.event.pageY - 28 - 12) + "px");
+
+      			})                       
+            .on("mouseout", function(d) {       
+                hideToolTip()
             })
             .on("click", function(d){
                 //updateDummySet(data);

@@ -146,18 +146,14 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
              }else{
                label=d.realTimestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
              }
-             
-              toolTip.transition()        
-                  .duration(100)      
-                  .style("opacity", .9);
-              toolTip.html(label)  
-                  .style("left", (d3.event.pageX) + 10+"px")     
-                  .style("top", (d3.event.pageY - 28 - 10) + "px");    
-              })                  
-         .on("mouseout", function(d) {       
-            toolTip.transition()        
-                .duration(250)      
-                .style("opacity", 0);   
+            showToolTip(label);
+        })
+        .on("mousemove", function(d){
+          updateToolTipPosition(d3.event.pageX, d3.event.pageY);
+
+  			})                             
+        .on("mouseout", function(d) {       
+          hideToolTip();
         })
         .on("click", function(d){
             //updateDummySet(data);

@@ -121,6 +121,9 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
                     .duration(250)      
                     .style("opacity", 0);   
             })
+            .on("mousemove", function(d){
+                updateToolTipPosition(d3.event.pageX, d3.event.pageY);
+      			})
             .on("click", function(d){
                 //updateDummySet(data);
             })  

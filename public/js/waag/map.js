@@ -123,6 +123,16 @@ WAAG.Map = function Map(domains) {
           }
       });
     });
+    
+    container.append("div")
+          .attr("id", "layerOverlay")
+          .style("position", "absolute")
+          .style("background-color", "#F9F1EA")
+          .style("top", 0+"px")
+          .style("left", -mapWidth+"px")
+          .style("height", mapHeight+"px")
+          .style("width", mapWidth+"px")
+          .style("z-index", 15)
    
     mapMenu = container.append("div")
           .attr("id", "mapMenu")
@@ -134,6 +144,8 @@ WAAG.Map = function Map(domains) {
           .style("width", 100+"%")
           .style("opacity", 0.95)
           .style("z-index", 10)
+          
+      
           
     // mapMenu.append("div")
     //       .attr("id", "mapMenu")
@@ -214,10 +226,10 @@ WAAG.Map = function Map(domains) {
         .style("position", "absolute")
         //.style("top", -mapWidth+"px")
         .style("top", 48+"px")
-        .style("left", 0+"px")
+        .style("left", -300+"px")
         .style("width", mapHeight/2+"px")
         .style("z-index", 0)
-        .style("opacity", 1)
+        .style("opacity", 0)
     
         dropDownLayers.append("hLine")
           .attr("class", "hLine")
@@ -274,7 +286,7 @@ WAAG.Map = function Map(domains) {
         var layers=[];
         d.subDomains.forEach(function(domain){
             if(domain.mapLayers){
-              console.log(domain.mapLayers);
+              //console.log(domain.mapLayers);
               domain.mapLayers.forEach(function(layer){
                 layers.push(layer)
               })
@@ -324,7 +336,7 @@ WAAG.Map = function Map(domains) {
               d3.select(this).html(label);         
               
          })
-         
+    deActivateLayerMenu();     
         
     div.append("hLine")
       .attr("class", "hLine")
@@ -366,22 +378,25 @@ WAAG.Map = function Map(domains) {
   }
   
   
-  function activateLayerMenu(index){
+  function activateLayerMenu(){
       //console.log(index);
+
       dropDownLayers.transition()
-          .duration(500)
+          .duration(250)
           .style("top", 48+"px")
-          .style("opacity", 0.95)  
-        
+          .style("left", 0+"px")
+          .style("opacity", 0.95)   
     
   }
   
-  function deActivateLayerMenu(index){
+  function deActivateLayerMenu(){
           
       dropDownLayers.transition()
-          .duration(500)
-          .style("top", -mapHeight+"px")  
-          .style("opacity", 0)  
+          .duration(250)
+          .style("top", 48+"px")
+          .style("left", -(mapWidth/2)+"px")  
+          //.style("opacity", 0) 
+          //.each("end", function() { dropDownLayers.style("visibility", "hidden") }); 
     
   }
   
@@ -541,9 +556,7 @@ WAAG.Map = function Map(domains) {
           
      var data = layer.mapData;
      var layerId=layer.mapId;
-     
 
-     
      var max =  d3.max(data, function(d) { return d.value; });
      var min =  d3.min(data, function(d) { return d.value; }); 
      var quantizeBrewer = d3.scale.quantile().domain([min, max]).range(d3.range(rangeCB));
@@ -563,27 +576,23 @@ WAAG.Map = function Map(domains) {
    			    })  
    			  .style("opacity", 0)
    			  .on("mouseover", function(d){
+   			    
    			    if(layer.id=="mainMap")return;
    			    d3.select(this).style("stroke-width", 0.25+"px" );
    			    d3.select(this).style("fill", "#f3ece5" );
   			    
-  			    label = setToolTipLabel(d, layer.sdkPath);
-  			    
-  			    toolTip.transition()        
-                .duration(100)      
-                .style("opacity", .9);      
-            toolTip.html(label)  
-                .style("left", (d3.event.pageX) + 10+"px")     
-                .style("top", (d3.event.pageY - 28 - 10) + "px");    
+  			    var label = setToolTipLabel(d, layer.sdkPath);
+  			    showToolTip(label);
+         
             })
       			.on("mouseout", function(d){
       			  if(layer.id=="mainMap")return;
       			  d3.select(this).style("stroke-width", 0.05+"px" );
       			  d3.select(this).style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
-              toolTip.transition()        
-                  .duration(250)      
-                  .style("opacity", 0);			  
-      			  
+              hideToolTip();
+      			})
+      			.on("mousemove", function(d){
+      			  updateToolTipPosition(d3.event.pageX, d3.event.pageY)      			  
       			})
     			  .on("click", function(d){
     			    if(layer.id=="mainMap")return;
@@ -628,21 +637,14 @@ WAAG.Map = function Map(domains) {
   			  .style("stroke-width", function(d){return 0})
   			  .style("stroke", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
   			  .on("mouseover", function(d){
-  			    label = setToolTipLabel(d, layer.sdkPath);
-  			    
-  			    toolTip.transition()        
-                .duration(100)      
-                .style("opacity", .9);
-            //toolTip.html(d.name+"<br> value: "+d.velocity+" km/u")            
-            toolTip.html(label)  
-                .style("left", (d3.event.pageX) + 5+"px")     
-                .style("top", (d3.event.pageY - 28 - 5) + "px");    
+  			    var label = setToolTipLabel(d, layer.sdkPath);
+  			    showToolTip(label);   
             })
       		.on("mouseout", function(d){
-            toolTip.transition()        
-                .duration(250)      
-                .style("opacity", 0);			  
-    			  
+			      hideToolTip();			  
+    			})
+    			.on("mousemove", function(d){
+    			  updateToolTipPosition(d3.event.pageX, d3.event.pageY)      			  
     			})
   			  .on("click", function(d){
   			        			    
@@ -688,12 +690,7 @@ WAAG.Map = function Map(domains) {
   			  //.style("opacity", 0)
   			  .style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
           .on("mouseover", function(d){
-            
-            var label;
-            toolTip.transition()        
-              .duration(100)      
-              .style("opacity", .9); 
-                    
+            var label;                    
               if(layer.sdkPath=="dummy"){
                   label+="value : (dummy) "+d.value.toFixed(2);  
               }else if(layer.type=="realtime"){
@@ -709,17 +706,14 @@ WAAG.Map = function Map(domains) {
                   label = setToolTipLabel(d, layer.sdkPath);
                 
               }
-     
-              toolTip.html(label)  
-                  .style("left", (d3.event.pageX) + 5+"px")     
-                  .style("top", (d3.event.pageY - 28 - 5) + "px");    
-              })
+              showToolTip(label);
+            })
       		.on("mouseout", function(d){
-      		  d3.select("body").style("cursor", "default");
-            toolTip.transition()        
-                .duration(250)      
-                .style("opacity", 0);			  
-    			  
+      		  d3.select("body").style("cursor", "default");			  
+    			  hideToolTip();
+    			})
+    			.on("mousemove", function(d){
+    			  updateToolTipPosition(d3.event.pageX, d3.event.pageY)      			  
     			})
   			  .on("click", function(d){
   			    if(layer.type=="realtime"){
@@ -849,16 +843,14 @@ WAAG.Map = function Map(domains) {
                   label = setToolTipLabel(d, layer.sdkPath);
                 
               }
-     
-              toolTip.html(label)  
-                  .style("left", (d3.event.pageX) + 5+"px")     
-                  .style("top", (d3.event.pageY - 28 - 5) + "px");    
-              })
-      		.on("mouseout", function(d){
-            toolTip.transition()        
-                .duration(250)      
-                .style("opacity", 0);			  
-    			  
+              showToolTip(label);
+   
+          })
+      		.on("mouseout", function(d){		  
+    			  hideToolTip();
+    			})
+    			.on("mousemove", function(d){
+    			  updateToolTipPosition(d3.event.pageX, d3.event.pageY)      			  
     			})
     			
 	    labels.exit().remove();		

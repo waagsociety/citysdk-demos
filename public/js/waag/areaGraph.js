@@ -86,13 +86,13 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
     
               
     line = d3.svg.line()
-     .interpolate("none")
+     .interpolate("basis")
       .x(function(d) { return x(d.timestamp); })
       .y(function(d) { return y(d.value); }); 
       
       
     area = d3.svg.area()
-    .interpolate("none")
+    .interpolate("basis")
       .x(function(d) { return x(d.timestamp); })
       .y0(height)
       .y1(function(d) { return y(d.value); }); 
@@ -221,19 +221,14 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
         .attr("height", height)
         .on("mouseover", function() { 
           focus.style("display", null);
-          toolTip.transition()        
-              .duration(250)      
-              .style("opacity", 0); 
+          showToolTip(""); 
         })
         .on("mouseout", function() { 
-          focus.style("display", "none"); 
-          toolTip.transition()        
-              .duration(250)      
-              .style("opacity", 0);   
-
-          })
+          focus.style("display", "none");    
+          hideToolTip();
+        })
         .on("mousemove", function(){
-          mouseMove(x, y, d3.mouse(this)[0], data, focus, range.min);
+          setLabelValueSingle(x, y, d3.mouse(this)[0], data, focus, range.min);
         });
     
     

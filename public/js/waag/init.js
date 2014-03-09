@@ -18,8 +18,9 @@ function initDashboard(){
 	console.log("kick off dashboard");
 			
 	toolTip = d3.select("body").append("div")   
-      .attr("class", "tooltip")               
-      .style("opacity", 1);
+      .attr("class", "tooltip")
+      .attr("id", "toolTip")               
+      .style("opacity", 0);
 	
 	window.addEventListener('resize', onWindowResize, false);
 	onWindowResize(null);

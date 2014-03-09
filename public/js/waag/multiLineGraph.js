@@ -172,20 +172,15 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
             .attr("height", height)
             .on("mouseover", function() { 
               focus.style("display", null);
-              toolTip.transition()        
-                  .duration(250)      
-                  .style("opacity", 0); 
+              showToolTip("") 
             })
             .on("mouseout", function() { 
               focus.style("display", "none"); 
-              toolTip.transition()        
-                  .duration(250)      
-                  .style("opacity", 0);   
+              hideToolTip();
 
               })
             .on("mousemove", function(){
-
-              mouseMoveMultiGraph(x, y, d3.mouse(this)[0], data, focus);
+              setLabelValueMulti(x, y, d3.mouse(this)[0], data, focus);
             });      
             
             // add legend   
@@ -265,20 +260,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
             return line(d.values); })
           .style("stroke", function(d) { return color(d.name); })
           .style("stroke-width", 1+"px")
-          .on("mouseover", function(d) {
-                toolTip.transition()        
-                    .duration(100)      
-                    .style("opacity", .9);         
-                })                  
-           .on("mouseout", function(d) {       
-              toolTip.transition()        
-                  .duration(250)      
-                  .style("opacity", 0);   
-          })
-          .on("click", function(d){
-              //updateDummySet(data);
-                 
-           });
+
 
 
       visLineNow.transition()
@@ -302,20 +284,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
             return line(d.values); })
           .style("stroke", function(d) { return color(d.name); })
           .style("stroke-width", 0.5+"px")
-          .on("mouseover", function(d) {
-                toolTip.transition()        
-                    .duration(100)      
-                    .style("opacity", .9);         
-            })                  
-           .on("mouseout", function(d) {       
-              toolTip.transition()        
-                  .duration(250)      
-                  .style("opacity", 0);   
-          })
-          .on("click", function(d){
-              //updateDummySet(data);
 
-           });
 
 
       visLineHistory.transition()

@@ -25,13 +25,15 @@ function initDashboard(){
 	onWindowResize(null);
 		
 	domainList=createDomains();
-	map = new WAAG.Map(domainList);
+	
 	
 	for(var i=0; i<domainList.length; i++){
 	  domainList[i].index=i;
 	  var domain = new WAAG.Domain( domainList[i]);
         
 	};
+	
+	map = new WAAG.Map(domainList);
 	
 	var yf=menuHeight+(domainList.length*widgetHeight)+mapHeight;
 	

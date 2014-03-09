@@ -110,7 +110,7 @@ input[type=checkbox]:checked + label:before {
 }
 #info_page {
   position:absolute;
-  top:8em;
+  top:-100em;
   width:100%;
 /*  background-color:#FEE6CE;*/
   background-color:#fff3e8;
@@ -123,7 +123,7 @@ input[type=checkbox]:checked + label:before {
   
 }
 #info_content {
-
+  
   margin:1.5em;
 
   
@@ -290,6 +290,18 @@ input[type=checkbox]:checked + label:before {
   
 }
 
+li #active{
+  /*position:static;*/
+  background: url("../images/icon_plus-8.png") no-repeat 0% 50%;
+  
+}
+
+li #inActive{
+  /*position:static;*/
+  background: url("../images/icon_min-8.png") no-repeat;
+  
+}
+
 .layerSelector {
     position:absolute;
     width:160px;
@@ -334,7 +346,9 @@ input[type=checkbox]:checked + label:before {
 .map_container{
   position:absolute;
   background-color: #f3ece5;
-  z-index:5;
+  z-index:200;
+  height:576px;
+  width:768px;
   
 /*  -webkit-box-shadow: inset 0px 1px 2px -2px "black";
   -moz-box-shadow: inset 0px 1px 2px -2px black;
@@ -370,7 +384,7 @@ input[type=checkbox]:checked + label:before {
   border: 0px;      
   border-radius: 4px;           
   pointer-events: none;
-  z-index:175;
+  z-index:225;
   opacity:0;
   
 }

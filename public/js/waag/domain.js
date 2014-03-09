@@ -32,7 +32,6 @@ WAAG.Domain = function Domain(_propertiesAll) {
         .style("height", widgetHeight+"px")
         .style("width", 100+"%")
         .style("z-index", -1)
-        .style("opacity", 0) 
         
     domainInfo.append("div")
          .attr("class", "domainInfo")
@@ -124,18 +123,20 @@ WAAG.Domain = function Domain(_propertiesAll) {
 	};
 	
 	function setInfo(properties){
+	  
 	  if(infoActive){
+
 	    domainInfo.transition()
-          .duration(250)
-          .style("opacity", 0)
-          .style("top", -widgetHeight+"px");
+          .duration(500)
+          .style("top", -widgetHeight+"px")
+          
           
 	    infoActive=false;
 	  }else{
 	    domainInfo.transition()
-          .duration(250)
-          .style("opacity", 1)
-          .style("top", 0+"px");
+          .duration(350)
+          .style("top", 0+"px")
+          
       infoActive=true;    
 	  }
 
@@ -509,9 +510,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
                     return d.value; 
                   }
                 })
-                
-               
-                            
+           
               .on("mouseover", function(d) {
                   d3.select("body").style("cursor", "pointer");
 
@@ -553,15 +552,26 @@ WAAG.Domain = function Domain(_propertiesAll) {
     var select = layerSelector.append("select")
                     .attr("class", "select")
                     .on("change", function() { 
-                      console.log("change :"+this.value) 
+                      //console.log("change :"+this.value) 
                       _class.updateDataSet(_properties, this.value, _class);
+                      
+                      if(_properties.mapLayers){
+                        if(_properties.mapLayers[0].id=="cbs"){
+                          _properties.mapLayers[0].defaultLayer=this.value;
+                          if(_properties.mapLayers[0].mapData){
+                            map.updateCbs(_properties);
+                          };
+                          
+                        }
+                      }
+                      
                       })
                       .on("mouseover", function(d) {
                              d3.select("body").style("cursor", "pointer");
                          })                  
-                        .on("mouseout", function(d) {       
+                      .on("mouseout", function(d) {       
                            d3.select("body").style("cursor", "default");
-                         });  
+                        });  
                          
       
      select.selectAll("option")
@@ -588,33 +598,40 @@ function activateMap(_properties){
   
   // /console.log("index :"+index);
   var map_container=d3.select("#map_container");
+  map_container.style("z-index", 5);
+  
   map_container.transition()
-      .duration(750)      
-      .style("top", (menuHeight+widgetHeight+(index*widgetHeight))+"px");
+      .duration(500)      
+      .style("top", (menuHeight+widgetHeight+(index*widgetHeight))+"px")
+      .each("end", function() { 
+        map_container.style("z-index", 200); 
+        });
   
   for(var i=0; i<domainList.length; i++){
 
       //console.log("domain index :"+parseInt(domainList[i].index)+" --> id :"+domainList[i].mainDomain.id);
+      d3.select("#map_container").style("z-index", 5);
       
       if(parseInt(domainList[i].index)<index){
         d3.select("#"+domainList[i].id)
           .transition()
             .duration(750)      
-            .style("top", (menuHeight+(domainList[i].index*widgetHeight))+"px");
+            .style("top", (menuHeight+(domainList[i].index*widgetHeight))+"px")
+            
+            
       }else if(parseInt(domainList[i].index)==index){
         d3.select("#"+domainList[i].id)
           .transition()
             .duration(750)      
-            .style("top", (menuHeight+(domainList[i].index*widgetHeight))+"px");
-      
-            map.addDomainLayer(_properties);
-      
-          
+            .style("top", (menuHeight+(domainList[i].index*widgetHeight))+"px")
+            .each("end", function() { map.addDomainLayer(_properties); });
+
       }else if( parseInt(domainList[i].index)>index) {
         d3.select("#"+domainList[i].id)
           .transition()
             .duration(750)      
-            .style("top", (menuHeight+mapHeight+(domainList[i].index*widgetHeight))+"px");
+            .style("top", (menuHeight+mapHeight+(domainList[i].index*widgetHeight))+"px")
+            
       }
   	  
     

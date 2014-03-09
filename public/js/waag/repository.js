@@ -229,7 +229,7 @@ function createDomains(){
     tickerData:tickerData, 
     graphType:"circlepack",
     mapLayers:[
-      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", type:"static", id:"cbs", label:"CBS statistics", userCallBacks:false, sdkPath:"layers:cbs:data"}
+      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", type:"static", id:"cbs", label:"CBS statistics", userCallBacks:false, sdkPath:"layers:cbs:data", defaultLayer:"bev_dichth"}
     ]
   };
 

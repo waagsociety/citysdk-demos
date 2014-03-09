@@ -7,7 +7,6 @@ WAAG.Map = function Map(domains) {
 	var centered, zoom;
 	var defs, filter, feMerge;
 	var rangeCB=9; //range colorbrewer
-
   var mapMenu;
   var llActive=false;
   var dropDownLayers;
@@ -15,6 +14,7 @@ WAAG.Map = function Map(domains) {
   
   var labelSCK;
   var labelTextCloud;
+  var dataMenu=[];
 
 	function init(){
       
@@ -44,16 +44,17 @@ WAAG.Map = function Map(domains) {
   		svg = d3.select("#map_container").append("svg")
   		    .attr("width", mapWidth+"px")
   		    .attr("height", mapHeight+"px")
+  		    .style("position", "absolute")
   		    .style("z-index", 0)
   		    .call(zoom);   
 
   		map = svg.append("g")
-  		   .attr("id", "map");
+  		   .attr("id", "map")
+  		   .style("position", "absolute")
+         .style("width", mapWidth)
+         .style("height", mapHeight)
   		   
-  		   
-  		main_map = map.append("g")
-     		   .attr("id", "main_map")
-     		   .attr("class", "Oranges");
+
 
   	// set dropshadow filters	   
      defs = map.append("defs");
@@ -100,6 +101,29 @@ WAAG.Map = function Map(domains) {
 
   
   function createMapMenu(){
+    
+          
+    domains.forEach(function(d){
+        if(d.map){
+
+          dataMenu.push(d);
+        }
+    
+    });
+    
+    
+    dataMenu.forEach(function(d){
+      d.subDomains.forEach(function(s){
+          s.domainId=d.id;
+          if(s.mapLayers){
+            s.mapLayers.forEach(function(layer){
+              layer.domainId=d.id;
+
+            });
+          }
+      });
+    });
+   
     mapMenu = container.append("div")
           .attr("id", "mapMenu")
           .attr("class", "mapMenu")
@@ -109,16 +133,17 @@ WAAG.Map = function Map(domains) {
           .style("height", 48+"px")
           .style("width", 100+"%")
           .style("opacity", 0.95)
+          .style("z-index", 10)
           
-    mapMenu.append("div")
-          .attr("id", "mapMenu")
-          .attr("class", "mapMenu")
-          .style("position", "absolute")
-          .style("background-color", "#e3ddd7")
-          .style("top", 0+"px")
-          .style("height", 48+"px")
-          .style("width", 100+"%")
-          .style("z-index", 10)      
+    // mapMenu.append("div")
+    //       .attr("id", "mapMenu")
+    //       .attr("class", "mapMenu")
+    //       .style("position", "absolute")
+    //       .style("background-color", "#e3ddd7")
+    //       .style("top", 0+"px")
+    //       .style("height", 48+"px")
+    //       .style("width", 100+"%")
+    //       .style("z-index", 10)      
 
     mapMenu.append("div")
       .attr("class", "vLine")
@@ -148,17 +173,15 @@ WAAG.Map = function Map(domains) {
         .on("click", function(d){
             if(llActive){
               llActive=false;
-              deActivateLayerMenu(domains.length);
+              deActivateLayerMenu(dataMenu.length);
 
             }else{
               llActive=true;
-              activateLayerMenu(domains.length);
+              activateLayerMenu(dataMenu.length);
 
             }
 
-
          });
-
 
     layerList.append("object")
       .attr("class", "mapIcon")
@@ -185,17 +208,16 @@ WAAG.Map = function Map(domains) {
         .style("height", 1.5+"em")
         .text("Layers")
 
-     dropDownLayers=mapMenu.append('div')
+     dropDownLayers=container.append('div')
         .attr("id", "dropDownLayers")  
         .style("background-color", "#e3ddd7")
         .style("position", "absolute")
-        .style("top", -mapWidth+"px")
+        //.style("top", -mapWidth+"px")
+        .style("top", 48+"px")
         .style("left", 0+"px")
         .style("width", mapHeight/2+"px")
-        .style("height", domains.length*100+"px") 
-        //.style("height", 0+"px")
-        .style("z-index", 5)
-        .style("opacity", 0)
+        .style("z-index", 0)
+        .style("opacity", 1)
     
         dropDownLayers.append("hLine")
           .attr("class", "hLine")
@@ -203,16 +225,15 @@ WAAG.Map = function Map(domains) {
           .style("margin-top", 0+"em")
           .style("left", 1+"em")
           .style("width", 90+"%")    
-        
 
-    var data=domains;
-    
     var div = dropDownLayers.selectAll("div")
-      .data(data)
+      .data(dataMenu)
       .enter().append("div")
-        .style("position", "absolute")
-        .style("top", function(d,i){ return i*100+"px" })
-        .style("height", 100+"px")
+        
+        .style("background-color", "#e3ddd7")
+        .style("position", "relative")
+        //.style("top", 48+"px")
+        //.style("height", 100+"px")
         .style("width", 100+"%")
         
     div.append("object")
@@ -220,6 +241,7 @@ WAAG.Map = function Map(domains) {
           .attr("id", function(d) { return "icon_"+d.id} )
           .attr("data", function(d) { return d.icon})
           .attr("type", "image/svg+xml")
+          .attr("transform", function() { return "translate(" + 0 + "," + 0 + ")scale("+ 0.5 +")"; })
           .style("position", "relative")
           // .style("width", 24+"px")
           // .style("height", "auto")
@@ -237,7 +259,7 @@ WAAG.Map = function Map(domains) {
       .style("position", "relative")
       .style("margin-top", 0+"em")
       .style("left", 3.5+"em")
-      .style("width", 80+"%") 
+      .style("width", 76+"%") 
       
     div.append("vLine")
         .attr("class", "vLine")
@@ -246,28 +268,77 @@ WAAG.Map = function Map(domains) {
         .style("left", 3+"em")
         .style("top", 0.5+"em")
         .style("height", 80+"%")
-        
+    
     div.selectAll("ul")
-      .data(function(d) { return d.subDomains; })
+      .data(function(d) { 
+        var layers=[];
+        d.subDomains.forEach(function(domain){
+            if(domain.mapLayers){
+              console.log(domain.mapLayers);
+              domain.mapLayers.forEach(function(layer){
+                layers.push(layer)
+              })
+              //return d.mapLayers;
+            }
+            
+        })
+        return layers;
+
+      }) 
       .enter()
         .append("li")
-        .attr("class", function(d) {return d.id})
+        .attr("id", "inActive")
         .style("position", "relative")
         .style("left", 4+"em")
         .style("top", -0.5+"em")
         .style("list-style-type", "none")
         .append("h4")
-        .text(function(d) {return d.label}) 
+        .html(function(d) {
+          var label="<img src=images/icon_plus-8.png> "+d.label 
+          return label;
+          
+          })
+        .on("mouseover", function(d) {
+            d3.select("body").style("cursor", "pointer");
+          })                  
+         .on("mouseout", function(d) {       
+            d3.select("body").style("cursor", "default");
+          })
+        .on("click", function(d){
+              var label;
+              if(d.sdkData){
+                if(d.mapActive){
+                  label="<img src=images/icon_plus-8.png> "+d.label;
+                  d.mapActive=false;
+                }else{
+                  label="<img src=images/icon_min-8.png> "+d.label 
+                  d.mapActive=true;
+                }
+                setMap(d);
+                
+              }else{
+                label="<img src=images/icon_min-8.png> "+d.label 
+                createLayerObject(d);
+              }
+              
+              d3.select(this).html(label);         
+              
+         })
+         
         
     div.append("hLine")
       .attr("class", "hLine")
       .style("position", "relative")
       .style("margin-top", 0+"em")
       .style("left", 1+"em")
-      .style("width", 90+"%")  
-      
+      .style("width", 90+"%") 
+
       setMainMap();   
         
+  }
+  
+  function updateMenuLayerList(){
+    
   }
   
   function setMainMap(){
@@ -283,7 +354,12 @@ WAAG.Map = function Map(domains) {
     layer.page=1;
     map.append("g")
       .attr("id", layer.mapId)
-      .attr("class", "Oranges");
+      .attr("class", "Oranges")
+      .style("position", "absolute")
+      .style("width", mapWidth)
+      .style("height", mapHeight)
+      .style("top", 0+"px")
+      .style("left", 0+"px")
             
     getGeoData(layer);
         
@@ -291,7 +367,7 @@ WAAG.Map = function Map(domains) {
   
   
   function activateLayerMenu(index){
-      console.log(index);
+      //console.log(index);
       dropDownLayers.transition()
           .duration(500)
           .style("top", 48+"px")
@@ -310,7 +386,8 @@ WAAG.Map = function Map(domains) {
   }
   
   function getGeoData(layer){
-
+      
+      console.log("loading layer data :"+layer.mapId+" --> page:"+layer.page);
       d3.json(layer.url+"&page="+layer.page, function(results){
     		//console.log("results :"+results.results.length);
     		layer.sdkData=layer.sdkData.concat(results.results);
@@ -339,6 +416,10 @@ WAAG.Map = function Map(domains) {
               layer.geomType=d.geometry.type;
               if(layer.sdkPath=="mainMap"){
                 d.value=8;
+              }else if(layer.id=="cbs"){
+                d.value=d.layers.cbs.data[layer.defaultLayer];
+                //console.log(d.value);
+              
               }else if(layer.sdkPath=="layers:divv.parking.capacity:data"){
                 d.value= (d.layers["divv.parking.capacity"].data.FreeSpaceShort+d.layers["divv.parking.capacity"].data.FreeSpaceLong)/(d.layers["divv.parking.capacity"].data.ShortCapacity+d.layers["divv.parking.capacity"].data.LongCapacity)
                 if(d.value<0 || isNaN(d.value) || d.value=="Infinity" || d.value==null){
@@ -440,7 +521,7 @@ WAAG.Map = function Map(domains) {
   }
   
   function setMap(layer){
-        
+    console.log("updating map layer :"+layer.mapId);   
     if(layer.mapActive){
       layer.mapData=layer.sdkData;
     }else{
@@ -461,11 +542,7 @@ WAAG.Map = function Map(domains) {
      var data = layer.mapData;
      var layerId=layer.mapId;
      
-     if(layer.layerId=="map_cbsA"){
-       data.forEach(function(d){
-            d.value=10+(Math.random()*90);
-        });
-     }
+
      
      var max =  d3.max(data, function(d) { return d.value; });
      var min =  d3.min(data, function(d) { return d.value; }); 
@@ -490,7 +567,7 @@ WAAG.Map = function Map(domains) {
    			    d3.select(this).style("stroke-width", 0.25+"px" );
    			    d3.select(this).style("fill", "#f3ece5" );
   			    
-  			    label = setToolTipLabel(d, layer.sdkProperties.sdkPath);
+  			    label = setToolTipLabel(d, layer.sdkPath);
   			    
   			    toolTip.transition()        
                 .duration(100)      
@@ -584,9 +661,7 @@ WAAG.Map = function Map(domains) {
 	}
 	
 	updatePointMap = function(layer){
-	  
 
-	  
 	  if(layer.id=="sck" || layer.id=="parking"){
 	    updateLabelsMap(layer);
 	    return;
@@ -706,6 +781,8 @@ WAAG.Map = function Map(domains) {
     			      if(d.value==null || isNaN(d.value) ){
                   v=0.5;
                 }
+                if(v>5) v=5;
+                
     			      path.pointRadius(v);
     			    }else{
     			      path.pointRadius(d.value);
@@ -741,9 +818,7 @@ WAAG.Map = function Map(domains) {
     
   	var visPointMap=d3.select("#"+layerId);
     //var vis = visPointMap.selectAll("path").data(data, function(d, i){return d.cdk_id});
-	  
-	  
-	  
+
 	  var labels = visPointMap.selectAll("use").data(data, function(d, i){return d.cdk_id}); 
     
     var s=0.25;
@@ -834,23 +909,9 @@ WAAG.Map = function Map(domains) {
       if(layers[i]!=false && layers[i].mapLayers!="dummy" && layers[i].mapLayers!=false ){
         
         for(var j=0; j<layers[i].mapLayers.length; j++){
-        
-          layers[i].mapLayers[j].domainId=_properties.id;
-          layers[i].mapLayers[j].mapId="map_"+_properties.id+"_"+layers[i].mapLayers[j].id;
-
-          console.log("adding map layer :"+layers[i].mapLayers[j].mapId);
+            layers[i].mapLayers[j].domainId=_properties.id;
+            var layer=createLayerObject(layers[i].mapLayers[j]);
             
-            map.append("g")
-              .attr("id", layers[i].mapLayers[j].mapId)
-              .attr("class", "Oranges");
-            layers[i].mapLayers[j].mapActive=true;
-            layers[i].mapLayers[j].sdkData=[];
-            layers[i].mapLayers[j].mapData=[];
-            layers[i].mapLayers[j].page=1;
-          
-            cachedLayers.push(layers[i].mapLayers[j]);  
-            //cachedLayers.push(layers[i].mapLayers[j].mapId);  
-            getGeoData(layers[i].mapLayers[j]);
         }
            
       }
@@ -859,10 +920,37 @@ WAAG.Map = function Map(domains) {
 
   };
   
+  function createLayerObject(layer){
+    
+    //layer.domainId=mapId;
+    layer.mapId="map_"+layer.domainId+"_"+layer.id;
+
+    console.log("creating map layer :"+layer.mapId);
+      
+      map.append("g")
+        .attr("id", layer.mapId)
+        .attr("class", "Oranges")
+        .style("position", "absolute")
+        .style("width", mapWidth)
+        .style("height", mapHeight)
+        
+      layer.mapActive=true;
+      layer.sdkData=[];
+      layer.mapData=[];
+      layer.page=1;
+    
+      cachedLayers.push(layer);  
+ 
+      getGeoData(layer);
+    
+  }
+  
   function zoomed() {
 	    //console.log(d3.event);
       map.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
   };
+  
+  
   
   function setToolTipLabel(_data, _path){
     var v = _data;
@@ -877,9 +965,23 @@ WAAG.Map = function Map(domains) {
 		return label;
 
   };
+  
+  updateCbs = function(_properties){
+    _properties.mapLayers[0].sdkData.forEach(function(d){
+      d.value=parseInt(d.layers.cbs.data[_properties.mapLayers[0].defaultLayer]);
+      if(d.value<0 || isNaN(d.value) || d.value=="Infinity"){
+        d.value=0;
+      };
+      
+    })
+    setMap(_properties.mapLayers[0]);
+    
+    console.log("updating cbs "+_properties.mapLayers[0].defaultLayer);
+  };
 
   init();
   this.addDomainLayer=addDomainLayer;
+  this.updateCbs=updateCbs;
   return this;   
 
 };

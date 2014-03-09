@@ -55,7 +55,7 @@ WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
     for(var i=0; i<data.length; i++){
       //console.log("value "+data[i].value+" -->"+data[i].name);
       if(data[i].value<=0){
-        console.log("value "+data[i].value+" -->"+data[i].name);
+        //console.log("value "+data[i].value+" -->"+data[i].name);
         data[i].value=1;
         
       }

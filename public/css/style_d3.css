@@ -98,5 +98,12 @@ path {
     stroke: #666;
     stroke-width: 10px;
 }
+#map{
+  position:absolute;
+  width:768px;
+  height:576px;
+  
+  
+}
 
 

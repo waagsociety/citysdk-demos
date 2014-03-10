@@ -55,13 +55,12 @@ module P2000Feed
          node = eval val 
          
          coordinates = node["geom"]["coordinates"]
-         distance = CdkUtils::distance coordinates, [lon,lat] 
+         distance = CdkUtils::distance coordinates.dup, [lon,lat] 
          if(distance < radius)
            count += 1
            locations.push (node)
          end
        end
-       JSON.pretty_generate locations
        return locations
     end
     

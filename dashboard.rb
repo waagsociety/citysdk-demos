@@ -117,7 +117,7 @@ configure do
     PhusionPassenger.on_event(:starting_worker_process) do |forked|
       if forked
         $logger.info "reconnecting Redis"
-        Client.instance.reconnect
+        Cache.instance.reconnect
         on_init        
       else
         # We're in conservative spawning mode. We don't need to do anything.

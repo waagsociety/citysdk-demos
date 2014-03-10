@@ -17,14 +17,24 @@ module P2000Feed
         lat = (item.elements["geo:lat"])
         lon = (item.elements["geo:long"])
         id = (item.elements["guid"])
+        desc = (item.elements["description"])
+        title = (item.elements["title"])
         time = (item.elements["pubDate"])  
-
-        if (lat != nil) && (lon != nil) 
+        guid =  (item.elements["guid"])
+        
+        if (lat != nil) && (lon != nil)
+          node = Hash.new
           lat = lat.text.to_f
           lon = lon.text.to_f
           id = id.text        
           time = Time.parse(time.text).to_i
-          Cache.instance.redis.zadd("p2000:alerts", time, [lon,lat].to_s)
+          node["type"] = "node"
+          node["geom"] = { "type" => "Point", "coordinates" => [lon,lat]} 
+          node["title"] = title.text.to_s
+          node["description"] = desc.text.to_s
+          node["cdk_id"] = "p2000_#{guid.text}"
+          node["timestamp"] = time
+          Cache.instance.redis.zadd("p2000:alerts", time, node.to_s)
         end
       end 
     end
@@ -42,14 +52,15 @@ module P2000Feed
        count = 0
        cache = Cache.instance.redis.zrangebyscore("p2000:alerts", time - 3600, time) 
        cache.each do |val| 
-         coordinates = eval val 
-         distance = CdkUtils::distance coordinates, [lon,lat] 
+         node = eval val 
+         
+         coordinates = node["geom"]["coordinates"]
+         distance = CdkUtils::distance coordinates.dup, [lon,lat] 
          if(distance < radius)
            count += 1
-           locations.push ({"lon" => lon, "lat" => lat, "timestamp" => time})
+           locations.push (node)
          end
        end
-
        return locations
     end
     

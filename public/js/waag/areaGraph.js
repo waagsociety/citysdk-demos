@@ -230,7 +230,10 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
         })
         .on("mousemove", function(){
           setLabelValueSingle(x, y, d3.mouse(this)[0], data, focus, range.min);
-        });
+        })
+        .on("click", function(){
+          setLabelValueSingle(x, y, d3.mouse(this)[0], data, focus, range.min);
+        })
     
     
     svgDomain.select(".focus").remove();    

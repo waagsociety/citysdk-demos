@@ -164,7 +164,7 @@ function createDomains(){
     label:"Smartcitizen", 
     icon:"images/svg/icon_environment.sck.svg", 
     tickerData:tickerData, 
-    graphType:"area",
+    graphType:"line",
     mapLayers:[
       {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000", type:"static", id:"sck", label:"Smart citizens", userCallBacks:false, sdkPath:"layers:sck:data"}
     ]

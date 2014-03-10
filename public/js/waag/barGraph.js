@@ -163,6 +163,21 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
           hideToolTip();
         })
         .on("click", function(d){
+             var timestamp;
+             if(d.hour<=hNow){
+               timestamp=d.timestamp;
+             }else{
+               timestamp=d.realTimestamp;
+             }
+             
+             var label;
+             if(isNaN(d.value) || !d.value || d.value==null){
+               label=noDataLabel+"<br>"+timestamp;
+             }else{
+               label=timestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
+             }
+            showToolTip(label);
+            
             //updateDummySet(data);
 			      
 			    });

@@ -35,6 +35,8 @@ function showToolTip(label){
   toolTip.transition()        
       .duration(250)      
       .style("opacity", 0.9);
+  updateToolTipPosition(d3.event.pageX, d3.event.pageY);    
+      
 }
 
 function hideToolTip(){

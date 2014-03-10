@@ -24,7 +24,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
       .style("top", menuHeight+(properties.index*widgetHeight)+"px")
       .style("z-index", 100-properties.index);
     
-      domainInfo=container.append("div")
+    domainInfo=container.append("div")
         .attr("id", "domainInfo")
         .style("background-color", domainColor)
         .style("position", "absolute")
@@ -166,26 +166,28 @@ WAAG.Domain = function Domain(_propertiesAll) {
     
     
     if(_properties.id=="smartcitizen"){
-      subDomainA.append("object")
-          .attr("id", "tempGraph")
-          .attr("data", "images/svg/icon_tempGraph.svg")
-          .attr("type", "image/svg+xml")
-          .style("position", "relative")
-          .style("left", 21+"em")
-          .style("top", -0.1+"em")
-          .on("mouseover", function(d) {
-                toolTip.transition()        
-                    .duration(100)      
-                    .style("opacity", .9);      
-                toolTip.html("temp 22.4")  
-                    .style("left", (d3.event.pageX) + 6+"px")     
-                    .style("top", (d3.event.pageY - 10) + "px");    
-                })
-          .on("mouseout", function(d) {       
-              toolTip.transition()        
-                  .duration(250)      
-                  .style("opacity", 0);   
-          })
+      var domain=d3.select("#"+_properties.id);
+      _properties.sckTemp="loading data";
+      d3.json(apiUrlDB+"environment.sck.temperature"+"/"+admr+"/live", function(result){
+        console.log("temp live ="+result);
+        var value=result["environment.sck.temperature:admr.nl.amsterdam"].toFixed(1);
+        
+        
+        domain.append("object")
+            .attr("id", "tempGraph")
+            .attr("data", "images/svg/icon_tempGraph.svg")
+            .attr("type", "image/svg+xml")
+            .style("position", "relative")
+            .style("left", 21+"em")
+            .style("top", -0.1+"em")          
+        
+        domain.append("div")
+            .attr("id", "sck_temp_label")
+            .style("left", 345+"px")
+            .style("top", -18+"px")
+            .html(value+" &#176");  
+      });
+  
     };
     
 
@@ -266,6 +268,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
            if(h>=hNow){
               var add=(60*60*24*1000)+date.getTime();
               date.setTime(add);
+              //console.log("add time" +date);
             }
            var value=0;  
            var children=[];          
@@ -355,6 +358,8 @@ WAAG.Domain = function Domain(_propertiesAll) {
      	    graph = new WAAG.PieGraphStacked (_properties, subDomain, true, domainColor);
      	}else if (_properties.graphType=="sunburst"){
      	    graph = new WAAG.SunburstGraph (_properties, subDomain, true, domainColor);
+     	}else if (_properties.graphType=="stackedBar"){
+     	    graph = new WAAG.StackedBarGraph (_properties, subDomain, domainColor);
      	}
 
     
@@ -552,18 +557,10 @@ WAAG.Domain = function Domain(_propertiesAll) {
     var select = layerSelector.append("select")
                     .attr("class", "select")
                     .on("change", function() { 
-                      //console.log("change :"+this.value) 
                       _class.updateDataSet(_properties, this.value, _class);
-                      
-                      if(_properties.mapLayers){
-                        if(_properties.mapLayers[0].id=="cbs"){
-                          _properties.mapLayers[0].defaultLayer=this.value;
-                          if(_properties.mapLayers[0].mapData){
-                            map.updateCbs(_properties);
-                          };
-                          
-                        }
-                      }
+                      if(_properties.id=="cbs"){
+                        map.updateCbs(this.value);
+                      };
                       
                       })
                       .on("mouseover", function(d) {
@@ -600,6 +597,8 @@ function activateMap(_properties){
   var map_container=d3.select("#map_container");
   map_container.style("z-index", 5);
   
+  d3.selectAll("#domainInfo").style("visibility", "hidden");
+  
   map_container.transition()
       .duration(500)      
       .style("top", (menuHeight+widgetHeight+(index*widgetHeight))+"px")
@@ -624,7 +623,11 @@ function activateMap(_properties){
           .transition()
             .duration(750)      
             .style("top", (menuHeight+(domainList[i].index*widgetHeight))+"px")
-            .each("end", function() { map.addDomainLayer(_properties); });
+            .each("end", function() { 
+              d3.selectAll("#domainInfo").style("visibility", "visible");
+              map.addDomainLayer(_properties); 
+              
+            });
 
       }else if( parseInt(domainList[i].index)>index) {
         d3.select("#"+domainList[i].id)

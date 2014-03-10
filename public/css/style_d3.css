@@ -48,6 +48,9 @@ path {
   stroke: #666;
   stroke-width: 0.5px;
 }
+.rect{
+  stroke-width: 0.1px;
+}
 
 .lineNow {
   fill: none;

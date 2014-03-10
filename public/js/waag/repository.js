@@ -206,7 +206,7 @@ function createDomains(){
       layers:cbsLayers
   };
     
-  subDomainA={id:"cbsA", 
+  subDomainA={id:"cbs", 
     label:"CBS Statistics", 
     icon:"images/svg/icon_statistics.cbs.svg", 
     tickerData:tickerData, 
@@ -223,7 +223,7 @@ function createDomains(){
       layers:cbsLayers
   };
   
-  subDomainB={id:"cbsB",
+  subDomainB={id:"cbs",
     label:"CBS Statistics", 
     icon:"images/svg/icon_statistics.cbs.svg", 
     tickerData:tickerData, 
@@ -329,6 +329,15 @@ function createDomains(){
     ]
 
   };
+  
+  subDomainB={id:"events",
+    label:"Events", 
+    icon:"images/svg/icon_tourism.events.svg", 
+    tickerData:tickerData, 
+    graphType:"stackedBar",
+    mapLayers:false
+
+  };
 
   var properties={
     id:"cultural",
@@ -336,7 +345,7 @@ function createDomains(){
 	  icon:"images/svg/icon_tourism.svg", 
 	  color:"#FFB27D",
 	  map:true,
-    subDomains:[false, subDomainA]
+    subDomains:[subDomainA, subDomainB]
 
 	};
 	list.push(properties);
@@ -354,8 +363,7 @@ function createDomains(){
     tickerData:tickerData, 
     graphType:"bar",
     mapLayers:[
-      {url:apiUrlDB+"cache/3600/admr.nl.amsterdam/nodes?layer=2cm.p2000bag&geom&per_page=1000", id:"p2000", type:"static", label:"P2000 events", userCallBacks:false, sdkPath:"layers:2cm.p2000bag:data"}
-              
+      {url:apiUrlDB+"emergency.p2000.locations/admr.nl.amsterdam/live", id:"p2000", type:"static", label:"P2000 events", userCallBacks:false, sdkPath:""}       
     ]
 
   };

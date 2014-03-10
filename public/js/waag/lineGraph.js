@@ -108,8 +108,7 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
       // cardinal-open - an open Cardinal spline; may not intersect the start or end, but will intersect other control points.
       // cardinal-closed - a closed Cardinal spline, as in a loop.
       // monotone - cubic interpolation that preserves monotonicity in y.  
-      
-      
+
       updateDataSet(properties, properties.tickerData.data[0].kci, 0);
 
   };
@@ -122,10 +121,9 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
 	  
 	  data.forEach(function(d){
 	      d.units=yUnits;
-        d.description=description; 
-	      if(isNaN(d.value)) d.value=range.min;
-	      if(!d.value) d.value=range.min;
-	      //console.log(d.valui
+        d.description=description;
+        if(d.value==null || isNaN(d.value) || !d.value ) d.value=range.min; 
+	      
 	  });
 	  
 	  y.domain([range.min, range.max]);

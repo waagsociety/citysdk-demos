@@ -86,13 +86,13 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
     
               
     line = d3.svg.line()
-     .interpolate("basis")
+      .interpolate("basis")
       .x(function(d) { return x(d.timestamp); })
       .y(function(d) { return y(d.value); }); 
       
       
     area = d3.svg.area()
-    .interpolate("basis")
+      .interpolate("basis")
       .x(function(d) { return x(d.timestamp); })
       .y0(height)
       .y1(function(d) { return y(d.value); }); 
@@ -111,12 +111,13 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 	  
 	  var dataArea=[];
 	  data.forEach(function(d){
-	      if(isNaN(d.value)) d.value=range.min;
-	      if(!d.value) d.value=range.min;
-	      if(d.hour<hNow){
-  	      dataArea.push(d);
-  	    }
-
+	    //console.log("old :"+d.value);  	    
+      if(d.value==null || isNaN(d.value) || !d.value ) d.value=range.min;      
+            
+      if(d.hour<=hNow){
+	      dataArea.push(d);
+	    }
+      //console.log("new :"+d.value);  	    
 	  });
 	  
 	  y.domain([range.min, range.max]);
@@ -185,7 +186,7 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
     data.forEach(function(d){
         d.units=yUnits;
         d.description=description;
-        if(isNaN(d.value)) d.value=0;
+        if(isNaN(d.value)) d.value=range.min;
       
     })
     

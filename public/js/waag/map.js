@@ -403,34 +403,44 @@ WAAG.Map = function Map(domains) {
   function getGeoData(layer){
       
       console.log("loading layer data :"+layer.mapId+" --> page:"+layer.page);
-      d3.json(layer.url+"&page="+layer.page, function(results){
-    		//console.log("results :"+results.results.length);
-    		layer.sdkData=layer.sdkData.concat(results.results);
+      var url;
+      if(layer.id=="p2000"){
+        url=layer.url;
+      }else{
+        url=layer.url+"&page="+layer.page;
+      }
 
-    		if(results.results.length>=1000){
-
-    		  var newPage=parseInt(layer.page+1);
-    		  //console.log("getting data page :"+newPage);
-    		  layer.page=newPage;
-    		  getGeoData(layer);
-    		  return;
+      d3.json(url, function(results){
+    		if(layer.id=="p2000"){
+    		  layer.sdkData=results["emergency.p2000.locations:admr.nl.amsterdam"];
+    		}else{
+    		  layer.sdkData=layer.sdkData.concat(results.results);
+      		if(results.results.length>=1000){
+      		  var newPage=parseInt(layer.page+1);
+      		  //console.log("getting data page :"+newPage);
+      		  layer.page=newPage;
+      		  getGeoData(layer);
+      		  return;
+      		}
+    		  
     		}
+
         // rewrite results to geojson and prepare v=isualisation values
 
         layer.sdkData.forEach(function(d){
-                   
+                 
           // redefine data structure for d3.geom
           if(d.geom){
+                          
               d.label="";
-            
-            	d.type="Feature";
+              d.type="Feature";
         			d.geometry=d.geom;
         			delete d.geom;
         			d.centroid = path.centroid(d);
         			d.bounds= path.bounds(d);
               layer.geomType=d.geometry.type;
               if(layer.sdkPath=="mainMap"){
-                d.value=8;
+                d.value=0;
               }else if(layer.id=="cbs"){
                 d.value=d.layers.cbs.data[layer.defaultLayer];
                 //console.log(d.value);
@@ -440,7 +450,6 @@ WAAG.Map = function Map(domains) {
                 if(d.value<0 || isNaN(d.value) || d.value=="Infinity" || d.value==null){
                   d.value=Math.random();
                 };
-                
                 //console.log("parking value ="+d.value);
               }else if(layer.sdkPath=="layers:divv.traffic:data"){
                   var g= d.layers["divv.traffic"];
@@ -450,14 +459,16 @@ WAAG.Map = function Map(domains) {
                   d.velocity=g.data.velocity;
                   d.maxVelocity=Math.round(d.value*tt_ff);
               }else if(layer.id=="ptstops"){
-                  d.value=0.5;
-                                    
+                  d.value=0.5;                  
               }else if(layer.id=="sck"){
-                d.value=0.25;
+                  d.value=0.25;
+              }else if(layer.id=="p2000"){
+                d.id="p2000";
+                
+                d.value=d.timestamp;
               }else{
                   d.value=0.1+(Math.random()*0.9);
               }
-              
               //console.log("trafel perc ="+d.value);
               if(d.value<0 || isNaN(d.value) || d.value=="Infinity" || d.value==null){
                 d.value=0;
@@ -466,26 +477,20 @@ WAAG.Map = function Map(domains) {
           }
            
       	  });
-
           layer.range=getRange(layer);
-          
           // get the delayed stops
           if(layer.id=="ptstops"){
             d3.json(apiUrlDB+"/transport.pt.stopsdelayed/admr.nl.amsterdam/live", function(results){
                 comparePTstops(results["transport.pt.stopsdelayed:admr.nl.amsterdam"]);
                 //console.log("results ptstops live "+results);
             });
-            
-            
+                        
           }else{
             setMap(layer);
           }
 
-          
-
     		});
       
-
   };
   
   function comparePTstops(data){
@@ -577,18 +582,21 @@ WAAG.Map = function Map(domains) {
    			  .style("opacity", 0)
    			  .on("mouseover", function(d){
    			    
-   			    if(layer.id=="mainMap")return;
-   			    d3.select(this).style("stroke-width", 0.25+"px" );
-   			    d3.select(this).style("fill", "#f3ece5" );
+   			    if(layer.id=="mainMap"){
+   			      showToolTip(d.name);
+   			      return;
+ 			      };
+            // d3.select(this).style("stroke-width", 0.25+"px" );
+            // d3.select(this).style("fill", "#f3ece5" );
   			    
   			    var label = setToolTipLabel(d, layer.sdkPath);
   			    showToolTip(label);
          
             })
       			.on("mouseout", function(d){
-      			  if(layer.id=="mainMap")return;
-      			  d3.select(this).style("stroke-width", 0.05+"px" );
-      			  d3.select(this).style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
+      			  //if(layer.id=="mainMap")return;
+              // d3.select(this).style("stroke-width", 0.05+"px" );
+              // d3.select(this).style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
               hideToolTip();
       			})
       			.on("mousemove", function(d){
@@ -700,7 +708,10 @@ WAAG.Map = function Map(domains) {
                   }else{
                     label="Name :"+d.name+"<br>Trips on schedule<br>Click to load realtime schedule";
                   }
-                 
+              }else if(d.id=="p2000"){
+                 var date=new Date();
+                 date.setTime(d.timestamp*1000);
+                 label="P2000<br>"+date+"<br>"+d.title+"<br>"+d.description   
                   
               }else{
                   label = setToolTipLabel(d, layer.sdkPath);
@@ -778,6 +789,11 @@ WAAG.Map = function Map(domains) {
                 if(v>5) v=5;
                 
     			      path.pointRadius(v);
+    			    }else if(d.id=="p2000"){
+    			      var r=((layer.range.max-d.value)/layer.range.range)*5;
+    			      if(r<2.5)r=2.5;
+    			      path.pointRadius(r);
+    			    
     			    }else{
     			      path.pointRadius(d.value);
     			    }
@@ -958,17 +974,28 @@ WAAG.Map = function Map(domains) {
 
   };
   
-  updateCbs = function(_properties){
-    _properties.mapLayers[0].sdkData.forEach(function(d){
-      d.value=parseInt(d.layers.cbs.data[_properties.mapLayers[0].defaultLayer]);
-      if(d.value<0 || isNaN(d.value) || d.value=="Infinity"){
-        d.value=0;
-      };
-      
-    })
-    setMap(_properties.mapLayers[0]);
+  updateCbs = function(dataLayer){
+    //console.log(dataLayer);
     
-    console.log("updating cbs "+_properties.mapLayers[0].defaultLayer);
+    for(var i=0; i<cachedLayers.length; i++){
+      if(cachedLayers[i].id=="cbs"){
+        cachedLayers[i].defaultLayer=dataLayer;
+        if(cachedLayers[i].mapData.length>0){
+          cachedLayers[i].sdkData.forEach(function(d){
+            d.value=parseInt(d.layers.cbs.data[cachedLayers[i].defaultLayer]);
+            if(d.value<0 || isNaN(d.value) || d.value=="Infinity"){
+              d.value=0;
+            };  
+          })
+          
+        }
+        setMap(cachedLayers[i]);
+        console.log("updating cbs "+cachedLayers[i].defaultLayer);
+        return;
+      }
+    };
+    console.log("cbs layer not active");
+    
   };
 
   init();

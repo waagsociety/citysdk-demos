@@ -1,4 +1,4 @@
-WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
+WAAG.StackedBarGraph = function StackedBarGraph(properties, _subDomain, domainColor) {
 
   //console.log("bargraph contructor");
   
@@ -10,8 +10,21 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
   var activeIndex=0;  
 
 	function init(){
-
     var data = properties.tickerData.data[0].kciData;
+    
+    data.forEach(function(d) {
+      d.children.forEach(function(c, i){
+        c.y0 = i;
+        c.y1 = i+1;
+        c.hour=d.hour;
+        c.timestamp=d.timestamp;
+        c.realTimestamp=d.realTimestamp;
+      })
+
+    });
+    
+    
+	  var subDomain = _subDomain;
 	  
 	  var subDomain = _subDomain;
       svgDomain = subDomain.append("svg")
@@ -29,7 +42,7 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
     
     y = d3.scale.linear()
        .range([height, 0]);
-    y.domain([0, d3.max(data, function(d) { return d.value; })]);    
+    y.domain([d3.min(data, function(d) { return d.value; }), d3.max(data, function(d) { return d.value; })]);    
 
    xAxis = d3.svg.axis()
          .scale(x)
@@ -83,28 +96,18 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
            // /.text("test")
               
     initted=true;
+    
+    
 
     updateDataSet(properties, properties.tickerData.data[0].kci, 0);      
     
 
   };
+  
 
 	function updateGraph(data, description, yUnits){
-	  	  	  
-	  var range=getRange(data);
-	  
-    if(isNaN(range.min) || !range.min || range.min==null ) range.min=0;
-	  if(isNaN(range.max) || !range.max || range.max==null ) range.max=100;
-	  
-	  
-    // data.forEach(function(d, i){      
-    //         if(isNaN(d.value)) d.value=range.min;
-    //         if(!d.value) d.value=range.min;
-    //         console.log(d.value);
-    //   
-    // });
-	  
-	  y.domain([range.min, range.max]); 
+
+	  y.domain([d3.min(data, function(d) { return d.value; }), d3.max(data, function(d) { return d.value; })]);
 	  //y.domain([0, max]); 
 	  
 	  var yAxis = d3.svg.axis()
@@ -121,95 +124,68 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 
     svgDomain.select("#y_axis_label")
         .html(description+" "+yUnits)
-        
-    // svgDomain.select("#y_axis_units")
-    //     .text(maxRound+" "+yUnits);
-    //     
-    // svgDomain.select("#y_axis_units_min")
-    //     .text(parseInt(min));
-   
-    var vis=svgDomain.selectAll(".bar").data(data, function(d, i){return i});
     
-    vis.enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.hour); })
+    // To Do: make updateble    
+    var vis=svgDomain.selectAll(".bar").data(data, function(d, i){return i});
+        
+    vis.enter().append("g")
+          .attr("class", "events")
+          .attr("transform", function(d) { return "translate(" + x(d.hour) + ",0)"; });
+
+
+    vis.selectAll("rect")
+          .data(function(d) { return d.children; })
+        .enter().append("rect")
         .attr("width", x.rangeBand())
-        //.attr("y", function(d) {  return y(0); })
-        .attr("y", 0)
-        .attr("height", height)
-        .style("stroke-width", function(d) { if(d.hour>hNow) return 0.25+"px" })
-        .style("stroke", function(d) { if(d.hour>hNow) return "#999" })
-        .on("mouseover", function(d) {
-             var timestamp;
-             if(d.hour<=hNow){
-               timestamp=d.timestamp;
-             }else{
-               timestamp=d.realTimestamp;
-             }
-             
-             var label;
-             if(isNaN(d.value) || !d.value || d.value==null){
-               label=noDataLabel+"<br>"+timestamp;
-             }else{
-               label=timestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
-             }
-            showToolTip(label);
-        })
-        .on("mousemove", function(d){
-          updateToolTipPosition(d3.event.pageX, d3.event.pageY);
-
-  			})                             
-        .on("mouseout", function(d) {       
-          hideToolTip();
-        })
-        .on("click", function(d){
-            //updateDummySet(data);
-			      
-			    });
-
-        
-    vis.transition()
-        .duration(time)
-        .attr("y", function(d) {
-          if(isNaN(d.value) || !d.value || d.value==null){
-            return y(range.max);
+        .attr("y", function(d) { 
+            return y(d.y1); })
+        .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+        .style("fill", function(d){ 
+           if(d.hour<=hNow){
+              return "#666";
+           }else{
+              return domainColor;
+           }
+            
+         })
+         .style("stroke", "none")   
+       .style("stroke", function(d){ 
+          if(d.hour<=hNow){
+             return domainColor;
           }else{
-            return y(d.value);
-          } 
-        })
-        .attr("height", function(d) { 
-          if(isNaN(d.value) || !d.value || d.value==null){
-            return height - y(range.max); 
-          }else{
-            return height - y(d.value); 
+             return "#666";
           }
+       
         })
-        .style("fill", function(d) { 
-          if(isNaN(d.value) || !d.value || d.value==null || d.hour>hNow){
-            return domainColor
-          } 
-        })
-        .style("stroke", function(d) { 
-          if(isNaN(d.value) || !d.value || d.value==null ){
-            return domainColor
-          }else if(d.hour>hNow) {
-            return "#999"
-          } 
-        })
-        .style("opacity", function(d) { 
-          if(isNaN(d.value) || !d.value || d.value==null){
-            return 0;
+       .style("stroke-width", 0.5+"px")
+       .on("mouseover", function(d) {
+         var timestamp;
+          if(d.hour<=hNow){
+            timestamp=d.timestamp;
           }else{
-            return 1;
-          } 
-        })
-        
+            timestamp=d.realTimestamp;
+          }
+         
+         
+         var label="time :"+d.hour+":00 hour<br/>Name :"+d.name+"<br> description :"+d.description;
+         if(d.children){
+           label=d.children.length+" - events at "+d.hour+":00";
+         }else{
+           label=d.description+"<br>"+timestamp;
+         }
+         showToolTip(label);  
+       })                  
+      .on("mouseout", function(d) {       
+         hideToolTip();   
+       })
+       .on("mousemove", function(d){
+           updateToolTipPosition(d3.event.pageX, d3.event.pageY);
+ 			})
+       .on("click", function(d){
+           //updateDummySet(data);
+       })  
 
-        
-    vis.exit().transition()
-        .duration(time)
-        .style("opacity", 0 )
-        .remove();        
+       
 
 	};
 	

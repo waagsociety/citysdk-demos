@@ -144,10 +144,10 @@ input[type=checkbox]:checked + label:before {
     
 }
 
-.menu_container #btn_menu{
+.menu_container #btn_main_info{
   position:relative;
   top:-6em;
-  left:640px;
+  left:668px;
   width:64px;
   height:64px;
 }
@@ -272,6 +272,11 @@ input[type=checkbox]:checked + label:before {
   
 }
 
+#sck_temp_label{
+  position:absolute;
+  font-size: 0.75em;
+}
+
 .tickerTable td th{
 
   /*position:static;*/
@@ -301,6 +306,7 @@ li #inActive{
   background: url("../images/icon_min-8.png") no-repeat;
   
 }
+
 
 .layerSelector {
     position:absolute;

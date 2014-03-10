@@ -8,12 +8,20 @@ function setLabelValueSingle(x, y, mouse, data, focus, minValue) {
         d1 = data[i],
         d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;
     focus.attr("transform", "translate(" + x(d.timestamp) + "," + y(d.value) + ")");
+    
+    var timestamp;
+     if(d.hour<=hNow){
+       timestamp=d.timestamp;
+     }else{
+       timestamp=d.realTimestamp;
+     }
+    
             
     var timeLabel=formatDate(d.realTimestamp);
     if(d.value==minValue){
       label=noDataLabel;
     }else{
-      label= "Time : "+d.realTimestamp+ "<br/>Value "+d.description+" : "  +d.value.toFixed(2)+" "+d.units;
+      label= "Time : "+timestamp+ "<br/>Value "+d.description+" : "  +d.value.toFixed(2)+" "+d.units;
     }
     
   	toolTip.html(label)
@@ -37,10 +45,6 @@ function hideToolTip(){
  
 
 function updateToolTipPosition(x, y){
-  var el   = document.getElementById("toolTip"); // or other selector like querySelector()
-  var rect = el.getBoundingClientRect(); // get the bounding rectangle
-	var w=rect.width;
-  
   
   toolTip.style("left", x+10+"px")     
       .style("top", y-28-10+"px");
@@ -55,10 +59,7 @@ function setLabelValueMulti(x, y, mouse, data, focus) {
         d1 = data[i],
         d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;
     focus.attr("transform", "translate(" + x(d.timestamp) + "," + 0 + ")");
-    
-    toolTip.transition()        
-        .duration(100)      
-        .style("opacity", 0.9);
+
     var label="";
     var v=d.value;
     var entries=d3.entries(d.value); 

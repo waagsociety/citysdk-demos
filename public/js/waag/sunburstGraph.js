@@ -14,11 +14,8 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
   var tickData;
   
   function init(){
-    
-    //var defaultLayer=properties.tickerData.layers[0].value;    
+   
     var data = prepareDataSet(properties.tickerData.data[0].kciData, properties.tickerData.data[0].description);
-
-	  //var data = properties.tickerData.data[0].kciData;
 	  var subDomain = _subDomain;
         
     svgDomain = subDomain.append("svg")
@@ -51,12 +48,12 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
   };
   
   function prepareDataSet(data, description){
-    
-    // /var dataSunburst=
+
     data.forEach(function(d){
 	    d.tick = 1;
 	    d.stackValue=d.value;
-	    d.description=description;	     
+	    d.description=description;
+	    
     });
     
     var dataSunburst={description:description, children:data};
@@ -79,47 +76,40 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
           .attr("display", function(d) { 
             return d.depth ? null : "none"; }) // hide inner ring
           .attr("d", arc)
-          .style("stroke", domainColor)
+          .style("stroke", function(d){
+            if( (d.children ? d : d.parent).hour>hNow){
+              return "#666";
+            }else{
+              return domainColor;
+            }
+          })
           .style("fill", function(d){
-              return colorbrewer[colorScheme]['9'][quantizeBrewer((d.children ? d : d.parent).hour)]  
-              // if((d.children ? d : d.parent).hour>hNow){
-              //   //console.log(domainColor);
-              //   return domainColor;
-              // }else{
-              //   //console.log("future");
-              //   return colorbrewer[colorScheme]['9'][quantizeBrewer((d.children ? d : d.parent).hour)]
-              // }
-            })
-          .style("stroke-width", function(d){
-              if((d.children ? d : d.parent).hour<=hNow){
-                return 1+"px";
-              }else{
-                return 0.5+"px";
-              }
-            })  
-            .on("mouseover", function(d) {
-                  var label="time :"+d.hour+":00 hour<br/>Name :"+d.name+"<br> description :"+d.description;
-                  if(d.children){
-                    label=d.children.length+" - events at "+d.hour+":00";
-                  }else{
-                     var date=new Date();
-                     date.setTime(d.timestamp*1000);
-                     d.realTimestamp=date;
-                    label=d.description+"<br>"+d.realTimestamp;
-                  }
+            if((d.children ? d : d.parent).hour>hNow){
+              return domainColor;
+            }else{
+              return "#666";
+            }
 
-                  toolTip.transition()        
-                      .duration(100)      
-                      .style("opacity", .9);
-         
-                  toolTip.html(label)  
-                      .style("left", (d3.event.pageX) + 10+"px")     
-                      .style("top", (d3.event.pageY - 28 - 10) + "px");    
-                  })                  
-             .on("mouseout", function(d) {       
-                toolTip.transition()        
-                    .duration(250)      
-                    .style("opacity", 0);   
+            })
+          .style("stroke-width", 0.25+"px")  
+            .on("mouseover", function(d) {
+
+              var label="time :"+d.hour+":00 hour<br/>Name :"+d.name+"<br> description :"+d.description;
+              if(d.children){
+                label=d.children.length+" - events at "+d.hour+":00";
+              }else{
+                var timestamp=new Date();
+                timestamp.setTime(d.timestamp*1000);
+                var h=timestamp.getHours();
+                if(h==hNow){
+                  timestamp.setTime( (d.timestamp*1000)+(60*60*24*1000) );
+                }
+                label=d.description+"<br>"+timestamp;
+              }
+              showToolTip(label);  
+            })                  
+           .on("mouseout", function(d) {       
+              hideToolTip();   
             })
             .on("mousemove", function(d){
                 updateToolTipPosition(d3.event.pageX, d3.event.pageY);
@@ -129,11 +119,9 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
             })  
           .each(stash)
 
-    
-
     path.data(partition.value(value).nodes)
         .transition()
-        .duration(1500)
+        .duration(1000)
         .attrTween("d", arcTween);
     
 

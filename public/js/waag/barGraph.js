@@ -95,15 +95,7 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 	  
     if(isNaN(range.min) || !range.min || range.min==null ) range.min=0;
 	  if(isNaN(range.max) || !range.max || range.max==null ) range.max=100;
-	  
-	  
-    // data.forEach(function(d, i){      
-    //         if(isNaN(d.value)) d.value=range.min;
-    //         if(!d.value) d.value=range.min;
-    //         console.log(d.value);
-    //   
-    // });
-	  
+
 	  y.domain([range.min, range.max]); 
 	  //y.domain([0, max]); 
 	  
@@ -128,7 +120,7 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
     // svgDomain.select("#y_axis_units_min")
     //     .text(parseInt(min));
    
-    var vis=svgDomain.selectAll(".bar").data(data, function(d, i){return i});
+    var vis=svgDomain.selectAll(".bar").data(data, function(d, i){return d.description+"_"+i});
     
     vis.enter().append("rect")
         .attr("class", "bar")
@@ -140,47 +132,18 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
         .style("stroke-width", function(d) { if(d.hour>hNow) return 0.25+"px" })
         .style("stroke", function(d) { if(d.hour>hNow) return "#999" })
         .on("mouseover", function(d) {
-             var timestamp;
-             if(d.hour<=hNow){
-               timestamp=d.timestamp;
-             }else{
-               timestamp=d.realTimestamp;
-             }
-             
-             var label;
-             if(isNaN(d.value) || !d.value || d.value==null){
-               label=noDataLabel+"<br>"+timestamp;
-             }else{
-               label=timestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
-             }
-            showToolTip(label);
+            showToolTip(d.mouseLabel);
         })
         .on("mousemove", function(d){
-          updateToolTipPosition(d3.event.pageX, d3.event.pageY);
+           updateToolTipPosition(d3.event.pageX, d3.event.pageY);
 
   			})                             
         .on("mouseout", function(d) {       
-          hideToolTip();
+           hideToolTip();
         })
         .on("click", function(d){
-             var timestamp;
-             if(d.hour<=hNow){
-               timestamp=d.timestamp;
-             }else{
-               timestamp=d.realTimestamp;
-             }
-             
-             var label;
-             if(isNaN(d.value) || !d.value || d.value==null){
-               label=noDataLabel+"<br>"+timestamp;
-             }else{
-               label=timestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
-             }
-            showToolTip(label);
             
-            //updateDummySet(data);
-			      
-			    });
+			  });
 
         
     vis.transition()
@@ -237,6 +200,21 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
       for(var i=0; i<d.value; i++){
         d.description=properties.tickerData.data[index].description;
         d.units=properties.tickerData.data[index].units;
+        var timestamp;
+         if(d.hour<=hNow){
+           timestamp=d.timestamp;
+         }else{
+           timestamp=d.realTimestamp;
+         }
+         
+         var label;
+         if(isNaN(d.value) || !d.value || d.value==null){
+           label=noDataLabel+"<br>"+timestamp;
+         }else{
+           label=timestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
+         }
+          d.mouseLabel=label;
+
       }
       
     })

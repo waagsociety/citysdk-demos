@@ -102,7 +102,7 @@ input[type=checkbox]:checked + label:before {
   height: 8em;
   width:100%;
   background-color:#FEE6CE;
-  z-index:150;
+  z-index:250;
   -webkit-box-shadow: 0px 4px 8px -4px black;
   -moz-box-shadow: 0px 4px 8px -4px black;
   box-shadow: 0px 4px 8px -4px black;
@@ -114,7 +114,7 @@ input[type=checkbox]:checked + label:before {
   width:100%;
 /*  background-color:#FEE6CE;*/
   background-color:#fff3e8;
-  z-index:125;
+  z-index:225;
   -webkit-box-shadow: 0px 4px 8px -4px black;
   -moz-box-shadow: 0px 4px 8px -4px black;
   box-shadow: 0px 4px 8px -4px black;
@@ -364,7 +364,6 @@ li #inActive{
 }
 
 
-
 .footer {
   position:absolute;
   height: 4em;
@@ -377,6 +376,16 @@ li #inActive{
   box-shadow: 0px -4px 8px -4px black;
   z-index:10;
 
+}
+
+.footer #logo-waag{
+  height:50px;
+  background: url("../images/logo_waag.png") no-repeat;
+}
+
+.footer #logo-cc{
+  height:50px;
+  background: url("../images/logo_cc.png") no-repeat;
 }
 
 .tooltip {   

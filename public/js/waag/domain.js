@@ -12,17 +12,30 @@ WAAG.Domain = function Domain(_propertiesAll) {
   var domainColor; 
 
 	function init(){
-	      
+	  
+	  var isEven = function(index){
+        return (index%2 == 0) ? true : false;
+    };
+    console.log("is even "+parseInt(properties.index/colorStepper)+" :"+isEven(parseInt(properties.index/colorStepper)))
+	  	      
 	  var stage = d3.select("#stage")  
     container = stage.append("div")
       .attr("class", "domain_container")
       .attr("id", properties.id)
       .style("background-color", function() {
-        domainColor=colorbrewer[colorScheme]['9'][properties.index];
+        console.log("setting color index ="+properties.index%(colorStepper))
+        if( isEven(parseInt(properties.index/colorStepper))){
+          domainColor=colorbrewer[colorScheme]['9'][properties.index%(colorStepper)];
+        }else{
+          domainColor=colorbrewer[colorScheme]['9'][colorStepper-properties.index%(colorStepper)];
+        }
+
         return domainColor;
       })
       .style("top", menuHeight+(properties.index*widgetHeight)+"px")
       .style("z-index", 100-properties.index);
+      
+    //console.log(stage);  
     
     domainInfo=container.append("div")
         .attr("id", "domainInfo")
@@ -338,6 +351,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
   }
 	
 	function setGraph(_properties, subDomain){
+    
 	    var graph;
  	   	  
    	  if(_properties.graphType=="bar"){
@@ -362,12 +376,12 @@ WAAG.Domain = function Domain(_propertiesAll) {
      	    graph = new WAAG.StackedBarGraph (_properties, subDomain, domainColor);
      	}
 
-    
-    if(_properties.tickerData.live){
-    	  createTickerTable(_properties, ["bullet", "description", "value"], subDomain, graph);
-    }else{
-        createSelectList(_properties, subDomain, graph);
-    }
+      if(_properties.tickerData.live){
+      	 createTickerTable(_properties, ["bullet", "description", "value"], subDomain, graph);
+      }else{
+         createSelectList(_properties, subDomain, graph);
+      }
+
 	  
 	};
 	
@@ -469,47 +483,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
                       return "("+d.value+")";
                     }else{
                       //console.log("live url ="+"http://loosecontrol.tv:4567/"+d.kci+"/admr.nl.amsterdam/live"); 
-                      d3.json(apiUrlDB+d.kci+"/"+admr+"/live", function(result){
-                        
-                        if(result[d.kci+":"+admr]==null){
-                          console.log("no live data available");
-                          domain.select("#"+d.valueId).html("<img src=images/icon-broken-link.png>");
-                          //return "_/-";
-                        }else if(result[d.kci+":"+admr]){
-                          if(result[d.kci+":"+admr].length>0){
-                            if(d.kci=="transport.pt.stopsdelayed"){
-                              var delay=0;
-                              result[d.kci+":"+admr].forEach(function(d){    
-                                delay+=d.delay;
-                              })
-                              var avgDelay=delay/result[d.kci+":"+admr].length;
-                              domain.select("#"+d.valueId).html(Math.round(avgDelay)+" "+d.units );
-                            }else if(d.kci=="tourism.events.nexthour"){
-                              var events= result[d.kci+":"+admr].length;
-                              domain.select("#"+d.valueId).html(Math.round(events)+" "+d.units );
-                              
-                              
-                            }
-                          }else{
-                            var keys = d3.entries(result[d.kci+":"+admr]);
-
-                            if(keys.length<=0){
-                              domain.select("#"+d.valueId).html(Math.round(result[d.kci+":"+admr])+" "+d.units );
-                            }else{
-                              var amount=0;
-                              keys.forEach(function(d){
-                                //console.log(d.value);
-                                amount+=d.value;
-                              });
-
-                            }
-
-                          }
-                          
-                        }
-
-                      });
-                                            
+                      setLiveValue(d, domain);                      
                     }
                   }else if(d.column!="bullet"){
                     return d.value; 
@@ -544,7 +518,60 @@ WAAG.Domain = function Domain(_propertiesAll) {
 
       return table;
   }
+  
+  function setLiveValue(d, domain){
+        
+    setTimeout(function(){setLiveValue(d, domain)},liveUpdateTime);
+    
+    
+    d3.json(apiUrlDB+d.kci+"/"+admr+"/live", function(result){
+      if(result[d.kci+":"+admr]==null){
+        console.log("no live data available");
+        domain.select("#"+d.valueId).html("<img src=images/icon-broken-link.png>");
+       
+      }else if(result[d.kci+":"+admr]){
+        //console.log("live update ="+result[d.kci+":"+admr]) ;       
+        
+        if(result[d.kci+":"+admr].length>0){
+          if(d.kci=="transport.pt.stopsdelayed"){
+            var delay=0;
+            result[d.kci+":"+admr].forEach(function(d){    
+              delay+=d.delay;
+            })
+            var avgDelay=delay/result[d.kci+":"+admr].length;
+            domain.select("#"+d.valueId).html(avgDelay.toFixed(2)+" "+d.units );
+            d.value=avgDelay.toFixed(2)+" "+d.units;
+          }else if(d.kci=="tourism.events.nexthour"){
+            var events= result[d.kci+":"+admr].length;
+            domain.select("#"+d.valueId).html(Math.round(events)+" "+d.units );
+            d.value=Math.round(events)+" "+d.units;
+          }
+        }else{
+          var keys = d3.entries(result[d.kci+":"+admr]);
 
+          if(keys.length<=0){
+            domain.select("#"+d.valueId).html(result[d.kci+":"+admr].toFixed(2)+" "+d.units );
+            d.value=result[d.kci+":"+admr].toFixed(2)+" "+d.units;
+          }else{
+            var amount=0;
+            keys.forEach(function(d){
+              //console.log(d.value);
+              amount+=d.value;
+            });
+            domain.select("#"+d.valueId).html(Math.round(amount)+" "+d.units );
+            d.liveValue=Math.round(amount)+" "+d.units;
+          }
+
+        }
+        
+      }
+      
+      
+
+    });
+
+  }
+  
   function createSelectList(_properties, _domain, _class) {
     console.log("adding select list");
     var data=_properties.tickerData.layers;

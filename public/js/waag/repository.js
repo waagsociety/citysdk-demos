@@ -11,7 +11,8 @@ var dNow = new Date();
 var timeNow=dNow.getTime();
 var hNow = dNow.getHours();
 var mNow = dNow.getMinutes();
-
+var colorStepper=4;
+var liveUpdateTime=100000;
 
 
 var noDataLabel="Data source interupted :-(";

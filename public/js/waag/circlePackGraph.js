@@ -31,8 +31,6 @@ WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
     pack = d3.layout.pack()
       .size([circlePackSize, circlePackSize])
       .value(function(d) { return d.value })
-      
-                
 
     updateGraph(data);
 
@@ -42,11 +40,11 @@ WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
     var data=[];
     for(var i=0; i<properties.tickerData.data[0].sdkResults.length; i++){
       
-      if(properties.tickerData.data[0].sdkResults[i].layers.cbs.data[layer]){
-        
-        var v=properties.tickerData.data[0].sdkResults[i].layers.cbs.data[layer]
+      if(properties.tickerData.data[0].sdkResults[i].layers.cbs.data[layer]){        
+        var v=parseInt(properties.tickerData.data[0].sdkResults[i].layers.cbs.data[layer]);
         var name=properties.tickerData.data[0].sdkResults[i].name
-        var object={name:name, value:parseInt(v)};
+        var mouseLabel="Name: "+name+"<br>value :"+v;
+        var object={name:name, value:v, mouseLabel:mouseLabel};
         
         data.push(object);
       }
@@ -88,22 +86,19 @@ WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
             .style("stroke", "#666")
             .style("stroke-width", 0.25+"px")
             .on("mouseover", function(d) {
-                var label="Name :"+d.name+"<br/>value: "  + parseInt(d.value);
-                showToolTip(label);    
+                showToolTip(d.mouseLabel);    
             })
             .on("mousemove", function(d){
-
               toolTip.style("left", (d3.event.pageX) + 10+"px")     
                   .style("top", (d3.event.pageY - 28 - 12) + "px");
-
       			})                       
             .on("mouseout", function(d) {       
                 hideToolTip()
             })
             .on("click", function(d){
-                //updateDummySet(data);
+                showToolTip(d.mouseLabel);  
 
-    			    })
+    			  })
 
         
         //node.append("title").text(function(d) { return parseInt(d.value)})    
@@ -130,7 +125,6 @@ WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
     
     console.log("updating data set "+layer);
     var data = prepareDataSet(layer);
-
     updateGraph(data);
   }
     

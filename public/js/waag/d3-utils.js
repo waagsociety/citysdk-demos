@@ -1,29 +1,27 @@
 var bisectDate = d3.bisector(function(d) { return d.timestamp; }).left;
 var ticksYaxis=2;
-function setLabelValueSingle(x, y, mouse, data, focus, minValue) {
+
+function setLabelValue(x, y, mouse, data, focus ) {
     
     var x0 = x.invert(mouse),
         i = bisectDate(data, x0, 1),
         d0 = data[i - 1],
         d1 = data[i],
         d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;
-    focus.attr("transform", "translate(" + x(d.timestamp) + "," + y(d.value) + ")");
     
-    var timestamp;
-     if(d.hour<=hNow){
-       timestamp=d.timestamp;
-     }else{
-       timestamp=d.realTimestamp;
-     }
-    
-            
-    var timeLabel=formatDate(d.realTimestamp);
-    if(d.value==minValue){
-      label=noDataLabel;
-    }else{
-      label= "Time : "+timestamp+ "<br/>Value "+d.description+" : "  +d.value.toFixed(2)+" "+d.units;
-    }
-    
+        var label;
+        var entries=d3.entries(d.value); 
+        if(entries.length>0){
+          focus.attr("transform", "translate(" + x(d.timestamp) + "," + 70 + ")");
+          entries.sort(function(b, a) { return d3.ascending(a["value"], b["value"])});
+      		entries.forEach(function(d){
+      		  label+=d.key+": "+d.value+"<br>"
+      		});
+        }else{
+          label=d.mouseLabel;
+          focus.attr("transform", "translate(" + x(d.timestamp) + "," + y(d.value) + ")");
+        }
+
   	toolTip.html(label)
   	updateToolTipPosition(d3.event.pageX, d3.event.pageY);
     
@@ -33,8 +31,9 @@ function showToolTip(label){
   // /console.log(label);
   toolTip.html(label);
   toolTip.transition()        
-      .duration(250)      
+      .duration(0)     
       .style("opacity", 0.9);
+  
   updateToolTipPosition(d3.event.pageX, d3.event.pageY);    
       
 }
@@ -43,67 +42,39 @@ function hideToolTip(){
   toolTip.transition()        
       .duration(250)      
       .style("opacity", 0);
+   
 }
  
 
 function updateToolTipPosition(x, y){
+  // toolTip.transition()        
+  //     .duration(10)
+  //     .style("left", x+10+"px")     
+  //     .style("top", y-28-10+"px");
+  
   
   toolTip.style("left", x+10+"px")     
       .style("top", y-28-10+"px");
   
 }
 
-function setLabelValueMulti(x, y, mouse, data, focus) {
-    
-    var x0 = x.invert(mouse),
-        i = bisectDate(data, x0, 1),
-        d0 = data[i - 1],
-        d1 = data[i],
-        d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;
-    focus.attr("transform", "translate(" + x(d.timestamp) + "," + 0 + ")");
-
-    var label="";
-    var v=d.value;
-    var entries=d3.entries(d.value); 
-    entries.sort(function(b, a) { return d3.ascending(a["value"], b["value"])});
-    //console.log(entries);
-
-		entries.forEach(function(d){
-		  
-		  label+=d.key+": "+d.value+"<br>"
-		  
-		})    
-    
-    //var timeLabel=formatDate(d.realTimestamp);
-    
-    toolTip.html(label)
-  	updateToolTipPosition(d3.event.pageX, d3.event.pageY);    
-}
-
 function formatDate(date){
   
-  
-
-  
-}
+};
 
 function setVisualisationValues(data){
   
-  
-  
-  // divv.parking.capacity": {
-  //       "data": {
-  //         "Name": "CE-P11 Waterlooplein",
-  //         "PubDate": "2014-03-07T09:17:22.344Z",
-  //         "Type": "parkinglocation",
-  //         "Status": "warning",
-  //         "FreeSpaceShort": 93,
-  //         "FreeSpaceLong": 70,
-  //         "ShortCapacity": 119,
-  //         "LongCapacity": 79
+};
 
+var timer=setInterval(function(){myTimer()},1000);
+
+function myTimer()
+{
+  var d=new Date();
+  var t=d.toLocaleTimeString();
+  //console.log(t);
   
-}
+};
 
 function getRange(data) {
 

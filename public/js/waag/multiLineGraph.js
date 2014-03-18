@@ -66,10 +66,11 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
           //console.log(d);
         }
         d.active=false;
-        //dataNow.push(d);
-        if(d.hour<=hNow){
-          //console.log(d)
+        if(d.hour<hNow){
           dataNow.push(d);
+        }else if(d.hour==hNow){
+          dataNow.push(d);
+          dataHistory.push(d);
         }else{
           dataHistory.push(d);
         }
@@ -180,7 +181,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
 
               })
             .on("mousemove", function(){
-              setLabelValueMulti(x, y, d3.mouse(this)[0], data, focus);
+              setLabelValue(x, y, d3.mouse(this)[0], data, focus);
             });      
             
             // add legend   
@@ -215,7 +216,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
                         .style("top", (d3.event.pageY - 36) + "px");    
                     })                  
                .on("mouseout", function(d) {       
-                 d3.selectAll("#"+d.name+"-now").style("stroke-width", 0.25+"px" );
+                 d3.selectAll("#"+d.name+"-now").style("stroke-width", 0.5+"px" );
                  d3.selectAll("#"+d.name+"-history").style("stroke-width", 0.25+"px" );
                   d.active=false;
                   toolTip.transition()        
@@ -259,9 +260,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
             //console.log(d);
             return line(d.values); })
           .style("stroke", function(d) { return color(d.name); })
-          .style("stroke-width", 1+"px")
-
-
+          .style("stroke-width", 1.5+"px")
 
       visLineNow.transition()
           .duration(time)
@@ -272,7 +271,6 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
           .style("opacity", 0 )
           .remove();  
           
-      
       var visLineHistory = svgDomain.selectAll("path.lineHistory").data(dataHistory, function(d, i) { return i; });
 
       visLineHistory.enter().append("path")
@@ -283,7 +281,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
             //console.log(d);
             return line(d.values); })
           .style("stroke", function(d) { return color(d.name); })
-          .style("stroke-width", 0.5+"px")
+          .style("stroke-width", 0.25+"px")
 
 
 

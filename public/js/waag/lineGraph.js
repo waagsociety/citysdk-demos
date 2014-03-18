@@ -23,8 +23,7 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
         .style("top", 2.5+"em")
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        
-    
+
       x = d3.time.scale()
           .range([0, width])
 
@@ -122,7 +121,21 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
 	  data.forEach(function(d){
 	      d.units=yUnits;
         d.description=description;
-        if(d.value==null || isNaN(d.value) || !d.value ) d.value=range.min; 
+        if(d.value==null || isNaN(d.value) || !d.value ) d.value=range.min;
+        var timestamp;
+         if(d.hour<=hNow){
+           timestamp=d.timestamp;
+         }else{
+           timestamp=d.realTimestamp;
+         }
+
+        var timeLabel=formatDate(d.realTimestamp);
+        if(d.value==range.min){
+          label=noDataLabel;
+        }else{
+          label= "Time : "+timestamp+ "<br/>Description :"+d.description+"<br>Value :"+d.value.toFixed(2)+" "+d.units;
+        }
+        d.mouseLabel=label; 
 	      
 	  });
 	  
@@ -154,8 +167,7 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
     
     visLine.enter().append("path")
         .attr("class", "line")
-        .attr("d" , line);
-        
+        .attr("d" , line);  
     
     visLine.transition()
         .duration(time)
@@ -205,15 +217,9 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
           focus.style("display", "none"); 
           hideToolTip();
         })
-        .on("mousemove", function(d){
-
-          toolTip.style("left", (d3.event.pageX) + 10+"px")     
-              .style("top", (d3.event.pageY - 28 - 12) + "px");
-
-  			})  
         .on("mousemove", function(){
           //in d3-utils.js
-          setLabelValueSingle(x, y, d3.mouse(this)[0], data, focus, range.min);
+          setLabelValue(x, y, d3.mouse(this)[0], data, focus);
         });
 
 
@@ -230,7 +236,6 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
 	};
 	
   updateDataSet = function(_properties, kci, index){
-    
     //console.log("updating data set "+kci);
     activeIndex=index;
     updateGraph(_properties.tickerData.data[index].kciData, _properties.tickerData.data[index].description, _properties.tickerData.data[index].units);

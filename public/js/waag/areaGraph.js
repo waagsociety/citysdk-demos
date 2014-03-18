@@ -111,9 +111,24 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 	  
 	  var dataArea=[];
 	  data.forEach(function(d){
-	    //console.log("old :"+d.value);  	    
+	    d.units=yUnits;
+      d.description=description;  	    
       if(d.value==null || isNaN(d.value) || !d.value ) d.value=range.min;      
-            
+      var timestamp;
+       if(d.hour<=hNow){
+         timestamp=d.timestamp;
+       }else{
+         timestamp=d.realTimestamp;
+       }
+
+      var timeLabel=formatDate(d.realTimestamp);
+      if(d.value==range.min){
+        label=noDataLabel;
+      }else{
+        label= "Time : "+timestamp+ "<br/>Description :"+d.description+"<br>Value :"+d.value.toFixed(2)+" "+d.units;
+      }
+      d.mouseLabel=label;
+  
       if(d.hour<=hNow){
 	      dataArea.push(d);
 	    }
@@ -222,17 +237,17 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
         .attr("height", height)
         .on("mouseover", function() { 
           focus.style("display", null);
-          showToolTip(""); 
+          showToolTip("");
         })
         .on("mouseout", function() { 
           focus.style("display", "none");    
           hideToolTip();
         })
         .on("mousemove", function(){
-          setLabelValueSingle(x, y, d3.mouse(this)[0], data, focus, range.min);
+          setLabelValue(x, y, d3.mouse(this)[0], data, focus);
         })
         .on("click", function(){
-          setLabelValueSingle(x, y, d3.mouse(this)[0], data, focus, range.min);
+          setLabelValue(x, y, d3.mouse(this)[0], data, focus);
         })
     
     

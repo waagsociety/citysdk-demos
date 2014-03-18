@@ -50,9 +50,10 @@ WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor
       
       if(properties.tickerData.data[0].sdkResults[i].layers.cbs.data[layer]){
         
-        var v=properties.tickerData.data[0].sdkResults[i].layers.cbs.data[layer]
+        var v=parseInt(properties.tickerData.data[0].sdkResults[i].layers.cbs.data[layer]);
         var name=properties.tickerData.data[0].sdkResults[i].name
-        var object={name:name, value:parseInt(v)};
+        var mouseLabel="Name: "+name+"<br>value :"+v;
+        var object={name:name, value:v, mouseLabel:mouseLabel};
         
         data.push(object);
       }
@@ -88,8 +89,8 @@ WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor
         .style("stroke", "#666")
         .style("stroke-width", 0.1+"px")        
         .on("mouseover", function(d) {    
-            var label="name :"+d.data.name+"<br/>value: "  + parseInt(d.value);
-            showToolTip(label);
+            
+            showToolTip(d.data.mouseLabel);
           
           })                  
         .on("mouseout", function(d) {       
@@ -99,7 +100,7 @@ WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor
             updateToolTipPosition(d3.event.pageX, d3.event.pageY);
   			})
         .on("click", function(d){
-            //updateDummySet(data);
+            showToolTip(d.data.mouseLabel);
         });
 
       donut.transition()

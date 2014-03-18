@@ -42,20 +42,17 @@ function initDashboard(){
       .attr("class", "footer")
       .style("top", yf+"px")
   
-  footer.append("object")
+  footer.append("div")
       .attr("class", "logo")
       .style("margin-top", 10+"px")
-      .attr("id", "logowaag")
-      .attr("data", "images/svg/icon_logo-waag.svg")
-      .attr("type", "image/svg+xml")
+      .attr("id", "logo-waag")
 	 
-  footer.append("object")
+  footer.append("div")
       .attr("class", "logo")
-      .style("margin-top", -5+"px")
-      .style("margin-left", 540+"px")
+      .style("margin-top", -46+"px")
+      .style("margin-left", 478+"px")
       .attr("id", "logo-cc")
-      .attr("data", "images/svg/icon_logo-cc.svg")
-      .attr("type", "image/svg+xml")
+
 
 };
 

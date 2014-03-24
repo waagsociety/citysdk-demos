@@ -9,10 +9,17 @@ function setLabelValue(x, y, mouse, data, focus ) {
         d1 = data[i],
         d = x0 - d0.timestamp > d1.timestamp - x0 ? d1 : d0;
     
-        var label;
+        var label="";
         var entries=d3.entries(d.value); 
         if(entries.length>0){
           focus.attr("transform", "translate(" + x(d.timestamp) + "," + 70 + ")");
+          if(d.hour>hNow){
+            label+=d.realTimestamp+"<br>"
+          }else{
+            label+=d.timestamp+"<br>"
+          }
+          
+          
           entries.sort(function(b, a) { return d3.ascending(a["value"], b["value"])});
       		entries.forEach(function(d){
       		  label+=d.key+": "+d.value+"<br>"
@@ -29,6 +36,8 @@ function setLabelValue(x, y, mouse, data, focus ) {
 
 function showToolTip(label){
   // /console.log(label);
+  if(label==undefined || label==null) label=noDataLabel;
+  
   toolTip.html(label);
   toolTip.transition()        
       .duration(0)     

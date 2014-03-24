@@ -204,24 +204,17 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
               .attr("height", 5)
               .style("fill", function(d) { return color(d.name); })
               .on("mouseover", function(d) {
-                
                     d3.selectAll("#"+d.name+"-now").style("stroke-width", 3+"px" );
                     d3.selectAll("#"+d.name+"-history").style("stroke-width", 1.5+"px" );
                     d.active=true;
-                    toolTip.transition()        
-                        .duration(100)      
-                        .style("opacity", .9);      
-                    toolTip.html("Subject :"+d.name+"<br>Amount :"+d.values[d.values.length-1].value)  
-                        .style("left", (d3.event.pageX) + -12+"px")     
-                        .style("top", (d3.event.pageY - 36) + "px");    
-                    })                  
+                    d.mouseLabel="Subject :"+d.name+"<br>Amount :"+d.values[d.values.length-1].value;
+                    showToolTip(d.mouseLabel);
+                })                 
                .on("mouseout", function(d) {       
                  d3.selectAll("#"+d.name+"-now").style("stroke-width", 0.5+"px" );
                  d3.selectAll("#"+d.name+"-history").style("stroke-width", 0.25+"px" );
                   d.active=false;
-                  toolTip.transition()        
-                      .duration(250)      
-                      .style("opacity", 0);   
+                  hideToolTip();
               })
               .on("click", function(d){
                   //updateDummySet(data);

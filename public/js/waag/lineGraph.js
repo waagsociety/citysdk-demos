@@ -218,7 +218,6 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
           hideToolTip();
         })
         .on("mousemove", function(){
-          //in d3-utils.js
           setLabelValue(x, y, d3.mouse(this)[0], data, focus);
         });
 

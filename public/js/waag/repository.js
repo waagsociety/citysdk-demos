@@ -13,10 +13,8 @@ var hNow = dNow.getHours();
 var mNow = dNow.getMinutes();
 var colorStepper=4;
 var liveUpdateTime=100000;
-
-
 var noDataLabel="Data source interupted :-(";
-
+var language="eng";
 
 //var initialTickerData=[];
 var admrData=[];
@@ -112,6 +110,7 @@ function createDomains(){
     icon:"images/svg/icon_transport.car.svg", 
     tickerData:tickerData, 
     graphType:"bar",
+    infoHtml:"transport.car",
     mapLayers:[
       {url:apiUrlDB+"cache/300/nodes?layer=divv.traffic&geom&per_page=1000", type:"static", id:"traffic", label:"Traffic", userCallBacks:false, sdkPath:"layers:divv.traffic:data"},
       {url:apiUrlDB+"cache/300/nodes?layer=divv.parking.capacity&geom&per_page=1000", type:"static", id:"parking", label:"Parking", userCallBacks:false, sdkPath:"layers:divv.parking.capacity:data"}
@@ -131,6 +130,7 @@ function createDomains(){
     icon:"images/svg/icon_transport.pt.svg", 
     tickerData:tickerData, 
     graphType:"bar",
+    infoHtml:"transport.pt",
     mapLayers:[
       {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/ptstops?geom&per_page=1000", type:"realtime", id:"ptstops", label:"Public transport", userCallBacks:"/select/now", sdkPath:false}
     ]
@@ -153,8 +153,8 @@ function createDomains(){
   var tickerData = {
       live:true,
       data:[
-      {bullet:">", description: "no2 (nitrogen dioxide)", value: "", units:"&#181g/m&#179", kci:"environment.sck.no2"},
-      {bullet:"+", description: "co (carbon monoxide)", value: "", units:"K&#937", kci:"environment.sck.co"},
+      {bullet:">", description: "NO&#178 (nitrogen dioxide)", value: "", units:"&#181g/m&#179", kci:"environment.sck.no2"},
+      {bullet:"+", description: "CO (carbon monoxide)", value: "", units:"K&#937", kci:"environment.sck.co"},
       {bullet:"+", description: "Noise level", value: "", units:"dB", kci:"environment.sck.noise"},
       {bullet:"+", description: "Light", value: "", units:"lux", kci:"environment.sck.light"}
       //{bullet:">", description: "Temperature", value: "", units:"&#176C", kci:"environment.sck.temperature"},
@@ -166,6 +166,7 @@ function createDomains(){
     icon:"images/svg/icon_environment.sck.svg", 
     tickerData:tickerData, 
     graphType:"line",
+    infoHtml:"environment.sck",
     mapLayers:[
       {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000", type:"static", id:"sck", label:"Smart citizens", userCallBacks:false, sdkPath:"layers:sck:data"}
     ]
@@ -176,8 +177,8 @@ function createDomains(){
   var tickerData = {
       live:true,
       data:[
-      {bullet:">", description: "no2 (nitrogen dioxide)", value: "", units:"&#181g/m&#179", kci:"environment.ggd.no2"},
-      {bullet:"+", description: "nh10 (fine particles)", value: "", units:"&#181g/m&#179", kci:"environment.ggd.nh10"}
+      {bullet:">", description: "NO&#178 (nitrogen dioxide)", value: "", units:"&#181g/m&#179", kci:"environment.ggd.no2"},
+      {bullet:"+", description: "NH10 (fine particles)", value: "", units:"&#181g/m&#179", kci:"environment.ggd.nh10"}
       
       
   ]};
@@ -186,6 +187,7 @@ function createDomains(){
     icon:"images/svg/icon_environment.ggd-airquality.svg", 
     tickerData:tickerData, 
     graphType:"area",
+    infoHtml:"environment.ggd",
     mapLayers:false
   };
   var properties={
@@ -212,6 +214,7 @@ function createDomains(){
     icon:"images/svg/icon_statistics.cbs.svg", 
     tickerData:tickerData, 
     graphType:"donut",
+    infoHtml:"statistics.cbs.left",
     mapLayers:false
     // mapLayers:[
     //   {url:"http://loosecontrol.tv:4567/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", id:"cbs", type:"static", userCallBacks:false, sdkPath:"layers:cbs:data"}
@@ -229,6 +232,7 @@ function createDomains(){
     icon:"images/svg/icon_statistics.cbs.svg", 
     tickerData:tickerData, 
     graphType:"circlepack",
+    infoHtml:"statistics.cbs.right",
     mapLayers:[
       {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", type:"static", id:"cbs", label:"CBS statistics", userCallBacks:false, sdkPath:"layers:cbs:data", defaultLayer:"bev_dichth"}
     ]
@@ -257,6 +261,7 @@ function createDomains(){
     icon:"images/svg/icon_economy.stocks.svg", 
     tickerData:tickerData, 
     graphType:"line",
+    infoHtml:"economy.stocks",
     mapLayers:false
 
   };
@@ -285,6 +290,7 @@ function createDomains(){
     icon:"images/svg/icon_social.twitter.svg", 
     tickerData:tickerData, 
     graphType:"multiline",
+    infoHtml:"social.sentiment",
     mapLayers:false
 
     };
@@ -300,6 +306,7 @@ function createDomains(){
       icon:"images/svg/icon_social.twitter.svg", 
       tickerData:tickerData, 
       graphType:"multiline",
+      infoHtml:"social.soccer",
       mapLayers:"false"
     };
   var properties={
@@ -325,6 +332,7 @@ function createDomains(){
     icon:"images/svg/icon_tourism.events.svg", 
     tickerData:tickerData, 
     graphType:"sunburst",
+    infoHtml:"tourism.events.left",
     mapLayers:[
       {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000", id:"artsholland", type:"static", label:"Arts Holland Events", userCallBacks:false, sdkPath:"layers:artsholland:data"}
     ]
@@ -336,6 +344,7 @@ function createDomains(){
     icon:"images/svg/icon_tourism.events.svg", 
     tickerData:tickerData, 
     graphType:"stackedBar",
+    infoHtml:"tourism.events.right",
     mapLayers:false
 
   };
@@ -363,6 +372,7 @@ function createDomains(){
     icon:"images/svg/icon_emergency.p2000.svg", 
     tickerData:tickerData, 
     graphType:"bar",
+    infoHtml:"security.p2000",
     mapLayers:[
       {url:apiUrlDB+"emergency.p2000.locations/admr.nl.amsterdam/live", id:"p2000", type:"static", label:"P2000 events", userCallBacks:false, sdkPath:""}       
     ]

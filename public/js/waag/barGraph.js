@@ -92,7 +92,7 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 	function updateGraph(data, description, yUnits){
 	  	  	  
 	  var range=getRange(data);
-	  
+
     if(isNaN(range.min) || !range.min || range.min==null ) range.min=0;
 	  if(isNaN(range.max) || !range.max || range.max==null ) range.max=100;
 
@@ -126,15 +126,23 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
         .attr("class", "bar")
         .attr("x", function(d) { return x(d.hour); })
         .attr("width", x.rangeBand())
-        //.attr("y", function(d) {  return y(0); })
-        .attr("y", 0)
-        .attr("height", height)
-        .style("stroke-width", function(d) { if(d.hour>hNow) return 0.25+"px" })
-        .style("stroke", function(d) { if(d.hour>hNow) return "#999" })
+        .style("fill", function(d) { 
+          if(isNaN(d.value) || !d.value || d.value==null || d.hour>hNow){
+            return domainColor
+          } 
+        })
+        .style("stroke", function(d) { 
+          if(isNaN(d.value) || !d.value || d.value==null ){
+            return domainColor
+          }else if(d.hour>hNow) {
+            return "#999"
+          } 
+        })
         .on("mouseover", function(d) {
             showToolTip(d.mouseLabel);
         })
         .on("mousemove", function(d){
+           
            updateToolTipPosition(d3.event.pageX, d3.event.pageY);
 
   			})                             

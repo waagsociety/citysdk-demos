@@ -45,21 +45,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
         .style("height", widgetHeight+"px")
         .style("width", 100+"%")
         .style("z-index", -1)
-        
-    domainInfo.append("div")
-         .attr("class", "domainInfo")
-         .attr("id", "infoDomainA")
-         .style("left", 16+"px")
-         .html(loremIpsumA)
-         
-   domainInfo.append("div")
-        .attr("id", "infoDomainA")
-        .attr("class", "domainInfo")
-        .style("left", 768/2+16+"px")
-        .style("width", 368-16+"px")
-        .html(loremIpsumA)
-
-     
+           
     var header=container.append("div")
       .attr("id", "header")
       .style("background-color", domainColor)
@@ -162,11 +148,20 @@ WAAG.Domain = function Domain(_propertiesAll) {
 	  if(_properties.active==false){
 	    return;
 	  }
-	      
+	  
+	  var infoHtml="";	  
+	  d3.html("text-content/"+_properties.infoHtml+".html", function(d){
+  	  var t=d.querySelector("#"+language);
+      container.select("#domainInfo").append("div")
+              .attr("class", "domainInfo")
+              .attr("id", "infoDomainA")
+              .style("left", 16+"px")
+              .html(t.innerHTML)
+	  });
+   
     subDomainA=container.append("div")
       .attr("class", "subDomainA")
       .attr("id", _properties.id);
-
     
     subDomainA.append("object")
         .attr("class", "subDomainIcon")
@@ -212,6 +207,19 @@ WAAG.Domain = function Domain(_propertiesAll) {
     if(_properties==false){
 	    return;
 	  }
+	  
+    
+      var infoHtml="";	  
+  	  d3.html("text-content/"+_properties.infoHtml+".html", function(d){
+    	  var t=d.querySelector("#"+language);
+        container.select("#domainInfo").append("div")
+                .attr("class", "domainInfo")
+                .attr("id", "infoDomainB")
+                .style("left", 768/2+16+"px")
+                .style("width", 368-16+"px")
+                .html(t.innerHTML)
+  	  });  
+      
       
     subDomainB=container.append("div")
       .attr("class", "subDomainB")

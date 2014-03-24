@@ -14,12 +14,11 @@ function setLabelValue(x, y, mouse, data, focus ) {
         if(entries.length>0){
           focus.attr("transform", "translate(" + x(d.timestamp) + "," + 70 + ")");
           if(d.hour>hNow){
-            label+=d.realTimestamp+"<br>"
+            label+=formatDate(d.realTimestamp)+"<br>"
           }else{
-            label+=d.timestamp+"<br>"
+            label+=formatDate(d.realTimestamp)+"<br>"
           }
-          
-          
+
           entries.sort(function(b, a) { return d3.ascending(a["value"], b["value"])});
       		entries.forEach(function(d){
       		  label+=d.key+": "+d.value+"<br>"
@@ -68,6 +67,10 @@ function updateToolTipPosition(x, y){
 }
 
 function formatDate(date){
+  var timeLabel=date.toString();
+  var n = timeLabel.search("GMT");
+  var label=timeLabel.slice(0,n);
+  return label;
   
 };
 

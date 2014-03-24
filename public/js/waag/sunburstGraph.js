@@ -104,7 +104,7 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
                 if(h==hNow){
                   timestamp.setTime( (d.timestamp*1000)+(60*60*24*1000) );
                 }
-                label=d.description+"<br>"+timestamp;
+                label=d.description+"<br>"+formatDate(timestamp);
               }
               showToolTip(label);  
             })                  

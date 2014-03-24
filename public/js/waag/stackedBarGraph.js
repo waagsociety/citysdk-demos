@@ -171,7 +171,7 @@ WAAG.StackedBarGraph = function StackedBarGraph(properties, _subDomain, domainCo
          if(d.children){
            label=d.children.length+" - events at "+d.hour+":00";
          }else{
-           label=d.description+"<br>"+timestamp;
+           label=d.description+"<br>"+formatDate(timestamp);
          }
          showToolTip(label);  
        })                  

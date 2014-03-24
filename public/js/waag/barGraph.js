@@ -217,9 +217,9 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
          
          var label;
          if(isNaN(d.value) || !d.value || d.value==null){
-           label=noDataLabel+"<br>"+timestamp;
+           label=noDataLabel+"<br>"+formatDate(timestamp);
          }else{
-           label=timestamp+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
+           label=formatDate(timestamp)+ "<br>Description: "+d.description+"<br>Value: "  + d.value.toFixed(2)+" "+d.units;
          }
           d.mouseLabel=label;
 

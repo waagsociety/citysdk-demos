@@ -121,11 +121,11 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
          timestamp=d.realTimestamp;
        }
 
-      var timeLabel=formatDate(d.realTimestamp);
+      
       if(d.value==range.min){
         label=noDataLabel;
       }else{
-        label= "Time : "+timestamp+ "<br/>Description :"+d.description+"<br>Value :"+d.value.toFixed(2)+" "+d.units;
+        label= "Time : "+formatDate(timestamp)+ "<br/>Description :"+d.description+"<br>Value :"+d.value.toFixed(2)+" "+d.units;
       }
       d.mouseLabel=label;
   

@@ -91,11 +91,8 @@ WAAG.Map = function Map(domains) {
 
        });
 
-
-
        createMapMenu();    
      		   
-
   };
   
 
@@ -456,9 +453,9 @@ WAAG.Map = function Map(domains) {
                   var tt=parseInt(g.data.traveltime);
                   var tt_ff=parseInt(g.data.traveltime_freeflow);
                   d.value=tt/tt_ff;            
-                  d.velocity=g.data.velocity;
-                  d.maxVelocity=Math.round(d.value*tt_ff);
+                  
               }else if(layer.id=="ptstops"){
+                  
                   d.value=0.5;                  
               }else if(layer.id=="sck"){
                   d.value=0.25;
@@ -589,7 +586,7 @@ WAAG.Map = function Map(domains) {
             // d3.select(this).style("stroke-width", 0.25+"px" );
             // d3.select(this).style("fill", "#f3ece5" );
   			    
-  			    var label = setToolTipLabel(d, layer.sdkPath);
+  			    var label = setMapToolTipLabel(d, layer.sdkPath);
   			    showToolTip(label);
          
             })
@@ -645,7 +642,7 @@ WAAG.Map = function Map(domains) {
   			  .style("stroke-width", function(d){return 0})
   			  .style("stroke", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
   			  .on("mouseover", function(d){
-  			    var label = setToolTipLabel(d, layer.sdkPath);
+  			    var label = setMapToolTipLabel(d, layer.sdkPath);
   			    showToolTip(label);   
             })
       		.on("mouseout", function(d){
@@ -699,14 +696,15 @@ WAAG.Map = function Map(domains) {
   			  .style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer([d.value])] })
           .on("mouseover", function(d){
             var label;                    
-              if(layer.sdkPath=="dummy"){
-                  label+="value : (dummy) "+d.value.toFixed(2);  
-              }else if(layer.type=="realtime"){
+              if(layer.userCallBack!=false){
                  d3.select("body").style("cursor", "pointer");
-                  if(d.value>0.5){
-                    label="Name :"+d.name+"<br>avg. delay:"+d.value+" sec.<br>Click to load realtime schedule";
-                  }else{
-                    label="Name :"+d.name+"<br>Trips on schedule<br>Click to load realtime schedule";
+                  if(layer.id=="ptstops"){                    
+                    label="Public transport stop :"+d.name+"<br>";
+                    if(d.value>0.5){
+                      label+="Average delay time past hour :"+d.value+" sec.<br>Click to load realtime schedule";
+                    }else{
+                      label+="All Trips on schedule<br>Click to load realtime schedule";
+                    }
                   }
               }else if(d.id=="p2000"){
                  var date=new Date();
@@ -714,7 +712,7 @@ WAAG.Map = function Map(domains) {
                  label="P2000<br>"+date+"<br>"+d.title+"<br>"+d.description   
                   
               }else{
-                  label = setToolTipLabel(d, layer.sdkPath);
+                  label = setMapToolTipLabel(d, layer.sdkPath);
                 
               }
               showToolTip(label);
@@ -727,7 +725,7 @@ WAAG.Map = function Map(domains) {
     			  updateToolTipPosition(d3.event.pageX, d3.event.pageY)      			  
     			})
   			  .on("click", function(d){
-  			    if(layer.type=="realtime"){
+  			    if(layer.userCallBack!=false){
       			    toolTip.transition()        
                   .duration(100)      
                   .style("opacity", .9); 
@@ -735,7 +733,7 @@ WAAG.Map = function Map(domains) {
                       .style("left", (d3.event.pageX) + 5+"px")     
                       .style("top", (d3.event.pageY - 28 - 5) + "px");
                   var label;
-                    var url ="http://api.citysdk.waag.org/"+d.cdk_id+"/select/now";
+                    var url ="http://api.citysdk.waag.org/"+d.cdk_id+layer.userCallBack;
                     console.log(url);
                 
                     d3.json(url, function(results){
@@ -856,7 +854,7 @@ WAAG.Map = function Map(domains) {
               }else if(layer.type=="realtime"){
                   label="Name :"+d.name+"<br>Click to load realtime schedule";
               }else{
-                  label = setToolTipLabel(d, layer.sdkPath);
+                  label = setMapToolTipLabel(d, layer.sdkPath);
                 
               }
               showToolTip(label);
@@ -960,14 +958,31 @@ WAAG.Map = function Map(domains) {
   
   
   
-  function setToolTipLabel(_data, _path){
+  function setMapToolTipLabel(_data, _path){
+    
+    var label=_data.name+"<br>";
+    
+    if(_data.layer=="divv.traffic"){
+       var g= _data.layers["divv.traffic"];
+       var tt=parseInt(g.data.traveltime);
+       var tt_ff=parseInt(g.data.traveltime_freeflow);  
+       var velocity=parseInt(g.data.velocity);
+       var maxVelocity=Math.round(( (parseInt(g.data.length)/tt_ff) /1000)*3600);
+       if(maxVelocity<0 || isNaN(maxVelocity) || maxVelocity=="Infinity" || maxVelocity==null){
+         maxVelocity="Not Available";
+       };
+       label+="actual speed: "+velocity+" km/u<br>";
+       label+="Max. speed: "+maxVelocity+" km/u<br>";
+       label+="Road pressure: "+_data.value.toFixed(2)+" %";
+
+       return label;
+    }
+
     var v = _data;
     _path.split(":").forEach(function(d) { v = v[d]; });
     
-    var label=_data.name+"<br>";
-		for(var key in v) {
+		for(var key in v) {  
 			label+=key+": "+v[key]+"<br>"
-			//console.log(key+" --> "+v[key])
 		};
 		
 		return label;

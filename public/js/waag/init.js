@@ -46,12 +46,14 @@ function initDashboard(){
       .attr("class", "logo")
       .style("margin-top", 10+"px")
       .attr("id", "logo-waag")
+      .on("click", function() { window.open("http://www.waag.org"); });
+
 	 
-  footer.append("div")
-      .attr("class", "logo")
-      .style("margin-top", -46+"px")
-      .style("margin-left", 478+"px")
-      .attr("id", "logo-cc")
+  // footer.append("div")
+  //     .attr("class", "logo")
+  //     .style("margin-top", -46+"px")
+  //     .style("margin-left", 478+"px")
+  //     .attr("id", "logo-cc")
 
 
 };

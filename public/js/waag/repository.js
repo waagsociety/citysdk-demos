@@ -112,8 +112,8 @@ function createDomains(){
     graphType:"bar",
     infoHtml:"transport.car",
     mapLayers:[
-      {url:apiUrlDB+"cache/300/nodes?layer=divv.traffic&geom&per_page=1000", type:"static", id:"traffic", label:"Traffic", userCallBacks:false, sdkPath:"layers:divv.traffic:data"},
-      {url:apiUrlDB+"cache/300/nodes?layer=divv.parking.capacity&geom&per_page=1000", type:"static", id:"parking", label:"Parking", userCallBacks:false, sdkPath:"layers:divv.parking.capacity:data"}
+      {url:apiUrlDB+"cache/300/nodes?layer=divv.traffic&geom&per_page=1000", type:"static", id:"traffic", label:"Traffic", userCallBack:false, sdkPath:"layers:divv.traffic:data"},
+      {url:apiUrlDB+"cache/300/nodes?layer=divv.parking.capacity&geom&per_page=1000", id:"parking", label:"Parking", userCallBack:false, sdkPath:"layers:divv.parking.capacity:data"}
     ]
   };
   
@@ -132,7 +132,7 @@ function createDomains(){
     graphType:"bar",
     infoHtml:"transport.pt",
     mapLayers:[
-      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/ptstops?geom&per_page=1000", type:"realtime", id:"ptstops", label:"Public transport", userCallBacks:"/select/now", sdkPath:false}
+      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/ptstops?geom&per_page=1000", id:"ptstops", label:"Public transport", userCallBack:"/select/now", sdkPath:false}
     ]
   
     };
@@ -168,7 +168,7 @@ function createDomains(){
     graphType:"line",
     infoHtml:"environment.sck",
     mapLayers:[
-      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000", type:"static", id:"sck", label:"Smart citizens", userCallBacks:false, sdkPath:"layers:sck:data"}
+      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000", id:"sck", label:"Smart citizens", userCallBack:false, sdkPath:"layers:sck:data"}
     ]
 
   };
@@ -217,7 +217,7 @@ function createDomains(){
     infoHtml:"statistics.cbs.left",
     mapLayers:false
     // mapLayers:[
-    //   {url:"http://loosecontrol.tv:4567/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", id:"cbs", type:"static", userCallBacks:false, sdkPath:"layers:cbs:data"}
+    //   {url:"http://loosecontrol.tv:4567/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", id:"cbs", type:"static", userCallBack:false, sdkPath:"layers:cbs:data"}
     // ]
   };
   
@@ -234,7 +234,7 @@ function createDomains(){
     graphType:"circlepack",
     infoHtml:"statistics.cbs.right",
     mapLayers:[
-      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", type:"static", id:"cbs", label:"CBS statistics", userCallBacks:false, sdkPath:"layers:cbs:data", defaultLayer:"bev_dichth"}
+      {url:apiUrlDB+"/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", id:"cbs", label:"CBS statistics", userCallBack:false, sdkPath:"layers:cbs:data", defaultLayer:"bev_dichth"}
     ]
   };
 
@@ -334,7 +334,7 @@ function createDomains(){
     graphType:"sunburst",
     infoHtml:"tourism.events.left",
     mapLayers:[
-      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000", id:"artsholland", type:"static", label:"Arts Holland Events", userCallBacks:false, sdkPath:"layers:artsholland:data"}
+      {url:apiUrlDB+"/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000", id:"artsholland", label:"Arts Holland Events", userCallBack:false, sdkPath:"layers:artsholland:data"}
     ]
 
   };
@@ -374,7 +374,7 @@ function createDomains(){
     graphType:"bar",
     infoHtml:"security.p2000",
     mapLayers:[
-      {url:apiUrlDB+"emergency.p2000.locations/admr.nl.amsterdam/live", id:"p2000", type:"static", label:"P2000 events", userCallBacks:false, sdkPath:""}       
+      {url:apiUrlDB+"emergency.p2000.locations/admr.nl.amsterdam/live", id:"p2000", label:"P2000 events", userCallBack:false, sdkPath:""}       
     ]
 
   };

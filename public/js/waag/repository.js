@@ -10,6 +10,7 @@ var assetsSvg = "images/svg/";
 var mainMapUrl = "http://citydashboard.waag.org/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&geom&per_page=1000";
 var dNow = new Date();
 var timeNow = dNow.getTime();
+var dayNow = dNow.getDay();
 var hNow = dNow.getHours();
 var mNow = dNow.getMinutes();
 var colorStepper = 4;

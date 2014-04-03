@@ -1000,14 +1000,26 @@ WAAG.Map = function Map(domains) {
 			label += "Road pressure: " + _data.value.toFixed(2) + " %";
 
 			return label;
-		}else if(_data.layer == "artsholland"){
+		}else if(_data.layer == "artsholland" || _data.layer =="osm"){
 			console.log("setting arts holland label");
+			var events=0;
 			if(_data.layers.artsholland.data.events){
+				
 				_data.layers.artsholland.data.events.forEach(function(e){
-					label += e.title+"<br>"
-					t = parseIsoDate(e.time) //set in d3-utils.js		
+					
+					t = parseIsoDate(e.time) //set in d3-utils.js
+					var date=new Date();
+					date.setTime(t);
+					var day=date.getDay();
+					if(day==dayNow){
+						events++;
+						var min=date.getMinutes();
+						if(min==0) min="00"
+						label +=date.getHours()+":"+min+" "+ e.title+"<br>"	
+					}
 
-				});	
+				});
+			 if(events==0)	label +="No events today";		
 		}else{
 			label += "No planned events.";
 		}

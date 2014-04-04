@@ -14,7 +14,7 @@ var dayNow = dNow.getDay();
 var hNow = dNow.getHours();
 var mNow = dNow.getMinutes();
 var colorStepper = 4;
-var liveUpdateTime = 100000;
+var liveUpdateTime = 10000;
 var noDataLabel = "Data source interupted :-(";
 var language = "eng";
 
@@ -80,11 +80,6 @@ function getAdmrData() {
 var loremIpsumA, loremIpsumB;
 
 function createDomains() {
-
-	// http://loosecontrol.tv:4567/transport.car.pressure/admr.nl.amsterdam/info
-	// http://loosecontrol.tv:4567/transport.car.pressure/admr.nl.amsterdam/live
-	// http://loosecontrol.tv:4567/transport.car.pressure/admr.nl.amsterdam/history
-	// http://loosecontrol.tv:4567/cache/3600/admr.nl.amsterdam/nodes?admr::admn_level=5&geom&per_page=1000
 
 	var list = [];
 	// domain Traffic
@@ -306,9 +301,7 @@ function createDomains() {
 		graphType: "donut",
 		infoHtml: "statistics.cbs.left",
 		mapLayers: false
-		// mapLayers:[
-		//   {url:"http://loosecontrol.tv:4567/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&layer=cbs&geom&per_page=1000", id:"cbs", type:"static", userCallBack:false, sdkPath:"layers:cbs:data"}
-		// ]
+
 	};
 
 	var tickerData = {
@@ -335,7 +328,7 @@ function createDomains() {
 			label: "CBS statistics",
 			userCallBack: false,
 			sdkPath: "layers:cbs:data",
-			defaultLayer: "bev_dichth"
+			cbsLayer: "bev_dichth"
 		}]
 	};
 

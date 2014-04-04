@@ -4,6 +4,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
 	var subDomianA, subDomianB;
 	var domainInfo;
 	var infoActive = false;
+	
 	var margin = {
 		top: 20,
 		right: 40,
@@ -696,6 +697,57 @@ function activateMap(_properties) {
 					d3.selectAll("#domainInfo").style("visibility", "visible");
 					map.addDomainLayer(_properties);
 
+				});
+
+		} else if (parseInt(domainList[i].index) > index) {
+			d3.select("#" + domainList[i].id)
+				.transition()
+				.duration(750)
+				.style("top", (menuHeight + mapHeight + (domainList[i].index * widgetHeight)) + "px")
+
+		}
+
+
+	};
+
+};
+
+function deActivateMap() {
+
+	var index = domainList.length-1;
+
+	// /console.log("index :"+index);
+	var map_container = d3.select("#map_container");
+	map_container.style("z-index", 5);
+
+	d3.selectAll("#domainInfo").style("visibility", "hidden");
+
+	map_container.transition()
+		.duration(500)
+		.style("top", (menuHeight + widgetHeight + (index * widgetHeight)) + "px")
+		.each("end", function() {
+			map_container.style("z-index", 200);
+		});
+
+	for (var i = 0; i < domainList.length; i++) {
+
+		//console.log("domain index :"+parseInt(domainList[i].index)+" --> id :"+domainList[i].mainDomain.id);
+		d3.select("#map_container").style("z-index", 5);
+
+		if (parseInt(domainList[i].index) < index) {
+			d3.select("#" + domainList[i].id)
+				.transition()
+				.duration(750)
+				.style("top", (menuHeight + (domainList[i].index * widgetHeight)) + "px")
+
+
+		} else if (parseInt(domainList[i].index) == index) {
+			d3.select("#" + domainList[i].id)
+				.transition()
+				.duration(750)
+				.style("top", (menuHeight + (domainList[i].index * widgetHeight)) + "px")
+				.each("end", function() {
+					d3.selectAll("#domainInfo").style("visibility", "visible");
 				});
 
 		} else if (parseInt(domainList[i].index) > index) {

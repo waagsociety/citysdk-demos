@@ -149,7 +149,30 @@ WAAG.Map = function Map(domains) {
 			.style("left", mapWidth / 2 + "px")
 			.style("height", 2 + "em")
 			.style("z-index", 15);
+			
+		mapMenu.append("object")
+			.attr("class", "mapIcon")
+			.attr("data", "images/svg/icon_close.svg")
+			.attr("type", "image/svg+xml")
+			.style("position", "relative")
+			.style("left", 724 + "px")
+			.style("top", 6 + "px")
 
+		mapMenu.append("div")
+			.style("width", 32+"px")
+			.style("height", 32+"px")
+			.style("position", "relative")
+			.style("left", 724 + "px")
+			.style("top", -32 + "px")
+			.on("mouseover", function(d) {
+				d3.select("body").style("cursor", "pointer");
+			})
+			.on("mouseout", function(d) {
+				d3.select("body").style("cursor", "default");
+			})
+			.on("click", function(){
+				deActivateMap();
+			})	
 
 		var layerList = mapMenu.append('div')
 			.attr("class", "layerList")
@@ -159,6 +182,23 @@ WAAG.Map = function Map(domains) {
 			.style("left", 0.25 + "em,")
 			.style("padding", 8 + "px")
 			.style("width", mapWidth / 2 - 16 + "px")
+			.style("z-index", 10)
+
+
+		layerList.append("object")
+			.attr("class", "mapIcon")
+			.attr("data", "images/svg/icon_layers.svg")
+			.attr("type", "image/svg+xml")
+			.style("position", "relative")
+			.style("left", 0.5 + "em")
+			
+		layerList.append('div')
+			.style("position", "absolute")
+			.style("top", 0 + "px")
+			.style("left", 0 + "em,")
+			.style("padding", 8 + "px")
+			.style("width", mapWidth / 2 - 16 + "px")
+			.style("height", 48 + "px")
 			.style("z-index", 10)
 			.on("mouseover", function(d) {
 				d3.select("body").style("cursor", "pointer");
@@ -178,13 +218,6 @@ WAAG.Map = function Map(domains) {
 				}
 
 			});
-
-		layerList.append("object")
-			.attr("class", "mapIcon")
-			.attr("data", "images/svg/icon_layers.svg")
-			.attr("type", "image/svg+xml")
-			.style("position", "relative")
-			.style("left", 0.5 + "em")
 
 		layerList.append("vLine")
 			.attr("class", "vLine")
@@ -434,7 +467,7 @@ WAAG.Map = function Map(domains) {
 					if (layer.sdkPath == "mainMap") {
 						d.value = 0;
 					} else if (layer.id == "cbs") {
-						d.value = d.layers.cbs.data[layer.defaultLayer];
+						d.value = d.layers.cbs.data[layer.cbsLayer];
 						//console.log(d.value);
 					} else if (layer.sdkPath == "layers:divv.parking.capacity:data") {
 						d.value = (d.layers["divv.parking.capacity"].data.FreeSpaceShort + d.layers["divv.parking.capacity"].data.FreeSpaceLong) / (d.layers["divv.parking.capacity"].data.ShortCapacity + d.layers["divv.parking.capacity"].data.LongCapacity)
@@ -595,9 +628,13 @@ WAAG.Map = function Map(domains) {
 				if (layer.id == "mainMap") {
 					showToolTip(d.name);
 					return;
+				}else if(layer.id=="cbs"){
+					d.layer="cbs";
+					d.cbsLayer=layer.cbsLayer;
 				};
 				// d3.select(this).style("stroke-width", 0.25+"px" );
 				// d3.select(this).style("fill", "#f3ece5" );
+				
 
 				var label = setMapToolTipLabel(d, layer.sdkPath);
 				showToolTip(label);
@@ -1022,10 +1059,20 @@ WAAG.Map = function Map(domains) {
 
 				});
 			 if(events==0)	label +="No events today";		
-		}else{
-			label += "No planned events.";
-		}
+			}else{
+				label += "No planned events.";
+			}
 			return label;	
+		}else if(_data.layer=="cbs"){
+			for (var i=0; i<cbsLayers.length; i++){
+				if(cbsLayers[i].value==_data.cbsLayer){
+					label+=cbsLayers[i].description+"<br>";
+					label+="value:" +_data.value;
+				}
+			}
+			
+			
+			return label;
 		}
 
 		var v = _data;
@@ -1046,10 +1093,10 @@ WAAG.Map = function Map(domains) {
 
 		for (var i = 0; i < cachedLayers.length; i++) {
 			if (cachedLayers[i].id == "cbs") {
-				cachedLayers[i].defaultLayer = dataLayer;
+				cachedLayers[i].cbsLayer = dataLayer;
 				if (cachedLayers[i].mapData.length > 0) {
 					cachedLayers[i].sdkData.forEach(function(d) {
-						d.value = parseInt(d.layers.cbs.data[cachedLayers[i].defaultLayer]);
+						d.value = parseInt(d.layers.cbs.data[cachedLayers[i].cbsLayer]);
 						if (d.value < 0 || isNaN(d.value) || d.value == "Infinity") {
 							d.value = 0;
 						};
@@ -1057,7 +1104,7 @@ WAAG.Map = function Map(domains) {
 
 				}
 				setMap(cachedLayers[i]);
-				console.log("updating cbs " + cachedLayers[i].defaultLayer);
+				console.log("updating cbs " + cachedLayers[i].cbsLayer);
 				return;
 			}
 		};

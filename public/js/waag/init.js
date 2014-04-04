@@ -16,6 +16,12 @@ var infoActive = false;
 function initDashboard() {
 
 	console.log("kick off dashboard");
+	
+	if (Modernizr.touch){
+	   console.log("touch events false");
+	}
+	
+	console.log("touch events :"+Modernizr.touch);
 
 	toolTip = d3.select("body").append("div")
 		.attr("class", "tooltip")

@@ -130,7 +130,7 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 		//     .text(parseInt(min));
 
 		var vis = svgDomain.selectAll(".bar").data(data, function(d, i) {
-			return d.description + "_" + i
+			return d.description + "_" + i;
 		});
 
 		vis.enter().append("rect")
@@ -153,6 +153,11 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 			})
 			.on("mouseover", function(d) {
 				showToolTip(d.mouseLabel);
+				// if (d.hour > hNow){
+				// 	d3.select(this).style("stroke", "#333")
+				// }
+				
+				
 			})
 			.on("mousemove", function(d) {
 

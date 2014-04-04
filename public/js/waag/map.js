@@ -468,7 +468,7 @@ WAAG.Map = function Map(domains) {
 					} else {
 						d.value = 0.1 + (Math.random() * 0.9);
 					}
-					//console.log("trafel perc ="+d.value);
+
 					if (d.value < 0 || isNaN(d.value) || d.value == "Infinity" || d.value == null) {
 						d.value = 0;
 					};
@@ -670,6 +670,7 @@ WAAG.Map = function Map(domains) {
 			.on("click", function(d) {
 
 			})
+			
 
 		vis.transition()
 			.duration(500)
@@ -730,7 +731,7 @@ WAAG.Map = function Map(domains) {
 						label += "All Trips on schedule<br>Click to load realtime schedule";
 					}
 				}
-			} else if (d.id == "p2000") {
+			} else if (layer.id == "p2000") {
 				var date = new Date();
 				date.setTime(d.timestamp * 1000);
 				label = "P2000<br>" + date + "<br>" + d.title + "<br>" + d.description
@@ -809,9 +810,10 @@ WAAG.Map = function Map(domains) {
 					if (v > 5) v = 5;
 
 					path.pointRadius(v);
-				} else if (d.id == "p2000") {
+				} else if (layer.id == "p2000") {
 					var r = ((layer.range.max - d.value) / layer.range.range) * 5;
 					if (r < 2.5) r = 2.5;
+					console.log("point radius ="+r);
 					path.pointRadius(r);
 
 				} else {

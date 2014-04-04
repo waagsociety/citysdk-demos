@@ -90,7 +90,8 @@ class Indicator
      def descend record, path
         symbol = path.shift
         obj = record[symbol] 
-        raise "non existing key #{symbol.to_s} in hash #{record} " if obj == nil
+        #raise "non existing key #{symbol.to_s} in hash #{record} " if obj == nil
+        $logger.error("non existing key #{symbol.to_s} in hash #{record} ") if obj == nil
 
         if path.length > 0
           obj = descend obj, path                                      

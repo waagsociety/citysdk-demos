@@ -28,9 +28,11 @@ class EnvironmentSckNoise < Indicator
      
      #get data from source
      results = Client.instance.get_all_records "/#{admr}/nodes?layer=sck"
-                   
+                 
      #retrieve the property we're interested in  
      noises = self.m_hash_get_path results, [:layers,:sck,:data,:noise]  
+      
+     #puts "noises #{noises}"    
       
      #do calculations
      noise = self.calculate_average noises

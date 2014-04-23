@@ -29,19 +29,13 @@ role :app, "195.169.149.30"                          # This may be the same as y
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
+  
   # Assumes you are using Passenger
-  # task :restart, :roles => :app, :except => { :no_release => true } do
-  #     run "touch #{File.join(current_path,'tmp','restart.txt')}"
-  #   end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
  
   task :finalize_update, :except => { :no_release => true } do
-    # run <<-CMD
-    #   rm -rf #{latest_release}/log &&
-    #   mkdir -p #{latest_release}/public &&
-    #   mkdir -p #{latest_release}/tmp &&
-    #   ln -s #{shared_path}/log #{latest_release}/log
-    # CMD
-    # run "ln -s /var/www/citysdk/shared/config/nskey.json #{release_path}"
   end
 end  
 

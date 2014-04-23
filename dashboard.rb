@@ -58,7 +58,11 @@ end
 
 
 get '/' do
-  'Dashboard service!'
+  'Dashboard service!!'
+end
+
+get '/version' do
+  '0.1'
 end 
 
 #build up all static info for the dashboard

@@ -4,7 +4,8 @@ require_relative 'model/cache.rb'
 require_relative 'model/pt_indicator.rb'  
                                               
 #global logger object needs to exist, is used everywhere
-$logger = Logger.new("log/dashboard.log")  
+$logger = Logger.new("log/dashboard.log")
+$logger.level = Logger::INFO  
 
 #call "method" of all indicators with "args"                         
 def all_indicators_do method, *args

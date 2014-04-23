@@ -10,89 +10,12 @@ require_relative 'model/pt_indicator.rb'
 FileUtils.mkdir_p "log"
                    
 #global stuff
-#log = File.new("log/sinatra.log", "a")
-#STDOUT.reopen(log)
-#STDERR.reopen(log)
 $logger = Logger.new("log/dashboard.log")
 $logger.level = Logger::WARN
 $indicators = Hash.new   
 
 set :server, 'webrick'
 set :logging, false
-    
-def on_init
-  
-  PtIndicator::init
-  
-  #do initial scheduled calls
-  Thread.new do
-    on_history_schedule 
-  end
-  
-  #do initial prepare
-  Thread.new do
-    on_prepare 
-  end
- 
-  #do initial daily
-  Thread.new do
-    on_daily 
-  end   
-  
-  #setup schedule
-  $scheduler = Rufus::Scheduler.new
-  $scheduler.cron '30 6 * * *' do
-    $logger.info "daily cron" 
-    on_daily  
-  end  
-
-  #every hour
-  $scheduler.cron '0 * * * *' do
-    $logger.info "******* cron" 
-    on_history_schedule  
-  end     
-
-  #every 5 minutes
-  $scheduler.every '5m' do 
-    $logger.info "******* prepare"
-    on_prepare  
-  end 
-
-end
-
-#called hourly add a history records for all indicators
-def on_history_schedule
-  Indicator.subclasses.each do |indicator|
-     instance = indicator.instance
-     begin
-       instance.add_history "admr.nl.amsterdam"
-     rescue Exception => e
-       $logger.error "caught exception in #{instance.get_id}.add_history : #{e.message} \n #{exception.backtrace}"
-     end
-  end 
-  Cache.instance.redis.bgsave
-end
-
-#called every 5 minutes give indicators the chance to prepare (do request) 
-#so calculated can use cached requests
-def on_prepare
-  Indicator.subclasses.each do |indicator|
-     instance = indicator.instance
-     Thread.new do 
-       begin
-         instance.prepare "admr.nl.amsterdam"
-       rescue Exception => e
-         $logger.error "caught exception in #{instance.get_id}.prepare : #{e.message} \n #{exception.backtrace}"
-       end 
-     end
-  end
-end 
-
-def on_daily
-  PtIndicator::__get_schedules "admr.nl.amsterdam"
-end
-   
-     
 
 #add to header
 before do 
@@ -118,18 +41,17 @@ configure do
      $logger.info "indicator loaded:#{id}"
   end 
   
+  #spawned or not
   if defined?(PhusionPassenger)
     PhusionPassenger.on_event(:starting_worker_process) do |forked|
       if forked
         $logger.info "reconnecting Redis"
         Cache.instance.reconnect
-        on_init        
       else
         # We're in conservative spawning mode. We don't need to do anything.
       end
     end
   else
-    on_init                             
   end
                      
 end

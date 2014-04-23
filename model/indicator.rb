@@ -1,5 +1,7 @@
 # encoding: utf-8
 require "singleton"
+require "citysdk"
+require "logger" 
 require_relative "cache.rb"    
                              
 class Class

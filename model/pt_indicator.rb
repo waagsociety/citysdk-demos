@@ -9,10 +9,6 @@ require "tmpdir"
                                
 module PtIndicator 
   
-    def self.init
-      @@redis = Redis.new({ :db => 1, :timeout => 300})
-    end
-   
     # time (no date) string to seconds
     def self.time_to_i time
       t_h = time.slice(0,2)
@@ -215,10 +211,6 @@ module PtIndicator
          end 
          
        end #recs.each_with_index 
-       
-       @trips_active = trips_scheduled_now.keys.length
-       @lines_active = lines_scheduled_now.keys.length
-       @stops_active = stops_scheduled_now.keys.length
        
        $logger.info "#{trips_scheduled_now.keys.length} trips active"
        $logger.info "#{lines_scheduled_now.keys.length} lines active" 

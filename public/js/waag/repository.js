@@ -151,7 +151,7 @@ function createDomains() {
 			description: "Avg. delay time",
 			value: "",
 			units: "sec",
-			kci: "transport.pt.stopsdelayed"
+			kci: "transport.pt.delay"
 		}, {
 			bullet: "+",
 			description: "Actual trips",

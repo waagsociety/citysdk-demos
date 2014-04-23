@@ -11,7 +11,7 @@ FileUtils.mkdir_p "log"
                    
 #global stuff
 $logger = Logger.new("log/dashboard.log")
-$logger.level = Logger::INFO
+$logger.level = Logger::ERROR
 $indicators = Hash.new   
 
 set :server, 'webrick'
@@ -140,7 +140,7 @@ get '/:indicator/:cdk_id/:method' do
       halt 400, "method not found"
   end   
   
-  $logger.info "result for cdk_id #{cdk_id}:#{indicator_id}.#{method} => #{result}"
+  #$logger.info "result for cdk_id #{cdk_id}:#{indicator_id}.#{method} => #{result}"
   return result  
 end 
 

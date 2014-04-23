@@ -1,6 +1,7 @@
 require "nokogiri"    
 require "faraday"
 require 'logger'
+require_relative "cache.rb"
 
 module GgdScraper 
     
@@ -11,16 +12,20 @@ module GgdScraper
       end
     end
     
-    def self.get_pm10
-      return @pm10
+    def self.get_cache_key admr, param
+      return "GgdScraper:#{admr}:#{param}"    
+    end
+    
+    def self.get_pm10 admr
+      return eval Cache.instance.redis.get self.get_cache_key(admr,"pm10")
     end
        
-    def self.get_no2
-      return @no2
+    def self.get_no2 admr
+      return eval Cache.instance.redis.get self.get_cache_key(admr,"no2")
     end
                
-    def self.get_date
-      return @date.to_i
+    def self.get_date admr
+      return eval Cache.instance.redis.get self.get_cache_key(admr,"date")
     end   
        
     def self.__get_average doc, sel
@@ -38,15 +43,20 @@ module GgdScraper
       return total/count
     end
     
-    def self.__scrape_amsterdam  
+    def self.__scrape_amsterdam 
+      admr = "admr.nl.amsterdam" 
       resp = Faraday.get "http://www.luchtmetingen.amsterdam.nl"
       d = Nokogiri::HTML(resp.body)
       last_measurement = d.css(".laatstemeting")
       date = Time.parse(last_measurement.text)      
-      @pm10 = __get_average d, ".col2"  
-      @no2 = __get_average d, ".col3" 
-      @date = date 
-      $logger.info "date #{@date.to_i} , pm10 #{@pm10}, no2 #{@no2}"
+      pm10 = __get_average d, ".col2"  
+      no2 = __get_average d, ".col3" 
+      
+      Cache.instance.redis.set self.get_cache_key(admr, "pm10"), pm10.to_s 
+      Cache.instance.redis.set self.get_cache_key(admr, "no2"), no2.to_s 
+      Cache.instance.redis.set self.get_cache_key(admr, "date"), date.to_i.to_s                  
+      
+      $logger.info "date #{date} , pm10 #{pm10}, no2 #{no2}"
     end
 
 end

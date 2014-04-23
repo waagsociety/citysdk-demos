@@ -138,14 +138,14 @@ class Indicator
      return cache_key
    end
    
-   def get_time_stamp
+   def get_time_stamp admr
      Time.new.to_i 
    end
            
    #return json string 
    #cache is only kept for 1 minute 
    def get_value admr
-      time = self.get_time_stamp 
+      time = self.get_time_stamp admr 
       cache_key = self.get_cache_key admr, "live"      
       
       #try to get indicator in current time grain from cache 
@@ -206,7 +206,7 @@ class Indicator
      record = self.get_value admr                                     
                           
      #we are called approximately at the begin of each our, but in case we we're called a little to late or to early, round it to the hour
-     time = self.get_time_stamp
+     time = self.get_time_stamp admr
      closest_hour = time + 1800 - (time + 1800) % 3600     
      
      #check if we have already a record for this time frame 

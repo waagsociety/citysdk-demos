@@ -11,7 +11,7 @@ FileUtils.mkdir_p "log"
                    
 #global stuff
 $logger = Logger.new("log/dashboard.log")
-$logger.level = Logger::WARN
+$logger.level = Logger::INFO
 $indicators = Hash.new   
 
 set :server, 'webrick'

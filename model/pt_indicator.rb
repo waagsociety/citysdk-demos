@@ -89,7 +89,8 @@ module PtIndicator
         break if sub.length == 0
         begin #get line info from open ov API
           req = "http://v0.ovapi.nl/line/#{sub.join(",")}"
-          response = Faraday.get "http://v0.ovapi.nl/line/#{sub.join(",")}", {"User-Agent" => "CityDashBoard"}
+          $logger.info "doing req: #{req}"
+          response = Faraday.get req, {"User-Agent" => "CityDashBoard"}
           result = JSON.parse(response.body)
           
           $logger.info "sub with offset #{offset}"

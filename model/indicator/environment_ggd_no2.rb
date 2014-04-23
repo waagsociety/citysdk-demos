@@ -21,8 +21,8 @@ class EnvironmentGgdNo2 < Indicator
      return "μg/m3"
    end 
    
-   def get_time_stamp  
-     return GgdScraper::get_date
+   def get_time_stamp admr  
+     return GgdScraper::get_date admr
    end
    
    def get_description
@@ -30,7 +30,7 @@ class EnvironmentGgdNo2 < Indicator
    end
    
    def calculate admr
-     return GgdScraper::get_no2
+     return GgdScraper::get_no2 admr
    end
   
 end

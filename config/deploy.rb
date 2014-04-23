@@ -1,7 +1,7 @@
 # require "bundler/capistrano"
 # todo :
 # - add automatic whenever --update-crontab
-# - add server restart
+
 puts "*** Deploying to \033[1;41mcitydashboard.waag.org\033[0m"  
 
 set :application, "CityDashBoard"

@@ -1,5 +1,6 @@
 require_relative "../indicator.rb"
-require_relative "../client.rb"
+require_relative "../client.rb"                 
+require 'logger'
                                
 class EnvironmentSckNoise < Indicator
        
@@ -32,7 +33,7 @@ class EnvironmentSckNoise < Indicator
      #retrieve the property we're interested in  
      noises = self.m_hash_get_path results, [:layers,:sck,:data,:noise]  
       
-     #puts "noises #{noises}"    
+     #$logger.info "noises #{noises}"    
       
      #do calculations
      noise = self.calculate_average noises

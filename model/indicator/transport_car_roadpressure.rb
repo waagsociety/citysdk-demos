@@ -1,6 +1,7 @@
 require_relative "../indicator.rb"
 require_relative "../client.rb"
-                               
+require 'logger'
+               
 class TrafficCarPressure < Indicator
        
    def get_id
@@ -39,7 +40,7 @@ class TrafficCarPressure < Indicator
      #calc pressure for each sensor as 1 - speed / max_speed
      pressures = Array.new 
      sensors.each do |sensor|
-       #puts "sensor #{sensor.inspect}" 
+       #$logger.info "sensor #{sensor.inspect}" 
        travel_time = sensor[:traveltime_freeflow]
        velocity = sensor[:velocity]
        if travel_time > 0 && velocity > 0

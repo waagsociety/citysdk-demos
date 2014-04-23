@@ -1,5 +1,6 @@
 require "nokogiri"    
 require "faraday"
+require 'logger'
 
 module GgdScraper 
     
@@ -45,7 +46,7 @@ module GgdScraper
       @pm10 = __get_average d, ".col2"  
       @no2 = __get_average d, ".col3" 
       @date = date 
-      puts "date #{@date.to_i} , pm10 #{@pm10}, no2 #{@no2}"
+      $logger.info "date #{@date.to_i} , pm10 #{@pm10}, no2 #{@no2}"
     end
 
 end

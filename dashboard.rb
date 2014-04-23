@@ -8,12 +8,17 @@ require_relative 'model/pt_indicator.rb'
    
 #`export LC_CTYPE=en_US.UTF-8`                          
 FileUtils.mkdir_p "log"
-
+                   
 #global stuff
-$logger = Logger.new("log/dashboard.log") #dashboard.log 
-$logger.level = Logger::INFO
-$indicators = Hash.new 
-  
+#log = File.new("log/sinatra.log", "a")
+#STDOUT.reopen(log)
+#STDERR.reopen(log)
+$logger = Logger.new("log/dashboard.log")
+$logger.level = Logger::WARN
+$indicators = Hash.new   
+
+set :server, 'webrick'
+set :logging, false
     
 def on_init
   
@@ -37,19 +42,19 @@ def on_init
   #setup schedule
   $scheduler = Rufus::Scheduler.new
   $scheduler.cron '30 6 * * *' do
-    puts "daily cron" 
+    $logger.info "daily cron" 
     on_daily  
   end  
 
   #every hour
   $scheduler.cron '0 * * * *' do
-    puts "******* cron" 
+    $logger.info "******* cron" 
     on_history_schedule  
   end     
 
   #every 5 minutes
   $scheduler.every '5m' do 
-    puts "******* prepare"
+    $logger.info "******* prepare"
     on_prepare  
   end 
 
@@ -110,7 +115,7 @@ configure do
      instance = indicator.instance
      id = instance.get_id
      $indicators[id] = instance 
-     puts "indicator loaded:#{id}"
+     $logger.info "indicator loaded:#{id}"
   end 
   
   if defined?(PhusionPassenger)
@@ -127,11 +132,8 @@ configure do
     on_init                             
   end
                      
-  
-
 end
 
-set :server, 'webrick'
 
 get '/' do
   'Dashboard service!'

@@ -10,7 +10,7 @@ module P2000Feed
       
       return if Cache.instance.locked? "P2000Feed::fetch", "", 100
       
-      puts "prepare p2000"                     
+      $logger.info "prepare p2000"                     
       resp = Faraday.get "http://feeds.livep2000.nl"
       doc = REXML::Document.new(resp.body) 
       doc.root.elements.each('channel/item') do |item|

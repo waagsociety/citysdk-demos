@@ -8,86 +8,14 @@ require_relative 'model/pt_indicator.rb'
    
 #`export LC_CTYPE=en_US.UTF-8`                          
 FileUtils.mkdir_p "log"
-
+                   
 #global stuff
-$logger = Logger.new("log/dashboard.log") #dashboard.log 
-$logger.level = Logger::INFO
-$indicators = Hash.new 
-  
-    
-def on_init
-  
-  PtIndicator::init
-  
-  #do initial scheduled calls
-  Thread.new do
-    on_history_schedule 
-  end
-  
-  #do initial prepare
-  Thread.new do
-    on_prepare 
-  end
- 
-  #do initial daily
-  Thread.new do
-    on_daily 
-  end   
-  
-  #setup schedule
-  $scheduler = Rufus::Scheduler.new
-  $scheduler.cron '30 6 * * *' do
-    puts "daily cron" 
-    on_daily  
-  end  
+$logger = Logger.new("log/dashboard.log")
+$logger.level = Logger::ERROR
+$indicators = Hash.new   
 
-  #every hour
-  $scheduler.cron '0 * * * *' do
-    puts "******* cron" 
-    on_history_schedule  
-  end     
-
-  #every 5 minutes
-  $scheduler.every '5m' do 
-    puts "******* prepare"
-    on_prepare  
-  end 
-
-end
-
-#called hourly add a history records for all indicators
-def on_history_schedule
-  Indicator.subclasses.each do |indicator|
-     instance = indicator.instance
-     begin
-       instance.add_history "admr.nl.amsterdam"
-     rescue Exception => e
-       $logger.error "caught exception in #{instance.get_id}.add_history : #{e.message} \n #{exception.backtrace}"
-     end
-  end 
-  Cache.instance.redis.bgsave
-end
-
-#called every 5 minutes give indicators the chance to prepare (do request) 
-#so calculated can use cached requests
-def on_prepare
-  Indicator.subclasses.each do |indicator|
-     instance = indicator.instance
-     Thread.new do 
-       begin
-         instance.prepare "admr.nl.amsterdam"
-       rescue Exception => e
-         $logger.error "caught exception in #{instance.get_id}.prepare : #{e.message} \n #{exception.backtrace}"
-       end 
-     end
-  end
-end 
-
-def on_daily
-  PtIndicator::__get_schedules "admr.nl.amsterdam"
-end
-   
-     
+set :server, 'webrick'
+set :logging, false
 
 #add to header
 before do 
@@ -110,31 +38,31 @@ configure do
      instance = indicator.instance
      id = instance.get_id
      $indicators[id] = instance 
-     puts "indicator loaded:#{id}"
+     $logger.info "indicator loaded:#{id}"
   end 
   
+  #spawned or not
   if defined?(PhusionPassenger)
     PhusionPassenger.on_event(:starting_worker_process) do |forked|
       if forked
         $logger.info "reconnecting Redis"
         Cache.instance.reconnect
-        on_init        
       else
         # We're in conservative spawning mode. We don't need to do anything.
       end
     end
   else
-    on_init                             
   end
                      
-  
-
 end
 
-set :server, 'webrick'
 
 get '/' do
-  'Dashboard service!'
+  'Dashboard service!!'
+end
+
+get '/version' do
+  '0.1'
 end 
 
 #build up all static info for the dashboard
@@ -212,7 +140,7 @@ get '/:indicator/:cdk_id/:method' do
       halt 400, "method not found"
   end   
   
-  $logger.info "result for cdk_id #{cdk_id}:#{indicator_id}.#{method} => #{result}"
+  #$logger.info "result for cdk_id #{cdk_id}:#{indicator_id}.#{method} => #{result}"
   return result  
 end 
 

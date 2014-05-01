@@ -569,6 +569,8 @@ WAAG.Domain = function Domain(_propertiesAll) {
 				domain.select("#" + d.valueId).html("<img src=images/icon-broken-link.png>");
 
 			} else if (result[d.kci + ":" + admr]!=null) {
+
+
 				//console.log("live update ="+result[d.kci+":"+admr]) ;       
 
 				if (result[d.kci + ":" + admr].length > 0) {

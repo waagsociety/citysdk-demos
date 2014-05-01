@@ -1,5 +1,6 @@
 require "redis"
-require "thread"
+require "thread"                                            
+require "logger"
 require "singleton"
 
 class Cache
@@ -25,7 +26,7 @@ class Cache
          key = "lock:#{key}:#{admr}"
          if @redis.get(key)
            $logger.info "re-entrant for key #{key}"
-           puts "reent ***************************"
+           $logger.info "reent ***************************"
            result = true                           
          else
            @redis.set(key,"busy",{:ex => secs}) #set busy 
@@ -45,7 +46,7 @@ class Cache
       cache = @redis.get(cache_key)
       return cache if cache
                                 
-      puts "new call"
+      $logger.info "new call"
       result = func.call(*params)
       if ttl
         @redis.set(cache_key, result.to_s, {:ex => ttl})

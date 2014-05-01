@@ -9,10 +9,6 @@ require "tmpdir"
                                
 module PtIndicator 
   
-    def self.init
-      @@redis = Redis.new({ :db => 1, :timeout => 300})
-    end
-   
     # time (no date) string to seconds
     def self.time_to_i time
       t_h = time.slice(0,2)
@@ -50,7 +46,7 @@ module PtIndicator
                               
       return if Cache.instance.locked? "__get_actuals", admr, 1800 #not more often then every 30 mins
       
-      puts "***** get actuals"
+      $logger.info "***** get actuals"
       
       #this should already be cached daily                               
       recs =  Client.instance.get_all_records "/#{admr}/ptlines?"
@@ -66,7 +62,7 @@ module PtIndicator
           ovid = "#{ovid}_#{dir}" if dir
           open_ov_lines.push ovid
         rescue Exception => e          
-          puts "self.__process_lines #{e.message}"
+          $logger.info "self.__process_lines #{e.message}"
           $logger.error "self.__process_lines #{e.message}"
         end
       end                                                
@@ -93,10 +89,11 @@ module PtIndicator
         break if sub.length == 0
         begin #get line info from open ov API
           req = "http://v0.ovapi.nl/line/#{sub.join(",")}"
-          response = Faraday.get "http://v0.ovapi.nl/line/#{sub.join(",")}", {"User-Agent" => "CityDashBoard"}
+          $logger.info "doing req: #{req}"
+          response = Faraday.get req, {"User-Agent" => "CityDashBoard"}
           result = JSON.parse(response.body)
           
-          puts "sub with offset #{offset}"
+          $logger.info "sub with offset #{offset}"
           result.each do |line_name,sched|
              line_names.push name                           
              lines += 1
@@ -125,9 +122,9 @@ module PtIndicator
         end
         offset += page_size
       end  #loop
-      puts "#{stops} stops, #{stops_delayed} stops delayed, #{lines} lines"
-      puts "ontime #{(1 - (stops_delayed.to_f / stops.to_f)) * 100} %" 
-      puts "avg_delay #{avg_delay / stops_delayed.to_f} %" 
+      $logger.info "#{stops} stops, #{stops_delayed} stops delayed, #{lines} lines"
+      $logger.info "ontime #{(1 - (stops_delayed.to_f / stops.to_f)) * 100} %" 
+      $logger.info "avg_delay #{avg_delay / stops_delayed.to_f} %" 
       
       Cache.instance.redis.set self.get_cache_key(admr, "on_time_percentage"), ((1 - (stops_delayed.to_f / stops.to_f)) * 100).to_s
       Cache.instance.redis.set self.get_cache_key(admr, "avg_delay"), (avg_delay / stops.to_f).to_s
@@ -177,7 +174,7 @@ module PtIndicator
            cache = Client.instance.cached_request "/#{cdk_id}/select/schedule", 0, :cache_mode_force
            if cache == nil  
               $logger.debug "skipped #{cdk_id}"
-              puts "skipped"
+              $logger.info "skipped"
               next
            end
            
@@ -216,13 +213,9 @@ module PtIndicator
          
        end #recs.each_with_index 
        
-       @trips_active = trips_scheduled_now.keys.length
-       @lines_active = lines_scheduled_now.keys.length
-       @stops_active = stops_scheduled_now.keys.length
-       
-       puts "#{trips_scheduled_now.keys.length} trips active"
-       puts "#{lines_scheduled_now.keys.length} lines active" 
-       puts "#{stops_scheduled_now.keys.length} stops active"
+       $logger.info "#{trips_scheduled_now.keys.length} trips active"
+       $logger.info "#{lines_scheduled_now.keys.length} lines active" 
+       $logger.info "#{stops_scheduled_now.keys.length} stops active"
        
        Cache.instance.redis.set self.get_cache_key(admr, "trips_active"), trips_scheduled_now.keys.length.to_i
        Cache.instance.redis.set self.get_cache_key(admr, "lines_active"), lines_scheduled_now.keys.length.to_i
@@ -296,7 +289,7 @@ end
 #        cache = Client.instance.cached_request "/#{cdk_id}/select/schedule", 0, :cache_mode_force
 #        if cache == nil  
 #           $logger.debug "skipped #{cdk_id}"
-#           puts "skipped"
+#           $logger.info "skipped"
 #           next
 #        end
 #        
@@ -381,7 +374,7 @@ end
 
 # def self.__process_stops admr    
 #       
-#       puts "***** _process_stops"
+#       $logger.info "***** _process_stops"
 #        
 #       recs = Client.instance.get_all_records "/#{admr}/ptstops?"
 # 
@@ -449,7 +442,7 @@ end
 #       tmpfile = "#{tmpdir}/gtfs-kv7-latest.zip"     
 #       stopsfile = "#{tmpdir}/stop_times.txt"    
 # 
-#       puts "#{tmpdir}"
+#       $logger.info "#{tmpdir}"
 # 
 #       system "curl --silent \"http://gtfs.ovapi.nl/govi/gtfs-kv7-latest.zip\" -o #{tmpfile}"
 #       system "unzip -o #{tmpfile} -d #{tmpdir}"  
@@ -477,6 +470,6 @@ end
 #         end
 #       end 
 #       
-#       puts "done all"
+#       $logger.info "done all"
 # 
 #     end

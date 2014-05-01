@@ -21,7 +21,7 @@ class TwitterUtils
           :consumer_secret => CONSUMER_KEY_SECRET,
         )
       rescue Twitter::Error => e
-    	   puts "twitter error #{e}" 
+    	   $logger.info "twitter error #{e}" 
     	 end
    end   
   
@@ -52,7 +52,7 @@ class TwitterUtils
      begin
    	  result = @twitter_client.search(param_q, options)
    	 rescue Twitter::Error => e
-   	  puts "twitter error #{e}"
+   	  $logger.info "twitter error #{e}"
    	 end
 
      return result
@@ -101,7 +101,7 @@ class TwitterUtils
        end
      end  
      
-     puts "counts #{counts}"       
+     $logger.info "counts #{counts}"       
 
      #results map
      return counts

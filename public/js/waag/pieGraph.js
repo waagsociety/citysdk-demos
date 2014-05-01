@@ -101,7 +101,6 @@ WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor
 			.style("stroke", "#666")
 			.style("stroke-width", 0.1 + "px")
 			.on("mouseover", function(d) {
-
 				showToolTip(d.data.mouseLabel);
 
 			})

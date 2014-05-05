@@ -116,12 +116,15 @@ function createDomains() {
 
 	// domain Transport
 	var subDomainA = {
+		
+		
 		id: "traffic",
 		label: "Traffic",
 		icon: "images/svg/icon_transport.car.svg",
 		tickerData: tickerData,
 		graphType: "bar",
 		infoHtml: "transport.car",
+		
 		mapLayers: [{
 			url: apiUrlDB + "cache/300/nodes?layer=divv.traffic&geom&per_page=1000",
 			type: "static",
@@ -366,6 +369,42 @@ function createDomains() {
 		mapLayers: false
 
 	};
+	
+	// domain p2000  
+	var tickerData = {
+		live: true,
+		data: [{
+			bullet: ">",
+			description: "P2000 events",
+			value: "0 ",
+			units: "events",
+			kci: "emergency.p2000.alarms"
+		}]
+	};
+	subDomainB = {
+		id: "p2000",
+		label: "P2000 events",
+		icon: "images/svg/icon_emergency.p2000.svg",
+		tickerData: tickerData,
+		graphType: "bar",
+		infoHtml: "security.p2000",
+		//properties if sub domain is different than main domain
+		newDomain:{
+			id: "security",
+			label: "Security (P2000)",
+			icon: "images/svg/icon_emergency.svg",
+			color: "#FFB27D",
+			map: true
+		},
+		mapLayers: [{
+			url: apiUrlDB + "emergency.p2000.locations/admr.nl.amsterdam/live",
+			id: "p2000",
+			label: "P2000 events",
+			userCallBack: false,
+			sdkPath: ""
+		}]
+
+	};
 
 	var properties = {
 		id: "economy",
@@ -373,7 +412,7 @@ function createDomains() {
 		icon: "images/svg/icon_economy.svg",
 		color: "#FFB27D",
 		map: false,
-		subDomains: [subDomainA, false]
+		subDomains: [subDomainA, subDomainB]
 
 	};
 	list.push(properties);
@@ -484,43 +523,43 @@ function createDomains() {
 
 
 	// domain p2000  
-	var tickerData = {
-		live: true,
-		data: [{
-			bullet: ">",
-			description: "P2000 events",
-			value: "0 ",
-			units: "events",
-			kci: "emergency.p2000.alarms"
-		}]
-	};
-	subDomainA = {
-		id: "p2000",
-		label: "P2000 events",
-		icon: "images/svg/icon_emergency.p2000.svg",
-		tickerData: tickerData,
-		graphType: "bar",
-		infoHtml: "security.p2000",
-		mapLayers: [{
-			url: apiUrlDB + "emergency.p2000.locations/admr.nl.amsterdam/live",
-			id: "p2000",
-			label: "P2000 events",
-			userCallBack: false,
-			sdkPath: ""
-		}]
-
-	};
-
-	var properties = {
-		id: "security",
-		label: "Security (P2000)",
-		icon: "images/svg/icon_emergency.svg",
-		color: "#FFB27D",
-		map: true,
-		subDomains: [subDomainA, false]
-
-	};
-	list.push(properties);
+	// var tickerData = {
+	// 	live: true,
+	// 	data: [{
+	// 		bullet: ">",
+	// 		description: "P2000 events",
+	// 		value: "0 ",
+	// 		units: "events",
+	// 		kci: "emergency.p2000.alarms"
+	// 	}]
+	// };
+	// subDomainA = {
+	// 	id: "p2000",
+	// 	label: "P2000 events",
+	// 	icon: "images/svg/icon_emergency.p2000.svg",
+	// 	tickerData: tickerData,
+	// 	graphType: "bar",
+	// 	infoHtml: "security.p2000",
+	// 	mapLayers: [{
+	// 		url: apiUrlDB + "emergency.p2000.locations/admr.nl.amsterdam/live",
+	// 		id: "p2000",
+	// 		label: "P2000 events",
+	// 		userCallBack: false,
+	// 		sdkPath: ""
+	// 	}]
+	// 
+	// };
+	// 
+	// var properties = {
+	// 	id: "security",
+	// 	label: "Security (P2000)",
+	// 	icon: "images/svg/icon_emergency.svg",
+	// 	color: "#FFB27D",
+	// 	map: true,
+	// 	subDomains: [subDomainA, false]
+	// 
+	// };
+	// list.push(properties);
 
 
 	return list;

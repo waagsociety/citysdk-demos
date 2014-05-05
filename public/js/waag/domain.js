@@ -4,6 +4,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
 	var subDomianA, subDomianB;
 	var domainInfo;
 	var infoActive = false;
+	var domainHeader;
 	
 	var margin = {
 		top: 20,
@@ -52,26 +53,26 @@ WAAG.Domain = function Domain(_propertiesAll) {
 			.style("width", 100 + "%")
 			.style("z-index", -1)
 
-		var header = container.append("div")
-			.attr("id", "header")
+		domainHeader = container.append("div")
+			.attr("id", "domainHeader")
 			.style("background-color", domainColor)
 			.style("z-index", 0)
 
-		header.append("object")
+		domainHeader.append("object")
 			.attr("class", "domainIcon")
 			.attr("data", properties.icon)
 			.attr("type", "image/svg+xml");
 
-		header.append("h2")
+		domainHeader.append("h2")
 			.text(properties.label);
 
-		header.append("div")
+		domainHeader.append("div")
 			.attr("class", "hLine")
 			.style("margin-top", 0.5 + "em")
 			.style("margin-bottom", 0.5 + "em")
 			.style("left", 6 + "em");
 
-		header.append("div")
+		domainHeader.append("div")
 			.attr("class", "vLine")
 			.style("position", "absolute")
 			.style("margin-top", 0.5 + "em")
@@ -81,13 +82,13 @@ WAAG.Domain = function Domain(_propertiesAll) {
 
 
 		if (properties.map) {
-			header.append("object")
+			domainHeader.append("object")
 				.attr("class", "mapIcon")
 				.attr("data", "images/svg/icon_map-small.svg")
 				.attr("type", "image/svg+xml")
 
 
-			header.append("div")
+			domainHeader.append("div")
 				.attr("class", "mapIcon")
 				.on("click", function() {
 					activateMap(properties);
@@ -101,12 +102,12 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		}
 
 
-		header.append("object")
+		domainHeader.append("object")
 			.attr("class", "domain-infoIcon")
 			.attr("data", "images/svg/icon_info-domain.svg")
 			.attr("type", "image/svg+xml")
 
-		header.append("div")
+		domainHeader.append("div")
 			.attr("class", "domain-infoIcon")
 			.on("click", function() {
 				setInfo(properties);
@@ -177,8 +178,6 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		var kci = _properties.tickerData.data[0].kci;
 		getGraphData(_properties, subDomainA, kci, null);
 
-
-
 		if (_properties.id == "smartcitizen") {
 			var domain = d3.select("#" + _properties.id);
 			_properties.sckTemp = "loading data";
@@ -231,12 +230,27 @@ WAAG.Domain = function Domain(_propertiesAll) {
 			.attr("class", "subDomainB")
 			.attr("id", _properties.id)
 
-
-
 		subDomainB.append("object")
 			.attr("class", "subDomainIcon")
 			.attr("data", _properties.icon)
 			.attr("type", "image/svg+xml")
+			
+		//if subdomainB is different than mainDomain --> set a new header  	
+		if(_properties.newDomain){
+			console.log("different domain icon :"+_properties.newDomain.icon);
+			
+			
+			// domainHeader.append("object")
+			// 	.attr("class", "domainIcon")
+			// 	.style("top",48+"px" )
+			// 	.attr("data", _properties.newDomain.icon)
+			// 	.attr("type", "image/svg+xml");	
+			
+			domainHeader.append("h2")
+				.style("left", 448+"px")
+				.text(_properties.newDomain.label);
+			
+		};	
 
 		var kci = _properties.tickerData.data[0].kci;
 		getGraphData(_properties, subDomainB, kci, null);

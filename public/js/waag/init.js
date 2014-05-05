@@ -1,7 +1,7 @@
 var WAAG = WAAG || {};
 
 var widgetHeight = 224;
-var menuHeight = 128;
+var menuHeight = 6.5*16; // 6.5em --> css .menu_container
 var mapWidth = 768;
 var mapHeight = 576;
 
@@ -85,7 +85,7 @@ function setInfoPage() {
 	} else {
 		infoPage.transition()
 			.duration(500)
-			.style("top", 128 + "px");
+			.style("top", menuHeight + "px");
 
 		infoActive = true;
 	}

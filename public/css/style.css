@@ -99,7 +99,7 @@ input[type=checkbox]:checked + label:before {
 .menu_container {
   position:absolute;
   top:0em;
-  height: 8em;
+  height: 6.5em;
   width:100%;
   background-color:#FEE6CE;
   z-index:250;
@@ -140,6 +140,7 @@ input[type=checkbox]:checked + label:before {
 .menu_container #menu_bar {
   position:absolute;
   padding:1em;
+  padding-top:8px;
   
     
 }
@@ -176,7 +177,7 @@ input[type=checkbox]:checked + label:before {
 .menu_container #menu_bar .vLine {
   position:absolute;
   top:1em;
-  height:6em;
+  height:4.5em;
 }
 
 .domain_container{

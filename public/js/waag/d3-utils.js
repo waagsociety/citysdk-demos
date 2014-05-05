@@ -111,6 +111,17 @@ function getRange(data) {
 		}
 
 	});
+	
+	console.log("max :" + max + " --> min :" + min );
+	
+	// set values if mx and min are NaN
+	if (min == null || isNaN(min) ) {
+		min=0;
+	};
+	
+	if (max == null || isNaN(max) ) {
+		max=100;
+	};
 
 	var range = max - min;
 	var values;
@@ -127,8 +138,6 @@ function getRange(data) {
 		};
 		return values;
 	}
-
-
 
 	var ticksRoundUp = roundTicks(range / 2);
 
@@ -152,6 +161,7 @@ function getRange(data) {
 	ticks = (ymax - ymin) / 2;
 
 	console.log("ticks :" + ticks + " --> min :" + ymin + " --> max " + ymax);
+		
 	var values = {
 		min: ymin,
 		max: ymax,

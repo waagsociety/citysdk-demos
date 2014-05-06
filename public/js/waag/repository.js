@@ -346,6 +346,86 @@ function createDomains() {
 	};
 	list.push(properties);
 
+	
+	// domain cultural  
+	var tickerData = {
+		live: true,
+		data: [{
+			bullet: ">",
+			description: "Events at this moment",
+			value: "20.27 ",
+			units: "events",
+			kci: "tourism.events.nexthour"
+		}]
+	};
+	subDomainA = {
+		id: "events",
+		label: "Events",
+		icon: "images/svg/icon_tourism.events.svg",
+		tickerData: tickerData,
+		graphType: "sunburst",
+		infoHtml: "tourism.events.left",
+		mapLayers: [{
+			url: apiUrlDB + "/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000",
+			id: "artsholland",
+			label: "Arts Holland Events",
+			userCallBack: false,
+			sdkPath: "layers:artsholland:data"
+		}]
+
+	};
+
+	subDomainB = {
+		id: "events",
+		label: "Events",
+		icon: "images/svg/icon_tourism.events.svg",
+		tickerData: tickerData,
+		graphType: "stackedBar",
+		infoHtml: "tourism.events.right",
+		mapLayers: false
+
+	};
+
+	var properties = {
+		id: "cultural",
+		label: "Cultural",
+		icon: "images/svg/icon_tourism.svg",
+		color: "#FFB27D",
+		map: true,
+		subDomains: [subDomainA, subDomainB]
+
+	};
+	list.push(properties);
+		
+	// domain p2000  
+	var tickerData = {
+		live: true,
+		data: [{
+			bullet: ">",
+			description: "P2000 events",
+			value: "0 ",
+			units: "events",
+			kci: "emergency.p2000.alarms"
+		}]
+	};
+	subDomainA = {
+		id: "p2000",
+		label: "P2000 events",
+		icon: "images/svg/icon_emergency.p2000.svg",
+		tickerData: tickerData,
+		graphType: "bar",
+		infoHtml: "security.p2000",
+		//properties if sub domain is different than main domain
+		mapLayers: [{
+			url: apiUrlDB + "emergency.p2000.locations/admr.nl.amsterdam/live",
+			id: "p2000",
+			label: "P2000 events",
+			userCallBack: false,
+			sdkPath: ""
+		}]
+
+	};
+	
 	// domain economy 
 	var tickerData = {
 		live: true,
@@ -359,63 +439,34 @@ function createDomains() {
 
 		]
 	};
-	subDomainA = {
+	subDomainB = {
 		id: "stocks",
 		label: "E.A.X.",
 		icon: "images/svg/icon_economy.stocks.svg",
 		tickerData: tickerData,
 		graphType: "line",
 		infoHtml: "economy.stocks",
-		mapLayers: false
-
-	};
-	
-	// domain p2000  
-	var tickerData = {
-		live: true,
-		data: [{
-			bullet: ">",
-			description: "P2000 events",
-			value: "0 ",
-			units: "events",
-			kci: "emergency.p2000.alarms"
-		}]
-	};
-	subDomainB = {
-		id: "p2000",
-		label: "P2000 events",
-		icon: "images/svg/icon_emergency.p2000.svg",
-		tickerData: tickerData,
-		graphType: "bar",
-		infoHtml: "security.p2000",
-		//properties if sub domain is different than main domain
+		mapLayers: false,
 		newDomain:{
-			id: "security",
-			label: "Security (P2000)",
-			icon: "images/svg/icon_emergency.svg",
+			id: "economy",
+			label: "Economy",
+			icon: "images/svg/icon_economy.svg",
 			color: "#FFB27D",
-			map: true
+			map: true,
 		},
-		mapLayers: [{
-			url: apiUrlDB + "emergency.p2000.locations/admr.nl.amsterdam/live",
-			id: "p2000",
-			label: "P2000 events",
-			userCallBack: false,
-			sdkPath: ""
-		}]
 
 	};
 
 	var properties = {
-		id: "economy",
-		label: "Economy",
-		icon: "images/svg/icon_economy.svg",
+		id: "security",
+		label: "Security (P2000)",
+		icon: "images/svg/icon_emergency.svg",
 		color: "#FFB27D",
-		map: false,
+		map: true,
 		subDomains: [subDomainA, subDomainB]
 
 	};
-	list.push(properties);
+	list.push(properties);	
 
 	// domain social
 	var tickerData = {
@@ -468,58 +519,8 @@ function createDomains() {
 		subDomains: [subDomainA, subDomainB]
 
 	};
-	list.push(properties);
-
-
-	// domain cultural  
-	var tickerData = {
-		live: true,
-		data: [{
-			bullet: ">",
-			description: "Events at this moment",
-			value: "20.27 ",
-			units: "events",
-			kci: "tourism.events.nexthour"
-		}]
-	};
-	subDomainA = {
-		id: "events",
-		label: "Events",
-		icon: "images/svg/icon_tourism.events.svg",
-		tickerData: tickerData,
-		graphType: "sunburst",
-		infoHtml: "tourism.events.left",
-		mapLayers: [{
-			url: apiUrlDB + "/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000",
-			id: "artsholland",
-			label: "Arts Holland Events",
-			userCallBack: false,
-			sdkPath: "layers:artsholland:data"
-		}]
-
-	};
-
-	subDomainB = {
-		id: "events",
-		label: "Events",
-		icon: "images/svg/icon_tourism.events.svg",
-		tickerData: tickerData,
-		graphType: "stackedBar",
-		infoHtml: "tourism.events.right",
-		mapLayers: false
-
-	};
-
-	var properties = {
-		id: "cultural",
-		label: "Cultural",
-		icon: "images/svg/icon_tourism.svg",
-		color: "#FFB27D",
-		map: true,
-		subDomains: [subDomainA, subDomainB]
-
-	};
-	list.push(properties);
+	list.push(properties);	
+	
 
 
 	// domain p2000  

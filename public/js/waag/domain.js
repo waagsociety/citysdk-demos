@@ -238,17 +238,11 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		//if subdomainB is different than mainDomain --> set a new header  	
 		if(_properties.newDomain){
 			console.log("different domain icon :"+_properties.newDomain.icon);
-			
-			
-			// domainHeader.append("object")
-			// 	.attr("class", "domainIcon")
-			// 	.style("top",48+"px" )
-			// 	.attr("data", _properties.newDomain.icon)
-			// 	.attr("type", "image/svg+xml");	
-			
-			domainHeader.append("h2")
-				.style("left", 448+"px")
-				.text(_properties.newDomain.label);
+						
+			domainHeader.append("div")
+				.append("h2")	
+					.style("left", 400+"px")
+					.text(_properties.newDomain.label);
 			
 		};	
 

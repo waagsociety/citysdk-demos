@@ -5,6 +5,7 @@ var apiGeom = "&geom&per_page=1000";
 //var apiUrlDB = "http://195.169.149.30/";
 var apiUrlDB = "http://citydashboard.waag.org/";
 var admr = "admr.nl.amsterdam";
+var admrHeader="Amsterdam (beta)"
 var assetsImages = "images/images/";
 var assetsSvg = "images/svg/";
 var mainMapUrl = "http://citydashboard.waag.org/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&geom&per_page=1000";
@@ -13,10 +14,10 @@ var timeNow = dNow.getTime();
 var dayNow = dNow.getDay();
 var hNow = dNow.getHours();
 var mNow = dNow.getMinutes();
-var colorStepper = 4;
+
 var liveUpdateTime = 10000;
 var noDataLabel = "Data source interupted :-(";
-var language = "eng";
+
 
 //var initialTickerData=[];
 var admrData = [];
@@ -396,6 +397,60 @@ function createDomains() {
 
 	};
 	list.push(properties);
+
+	// domain social
+	var tickerData = {
+		live: true,
+		data: [{
+			bullet: ">",
+			description: "Political parties",
+			value: "",
+			units: "tweets",
+			kci: "social.twitter.sentiment"
+		}]
+	};
+
+	subDomainA = {
+		id: "sentiment",
+		label: "Sentiment",
+		icon: "images/svg/icon_social.twitter.svg",
+		tickerData: tickerData,
+		graphType: "multiline",
+		infoHtml: "social.sentiment",
+		mapLayers: false
+
+	};
+
+	var tickerData = {
+		live: true,
+		data: [{
+			bullet: ">",
+			description: "Soccer",
+			value: "20.27",
+			units: "tweets",
+			kci: "social.twitter.soccer"
+		}]
+	};
+	subDomainB = {
+		id: "soccer",
+		label: "Soccer",
+		icon: "images/svg/icon_social.twitter.svg",
+		tickerData: tickerData,
+		graphType: "multiline",
+		infoHtml: "social.soccer",
+		mapLayers: "false"
+	};
+	var properties = {
+		id: "social",
+		label: "Social",
+		icon: "images/svg/icon_social.svg",
+		color: "#EF7714", //F16912
+		map: false,
+		subDomains: [subDomainA, subDomainB]
+
+	};
+	list.push(properties);	
+	
 		
 	// domain p2000  
 	var tickerData = {
@@ -459,7 +514,7 @@ function createDomains() {
 
 	var properties = {
 		id: "security",
-		label: "Security (P2000)",
+		label: "Emengency (P2000)",
 		icon: "images/svg/icon_emergency.svg",
 		color: "#FFB27D",
 		map: true,
@@ -468,58 +523,7 @@ function createDomains() {
 	};
 	list.push(properties);	
 
-	// domain social
-	var tickerData = {
-		live: true,
-		data: [{
-			bullet: ">",
-			description: "Political parties",
-			value: "",
-			units: "tweets",
-			kci: "social.twitter.sentiment"
-		}]
-	};
-
-	subDomainA = {
-		id: "sentiment",
-		label: "Sentiment",
-		icon: "images/svg/icon_social.twitter.svg",
-		tickerData: tickerData,
-		graphType: "multiline",
-		infoHtml: "social.sentiment",
-		mapLayers: false
-
-	};
-
-	var tickerData = {
-		live: true,
-		data: [{
-			bullet: ">",
-			description: "Soccer",
-			value: "20.27",
-			units: "tweets",
-			kci: "social.twitter.soccer"
-		}]
-	};
-	subDomainB = {
-		id: "soccer",
-		label: "Soccer",
-		icon: "images/svg/icon_social.twitter.svg",
-		tickerData: tickerData,
-		graphType: "multiline",
-		infoHtml: "social.soccer",
-		mapLayers: "false"
-	};
-	var properties = {
-		id: "social",
-		label: "Social",
-		icon: "images/svg/icon_social.svg",
-		color: "#EF7714", //F16912
-		map: false,
-		subDomains: [subDomainA, subDomainB]
-
-	};
-	list.push(properties);	
+	
 	
 
 

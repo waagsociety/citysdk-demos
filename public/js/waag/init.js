@@ -10,7 +10,9 @@ var map;
 var colorScheme = "Oranges";
 
 var rangeCB = 9; //range colorbrewer
+var colorStepper = 4; // use of colors
 var infoActive = false;
+var language = "eng";
 
 
 function initDashboard() {
@@ -30,6 +32,23 @@ function initDashboard() {
 
 	window.addEventListener('resize', onWindowResize, false);
 	onWindowResize(null);
+	
+	// set menu header text
+	d3.select("#admr").html(admrHeader);
+	
+	// set main info text
+	d3.html("text-content/main_info.html", function(d) {
+		var t = d.querySelector("#" + language);
+		var infoHtml=d3.select("#info_content");
+		infoHtml.html(t.innerHTML);
+		
+		var el = document.getElementById("info_page"); // or other selector like querySelector()
+		var rect = el.getBoundingClientRect(); // get the bounding rectangle
+		
+		d3.select("#info_page").style("top", menuHeight - rect.height - 32 + "px")
+			
+	});
+	
 
 	domainList = createDomains();
 

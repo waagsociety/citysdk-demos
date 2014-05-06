@@ -122,20 +122,16 @@ input[type=checkbox]:checked + label:before {
 
   
 }
-#info_content {
-  
-  margin:1.5em;
 
-  
-}
-
-#info_content #partners{
+#info_page #partners{
   position:relative;
   left:56px;
   
 }
 
-
+#info_content {
+  margin:1.5em;  
+}
 
 .menu_container #menu_bar {
   position:absolute;

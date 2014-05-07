@@ -1039,6 +1039,19 @@ WAAG.Map = function Map(domains) {
 			label += "Road pressure: " + _data.value.toFixed(2) + " %";
 
 			return label;
+		}else if(_data.layer=="divv.parking.capacity"){
+			var g = _data.layers["divv.parking.capacity"];
+			var totCapacity=parseInt(g.data.LongCapacity)+parseInt(g.data.ShortCapacity);
+			
+			
+			label +="Type: "+g.data.Type+"<br>"	
+			label +="Free space short parking: "+g.data.FreeSpaceShort+"<br>"	
+			label +="Free space longterm parking: "+g.data.FreeSpaceLong+"<br>"	
+			label +="Capacity short parkinging: "+g.data.ShortCapacity+"<br>"	
+			label +="Capacity longterm parkinging: "+g.data.LongCapacity+"<br>"
+			label +="Total Capacity: "+totCapacity+"<br>"			
+		
+			return label;
 		}else if(_data.layer == "artsholland" || _data.layer =="osm"){
 			console.log("setting arts holland label");
 			var events=0;

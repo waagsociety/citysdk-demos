@@ -574,10 +574,36 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		d3.json(apiUrlDB + d.kci + "/" + admr + "/live", function(result) {
 			if (result[d.kci + ":" + admr] == null) {
 				console.log("no live data available");
-				domain.select("#" + d.valueId).html("<img src=images/icon-broken-link.png>");
+				domain.select("#" + d.valueId)
+					.on("mouseover", function(d) {
+						showToolTip("Data source interrupted<br>No live data available :-(");
+
+					})
+					.on("mousemove", function(d) {
+
+						updateToolTipPosition(d3.event.pageX, d3.event.pageY);
+
+					})
+					.on("mouseout", function(d) {
+						hideToolTip();
+					})
+					.html("<img src=images/icon-broken-link.png>");
+				
 
 			} else if (result[d.kci + ":" + admr]!=null) {
+				domain.select("#" + d.valueId)
+					.on("mouseover", function(d) {
+						showToolTip("Live values<br>Click to update graph");
 
+					})
+					.on("mousemove", function(d) {
+
+						updateToolTipPosition(d3.event.pageX, d3.event.pageY);
+
+					})
+					.on("mouseout", function(d) {
+						hideToolTip();
+					})
 
 				//console.log("live update ="+result[d.kci+":"+admr]) ;       
 

@@ -134,7 +134,7 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
 		data.forEach(function(d) {
 			d.units = yUnits;
 			d.description = description;
-			if (d.value == null || isNaN(d.value) || !d.value) d.value = range.min;
+			
 			var timestamp;
 			if (d.hour <= hNow) {
 				timestamp = d.timestamp;
@@ -142,8 +142,9 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
 				timestamp = d.realTimestamp;
 			}
 
-			if (d.value == range.min) {
-				label = noDataLabel;
+			if (d.value == null || isNaN(d.value) || !d.value) {
+				label = noDataLabel;   
+				d.value = range.min
 			} else {
 				label = "Time : " + formatDateLabel(timestamp) + "<br/>Description :" + d.description + "<br>Value :" + d.value.toFixed(2) + " " + d.units;
 			}

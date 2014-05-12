@@ -387,15 +387,18 @@ WAAG.Domain = function Domain(_propertiesAll) {
 
 	function setGraph(_properties, subDomain) {
 
-		var graph;
-
+		var graph;     
+		
 		if (_properties.graphType == "bar") {
 			graph = new WAAG.BarGraph(_properties, subDomain, domainColor);
 		} else if (_properties.graphType == "line") {
 			graph = new WAAG.LineGraph(_properties, subDomain, domainColor);
 		} else if (_properties.graphType == "multiline") {
 			graph = new WAAG.MultiLineGraph(_properties, subDomain, domainColor);
-		} else if (_properties.graphType == "area") {
+		} else if (_properties.graphType == "area") {     
+			console.log("area graph")
+			console.log(_properties)
+			
 			graph = new WAAG.AreaGraph(_properties, subDomain, domainColor);
 		} else if (_properties.graphType == "circlepack") {
 			graph = new WAAG.CirclePack(_properties, subDomain, domainColor);

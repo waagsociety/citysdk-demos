@@ -17,7 +17,8 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 
 	function init() {
 
-		var data = properties.tickerData.data[0].kciData;
+		var data = properties.tickerData.data[0].kciData; 
+	  
 		var subDomain = _subDomain;
 		svgDomain = subDomain.append("svg")
 			.attr("width", width + margin.left + margin.right)
@@ -130,7 +131,7 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 		data.forEach(function(d) {
 			d.units = yUnits;
 			d.description = description;
-			if (d.value == null || isNaN(d.value) || !d.value) d.value = range.min;
+			
 			var timestamp;
 			if (d.hour <= hNow) {
 				timestamp = d.timestamp;
@@ -138,8 +139,8 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 				timestamp = d.realTimestamp;
 			}
 
-
-			if (d.value == range.min) {
+			if (d.value == null || isNaN(d.value) || !d.value) {
+				d.value = range.min
 				label = noDataLabel;
 			} else {
 				label = "Time : " + formatDateLabel(timestamp) + "<br/>Description :" + d.description + "<br>Value :" + d.value.toFixed(2) + " " + d.units;
@@ -149,7 +150,6 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 			if (d.hour <= hNow) {
 				dataArea.push(d);
 			}
-			//console.log("new :"+d.value);  	    
 		});
 
 		y.domain([range.min, range.max]);

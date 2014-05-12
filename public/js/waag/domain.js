@@ -276,7 +276,6 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		if (_properties.tickerData.live) {
 
 			d3.json(apiUrlDB + kci + "/" + admr + "/history", function(results) {
-				//console.log("loosecontrol results ="+results.length);
 				var i = 0;
 				var dTemp = new Date();
 				var initialTickerData = [];
@@ -624,9 +623,20 @@ WAAG.Domain = function Domain(_propertiesAll) {
 				} else {
 					var keys = d3.entries(result[d.kci + ":" + admr]);
 
-					if (keys.length <= 0) {
-						domain.select("#" + d.valueId).html(result[d.kci + ":" + admr].toFixed(2) + " " + d.units);
-						d.value = result[d.kci + ":" + admr].toFixed(2) + " " + d.units;
+					if (keys.length <= 0) {   
+						var res = result[d.kci + ":" + admr]
+						var val = null;
+						if(!isNaN(parseFloat(res)) && isFinite(res)) //a number result
+						{
+						 	val = res.toFixed(2)
+						}                                                         
+						else if(res instanceof Array)
+						{
+							val = res.length 
+						}
+					 	domain.select("#" + d.valueId).html(val + " " + d.units);
+						d.value = val + " " + d.units;
+						
 					} else {
 						var amount = 0;
 						keys.forEach(function(d) {

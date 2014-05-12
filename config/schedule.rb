@@ -1,13 +1,13 @@
 # Schedule for whenever : Learn more: http://github.com/javan/whenever
-# After change do: whenever --update-crontab                          
+# After change do: whenever --update-crontab,                          
                             
 #prepare every five minutes
 every 5.minutes do
   rake "background:prepare"
 end                                 
 
-#hourly add history records 
-every '0 * * * *' do 
+#hourly add history records these are rounded to the hour but doing it more then every hour we have a retry mechanism
+every 15.minutes do 
   rake "background:add_history"
 end 
                         

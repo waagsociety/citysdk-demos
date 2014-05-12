@@ -16,7 +16,7 @@ var hNow = dNow.getHours();
 var mNow = dNow.getMinutes();
 
 var liveUpdateTime = 10000;
-var noDataLabel = "Data source interupted :-(";
+var noDataLabel = "Data source interrupted :-(";
 
 
 //var initialTickerData=[];

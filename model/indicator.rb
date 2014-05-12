@@ -218,7 +218,7 @@ class Indicator
         return 
      end     
      
-     #get value from existing record
+     #get value from record
      obj = JSON.parse(record,{:symbolize_names => true})
      key = self.get_key admr
      value = obj[key.to_sym] 

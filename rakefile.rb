@@ -12,9 +12,9 @@ def all_indicators_do method, *args
   Dir[File.dirname(__FILE__) + '/model/indicator/*.rb'].each do |file| require file 
     $logger.info "loaded indicator #{file}"
   end
-  threads = [] 
+  #threads = [] 
   Indicator.subclasses.each do |indicator|
-     threads << Thread.new do
+     #threads << Thread.new do
        instance = indicator.instance
        begin
          $logger.info "#{method} indicator #{instance.get_id}"
@@ -22,9 +22,9 @@ def all_indicators_do method, *args
        rescue Exception => e
          puts "caught exception in #{instance.get_id}.add_history : #{e.message} \n #{e.backtrace}"
        end
-     end
+     #end
   end
-  ThreadsWait.all_waits(*threads)
+  #ThreadsWait.all_waits(*threads)
 end
 
 #background tasks to be executed from whenever

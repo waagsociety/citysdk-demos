@@ -13,7 +13,7 @@ set :scm, :none
 
 set :deploy_to, "/var/www/citydashboard"
 
-set :copy_exclude, ['test']
+set :copy_exclude, ['test','log']
 
 set :deploy_via, :copy
 

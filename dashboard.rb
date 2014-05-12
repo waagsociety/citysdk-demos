@@ -1,3 +1,5 @@
+#encoding: utf-8 
+
 require 'rubygems'
 require 'sinatra'  
 require 'logger'
@@ -6,7 +8,6 @@ require 'rufus-scheduler'
 require_relative 'model/cache.rb'
 require_relative 'model/pt_indicator.rb'
    
-#`export LC_CTYPE=en_US.UTF-8`                          
 FileUtils.mkdir_p "log"
                    
 #global stuff

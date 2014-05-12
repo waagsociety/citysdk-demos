@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 require_relative "../cache.rb" 
 require "logger"
                                
@@ -63,9 +64,6 @@ class TourismEventsNexthour < Indicator
       return result
    end
    
-   def query_history_week admr
-       return "not implemented"
-   end
    
    
   

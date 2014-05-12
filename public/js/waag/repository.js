@@ -146,7 +146,7 @@ function createDomains() {
 		live: true,
 		data: [{
 			bullet: ">",
-			description: "Ontime",
+			description: "On time",
 			value: "",
 			units: "%",
 			kci: "transport.pt.ontime"
@@ -514,7 +514,7 @@ function createDomains() {
 
 	var properties = {
 		id: "security",
-		label: "Emengency (P2000)",
+		label: "Emergency (P2000)",
 		icon: "images/svg/icon_emergency.svg",
 		color: "#FFB27D",
 		map: true,

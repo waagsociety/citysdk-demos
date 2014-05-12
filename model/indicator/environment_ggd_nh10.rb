@@ -10,7 +10,7 @@ class EnvironmentGgdNh10 < Indicator
    end
    
    def prepare admr  
-     GgdScraper::scrape admr
+     GgdScraper::scrape admr #scrape the page and store live values persistent
    end
    
    def get_name
@@ -30,7 +30,7 @@ class EnvironmentGgdNh10 < Indicator
    end
    
    def calculate admr
-     return GgdScraper::get_pm10 admr
+     return GgdScraper::get_pm10 admr #get persistent value, which was scraped in prepare
    end
   
 end

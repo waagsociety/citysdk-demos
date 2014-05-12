@@ -1,3 +1,5 @@
+#encoding: utf-8 
+
 require "nokogiri"    
 require "faraday"
 require 'logger'
@@ -17,15 +19,15 @@ module GgdScraper
     end
     
     def self.get_pm10 admr
-      return eval Cache.instance.redis.get self.get_cache_key(admr,"pm10")
+      return (eval Cache.instance.redis.get self.get_cache_key(admr,"pm10")).to_f
     end
        
     def self.get_no2 admr
-      return eval Cache.instance.redis.get self.get_cache_key(admr,"no2")
+      return (eval Cache.instance.redis.get self.get_cache_key(admr,"no2")).to_f
     end
                
     def self.get_date admr
-      return eval Cache.instance.redis.get self.get_cache_key(admr,"date")
+      return (eval Cache.instance.redis.get self.get_cache_key(admr,"date")).to_i
     end   
        
     def self.__get_average doc, sel

@@ -234,7 +234,7 @@ function createDomains() {
 		graphType: "line",
 		infoHtml: "environment.sck",
 		mapLayers: [{
-			url: apiUrlDB + "/cache/300/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000",
+			url: apiUrlDB + "/cache/3600/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000",
 			id: "sck",
 			label: "Smart citizens",
 			userCallBack: false,
@@ -367,7 +367,7 @@ function createDomains() {
 		graphType: "sunburst",
 		infoHtml: "tourism.events.left",
 		mapLayers: [{
-			url: apiUrlDB + "/cache/300/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000",
+			url: apiUrlDB + "/cache/1800/admr.nl.amsterdam/nodes?layer=artsholland&geom&per_page=1000",
 			id: "artsholland",
 			label: "Arts Holland Events",
 			userCallBack: false,

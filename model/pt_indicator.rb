@@ -1,6 +1,7 @@
 require_relative "indicator.rb"
 require_relative "client.rb"
 require_relative "cache.rb"
+require "cgi"
 require "faraday"
 require "json"
 require "csv"          
@@ -49,18 +50,22 @@ module PtIndicator
       $logger.info "***** get actuals"
       
       #this should already be cached daily                               
-      recs =  Client.instance.get_all_records "/#{admr}/ptlines?"
+      recs =  Client.instance.get_all_records "/#{admr}/ptlines?layer=gtfs"
                                      
       open_ov_lines = Array.new
       recs.each_with_index do |line, line_index|
-        begin
+        begin    
           cdk_id = line[:cdk_id]
-          op = (cdk_id.split("."))[2]
-          linename = (cdk_id.split("."))[3] 
-          linenr, dir = linename.split("-")
-          ovid = "#{op.upcase()}_#{linenr}"
-          ovid = "#{ovid}_#{dir}" if dir
-          open_ov_lines.push ovid
+          line_name = line[:layers][:gtfs][:data][:route_short_name]
+          agency_id = line[:layers][:gtfs][:data][:agency_id]
+          if line_name && agency_id
+            $logger.debug "cdk id #{cdk_id}" 
+            cid, dir = cdk_id.split("-")
+            ovid = "#{CGI.escape(agency_id.upcase())}_#{CGI.escape(line_name)}"
+            ovid = "#{ovid}_#{dir}" if dir
+            open_ov_lines.push ovid  
+            $logger.debug "ovid #{ovid}" 
+          end
         rescue Exception => e          
           $logger.info "self.__process_lines #{e.message}"
           $logger.error "self.__process_lines #{e.message}"

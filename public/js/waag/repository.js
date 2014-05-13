@@ -146,6 +146,12 @@ function createDomains() {
 		live: true,
 		data: [{
 			bullet: ">",
+			description: "Actual trips",
+			value: "",
+			units: "",
+			kci: "transport.pt.running"
+		}, {
+			bullet: "+",
 			description: "On time",
 			value: "",
 			units: "%",
@@ -156,13 +162,7 @@ function createDomains() {
 			value: "",
 			units: "sec",
 			kci: "transport.pt.delay"
-		}, {
-			bullet: "+",
-			description: "Actual trips",
-			value: "",
-			units: "",
-			kci: "transport.pt.running"
-		}, ]
+		}]
 	};
 	var subDomainB = {
 		id: "pt",

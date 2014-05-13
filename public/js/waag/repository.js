@@ -457,15 +457,15 @@ function createDomains() {
 		live: true,
 		data: [{
 			bullet: ">",
-			description: "P2000 events",
+			description: "P2000 reports",
 			value: "0 ",
-			units: "events",
+			units: "reports",
 			kci: "emergency.p2000.alarms"
 		}]
 	};
 	subDomainA = {
 		id: "p2000",
-		label: "P2000 events",
+		label: "P2000 reports",
 		icon: "images/svg/icon_emergency.p2000.svg",
 		tickerData: tickerData,
 		graphType: "bar",
@@ -474,7 +474,7 @@ function createDomains() {
 		mapLayers: [{
 			url: apiUrlDB + "emergency.p2000.locations/admr.nl.amsterdam/live",
 			id: "p2000",
-			label: "P2000 events",
+			label: "P2000(emergencies)",
 			userCallBack: false,
 			sdkPath: ""
 		}]

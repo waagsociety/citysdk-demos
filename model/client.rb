@@ -1,4 +1,6 @@
 require "singleton" 
+require "cgi"
+require "uri"
 require_relative "cache.rb" 
 
 class CitySDK::API
@@ -69,13 +71,29 @@ class Client
        end
        return nil if :cache_mode_force == true 
      end
-
+     
+     #do paged request to get all
      page = 1   
      all = Array.new  
      begin
        loop do
+         params = Hash.new
+         path = URI.parse(req).path
+         query = URI.parse(req).query
+         if query
+           p = CGI.parse(query)
+           p.each do |k,v| params[k] = v.join(",") end
+         end      
+         
+         #add paging params 
+         params["per_page"] = per_page.to_s
+         params["page"] = page.to_s 
+                           
+         #generate query string
+         querystring = params.map{|k,v| "#{CGI.escape(k)}=#{CGI.escape(v)}"}.join("&")
+                  
          #sub request for page
-         subreq = "#{req}&per_page=#{per_page}&page=#{page}"
+         subreq = "#{path}?#{querystring}" 
                               
          #result
          result  = @api.get(subreq)

@@ -112,6 +112,7 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 			})
 			.y0(height)
 			.y1(function(d) {
+				//console.log("value ="+d.value);
 				return y(d.value);
 			});
 
@@ -209,11 +210,11 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 		visArea.enter().append("path")
 			.attr("class", "area")
 			.attr("d", area)
-
+		
 		visArea.transition()
 			.duration(time)
 			.attr("d", area);
-
+		
 		visArea.exit().transition()
 			.duration(time)
 			.style("opacity", 0)

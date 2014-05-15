@@ -221,9 +221,6 @@ function createDomains() {
 				units: "lux",
 				kci: "environment.sck.light"
 			}
-			//{bullet:">", description: "Temperature", value: "", units:"&#176C", kci:"environment.sck.temperature"},
-			//{bullet:"+", description: "Humidity", value: "", units:"%", kci:"environment.sck.humidity"},
-			//{bullet:"+", description: "Light", value: "", units:"lux", kci:"environment.sck.light"}   
 		]
 	};
 	subDomainA = {
@@ -231,7 +228,7 @@ function createDomains() {
 		label: "Smartcitizen",
 		icon: "images/svg/icon_environment.sck.svg",
 		tickerData: tickerData,
-		graphType: "line",
+		graphType: "area",
 		infoHtml: "environment.sck",
 		mapLayers: [{
 			url: apiUrlDB + "/cache/3600/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000",
@@ -268,7 +265,7 @@ function createDomains() {
 		label: "GGD airquality",
 		icon: "images/svg/icon_environment.ggd-airquality.svg",
 		tickerData: tickerData,
-		graphType: "area",
+		graphType: "line",
 		infoHtml: "environment.ggd",
 		mapLayers: false
 	};

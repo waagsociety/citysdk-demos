@@ -10,7 +10,7 @@ var map;
 var colorScheme = "Oranges";
 
 var rangeCB = 9; //range colorbrewer
-var colorStepper = 4; // use of colors
+var colorStepper = 2; // use of colors
 var infoActive = false;
 var language = "eng";
 

@@ -11,7 +11,7 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 		width = 350 - margin.left - margin.right,
 		height = 100 - margin.top - margin.bottom;
 
-	var x, y, xaxis, yaxis, line, svgDomain, focus;
+	var x, y, xaxis, yaxis, line, area, svgDomain, focus;
 	var activeIndex = 0;
 	var focus;
 
@@ -112,7 +112,7 @@ WAAG.AreaGraph = function AreaGraph(properties, _subDomain, domainColor) {
 			})
 			.y0(height)
 			.y1(function(d) {
-				//console.log("value ="+d.value);
+				console.log("value ="+d.value);
 				return y(d.value);
 			});
 

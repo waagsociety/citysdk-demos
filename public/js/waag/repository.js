@@ -198,15 +198,15 @@ function createDomains() {
 		live: true,
 		data: [{
 				bullet: ">",
-				description: "NO&#178 (nitrogen dioxide)",
+				description: "NO&#x2082 (nitrogen dioxide)",
 				value: "",
-				units: "&#181g/m&#179",
+				units: "k&#937",
 				kci: "environment.sck.no2"
 			}, {
 				bullet: "+",
 				description: "CO (carbon monoxide)",
 				value: "",
-				units: "K&#937",
+				units: "k&#937",
 				kci: "environment.sck.co"
 			}, {
 				bullet: "+",
@@ -248,13 +248,13 @@ function createDomains() {
 		live: true,
 		data: [{
 				bullet: ">",
-				description: "NO&#178 (nitrogen dioxide)",
+				description: "NO&#x2082 (nitrogen dioxide)",
 				value: "",
 				units: "&#181g/m&#179",
 				kci: "environment.ggd.no2"
 			}, {
 				bullet: "+",
-				description: "NH10 (fine particles)",
+				description: "PM10 (particles)",
 				value: "",
 				units: "&#181g/m&#179",
 				kci: "environment.ggd.nh10"

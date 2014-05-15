@@ -8,7 +8,7 @@ class EnvironmentSckLight < Indicator
    end
    
    def get_name
-      return "light"
+     return "light"
    end
    
    def get_description
@@ -27,13 +27,17 @@ class EnvironmentSckLight < Indicator
      $logger.debug "calculating key #{self.get_id}:#{admr}"
      
      #get data from source
-     results = Client.instance.get_all_records "/#{admr}/nodes?layer=sck"
+     cdk_req = "/#{admr}/nodes?layer=sck" 
+     results = Client.instance.get_all_records cdk_req
                    
      #retrieve the property we're interested in  
      lights = self.m_hash_get_path results, [:layers,:sck,:data,:light]  
       
      #do calculations
      light = self.calculate_average lights
+     
+     #dont cache the raw results if the lead to a nil value
+     Client.instance.clear_cache_records cdk_req if light == nil
 
      return light
    end

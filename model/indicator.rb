@@ -80,7 +80,7 @@ class Indicator
    end
    
    def get_cache_time
-     return 60
+     return 300
    end
 
    def calculate
@@ -162,13 +162,13 @@ class Indicator
         $logger.error("caught exception #{e.message} \n #{e.backtrace}")
       end 
                        
-      #create record and store the value in cache for one minute
+      #create record
       result = self.create_record admr, value, time.to_i 
       json = JSON.generate(result)
       
-      #store
+      #cache only if the value is not nil
       if value
-        Cache.instance.redis.set(cache_key, json, {:ex => self.get_cache_time}) #1 minute cache      
+        Cache.instance.redis.set(cache_key, json, {:ex => self.get_cache_time}) #cache time defined by indicator      
       end  
       
       return json

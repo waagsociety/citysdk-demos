@@ -198,15 +198,15 @@ function createDomains() {
 		live: true,
 		data: [{
 				bullet: ">",
-				description: "NO&#178 (nitrogen dioxide)",
+				description: "NO&#x2082 (nitrogen dioxide)",
 				value: "",
-				units: "&#181g/m&#179",
+				units: "k&#937",
 				kci: "environment.sck.no2"
 			}, {
 				bullet: "+",
 				description: "CO (carbon monoxide)",
 				value: "",
-				units: "K&#937",
+				units: "k&#937",
 				kci: "environment.sck.co"
 			}, {
 				bullet: "+",
@@ -221,9 +221,6 @@ function createDomains() {
 				units: "lux",
 				kci: "environment.sck.light"
 			}
-			//{bullet:">", description: "Temperature", value: "", units:"&#176C", kci:"environment.sck.temperature"},
-			//{bullet:"+", description: "Humidity", value: "", units:"%", kci:"environment.sck.humidity"},
-			//{bullet:"+", description: "Light", value: "", units:"lux", kci:"environment.sck.light"}   
 		]
 	};
 	subDomainA = {
@@ -231,7 +228,7 @@ function createDomains() {
 		label: "Smartcitizen",
 		icon: "images/svg/icon_environment.sck.svg",
 		tickerData: tickerData,
-		graphType: "line",
+		graphType: "area",
 		infoHtml: "environment.sck",
 		mapLayers: [{
 			url: apiUrlDB + "/cache/3600/admr.nl.amsterdam/nodes?layer=sck&geom&per_page=1000",
@@ -248,13 +245,13 @@ function createDomains() {
 		live: true,
 		data: [{
 				bullet: ">",
-				description: "NO&#178 (nitrogen dioxide)",
+				description: "NO&#x2082 (nitrogen dioxide)",
 				value: "",
 				units: "&#181g/m&#179",
 				kci: "environment.ggd.no2"
 			}, {
 				bullet: "+",
-				description: "NH10 (fine particles)",
+				description: "PM10 (particles)",
 				value: "",
 				units: "&#181g/m&#179",
 				kci: "environment.ggd.nh10"

@@ -1,8 +1,7 @@
 
 html, body {
-  
-	height: 100%;
-	padding: 0;
+  height: 100%;
+  padding: 0;
   margin: 0;
   /*overflow: hidden;*/
   background-color: #F9F1EA; 
@@ -10,6 +9,11 @@ html, body {
   font-family: 'Gudea', sans-serif;
   color:#666;
   font-size: 1em;
+}
+a:link, a:visited, a:hover, a:active {
+	color:#666;
+	text-style:underline;
+	
 }
 
 #stage{
@@ -223,12 +227,20 @@ input[type=checkbox]:checked + label:before {
   height:2em;
   
 }
-.domainInfo{
+.domain_container .domainInfo{
   position:absolute;
   top:76px;
   width:360px;
   height:130px;
   font-size: 0.8em;
+}
+
+.domainInfoA, .domainInfoB {
+    position:absolute;
+    top:76px;
+    width:360px;
+    height:130px;
+
 }
 
 .domain_container .subDomainA{
@@ -378,6 +390,12 @@ li #inActive{
 .footer #logo-waag{
   height:50px;
   background: url("../images/logo_waag.png") no-repeat;
+}
+
+.footer #logo-partners{
+  height:71px;
+  background: url("../images/logos.png") no-repeat;
+  margin-left:60px
 }
 
 .footer #logo-cc{

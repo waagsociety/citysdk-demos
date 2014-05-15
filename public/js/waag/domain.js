@@ -45,13 +45,15 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		//console.log(stage);  
 
 		domainInfo = container.append("div")
-			.attr("id", "domainInfo")
+			.attr("class", "domainInfo")
 			.style("background-color", domainColor)
 			.style("position", "absolute")
 			.style("top", -widgetHeight + "px")
 			.style("height", widgetHeight + "px")
 			.style("width", 100 + "%")
 			.style("z-index", -1)
+			
+			
 
 		domainHeader = container.append("div")
 			.attr("id", "domainHeader")
@@ -159,9 +161,8 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		var infoHtml = "";
 		d3.html("text-content/" + _properties.infoHtml + ".html", function(d) {
 			var t = d.querySelector("#" + language);
-			container.select("#domainInfo").append("div")
-				.attr("class", "domainInfo")
-				.attr("id", "infoDomainA")
+			container.select(".domainInfo").append("div")
+				.attr("class", "domainInfoA")
 				.style("left", 16 + "px")
 				.html(t.innerHTML)
 		});
@@ -217,9 +218,8 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		var infoHtml = "";
 		d3.html("text-content/" + _properties.infoHtml + ".html", function(d) {
 			var t = d.querySelector("#" + language);
-			container.select("#domainInfo").append("div")
-				.attr("class", "domainInfo")
-				.attr("id", "infoDomainB")
+			container.select(".domainInfo").append("div")
+				.attr("class", "domainInfoB")
 				.style("left", 768 / 2 + 16 + "px")
 				.style("width", 368 - 16 + "px")
 				.html(t.innerHTML)
@@ -716,7 +716,7 @@ function activateMap(_properties) {
 	var map_container = d3.select("#map_container");
 	map_container.style("z-index", 5);
 
-	d3.selectAll("#domainInfo").style("visibility", "hidden");
+	d3.selectAll(".domainInfo").style("visibility", "hidden");
 
 	map_container.transition()
 		.duration(500)
@@ -743,7 +743,7 @@ function activateMap(_properties) {
 				.duration(750)
 				.style("top", (menuHeight + (domainList[i].index * widgetHeight)) + "px")
 				.each("end", function() {
-					d3.selectAll("#domainInfo").style("visibility", "visible");
+					d3.selectAll(".domainInfo").style("visibility", "visible");
 					map.addDomainLayer(_properties);
 
 				});
@@ -769,7 +769,7 @@ function deActivateMap() {
 	var map_container = d3.select("#map_container");
 	map_container.style("z-index", 5);
 
-	d3.selectAll("#domainInfo").style("visibility", "hidden");
+	d3.selectAll(".domainInfo").style("visibility", "hidden");
 
 	map_container.transition()
 		.duration(500)
@@ -796,7 +796,7 @@ function deActivateMap() {
 				.duration(750)
 				.style("top", (menuHeight + (domainList[i].index * widgetHeight)) + "px")
 				.each("end", function() {
-					d3.selectAll("#domainInfo").style("visibility", "visible");
+					d3.selectAll(".domainInfo").style("visibility", "visible");
 				});
 
 		} else if (parseInt(domainList[i].index) > index) {

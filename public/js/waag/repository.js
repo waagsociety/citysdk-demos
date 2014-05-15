@@ -569,94 +569,94 @@ function createDomains() {
 
 var cbsLayers = [{
 		value: "bev_dichth",
-		description: "Bev. dichtheid"
+		description: "Population density"
 	}, {
 		value: "aant_inw",
-		description: "Aantal inwoners"
+		description: "Inhabitants"
 	}, {
 		value: "aant_vrouw",
-		description: "Aantal vrouwen"
+		description: "Amount women"
 	}, {
 		value: "aant_man",
-		description: "Aantal mannen"
+		description: "Amount men"
 	}, {
 		value: "aantal_hh",
-		description: "Aantal huishoudens"
+		description: "Households"
 	}, {
 		value: "gem_hh_gr",
-		description: "Gemm. hh grote"
+		description: "Avg. size households"
 	}, {
 		value: "p_gehuwd",
-		description: "Perc. gehuwd"
+		description: "Perc. married"
 	}, {
 		value: "p_hh_m_k",
-		description: "Perc. hh met kinderen"
+		description: "Perc. hh with children"
 	}, {
 		value: "p_hh_z_k",
-		description: "Perc. hh zonder kinderen"
+		description: "Perc. hh without children"
 	}, {
 		value: "p_eenp_hh",
-		description: "Perc. 1pers. hh"
+		description: "Perc. single hh"
 	}, {
 		value: "p_gescheid",
-		description: "Perc. gescheiden"
+		description: "Perc. devorced"
 	}, {
 		value: "p_ongehuwd",
-		description: "Perc. ongehuwd"
+		description: "Perc. unmarried"
 	}, {
 		value: "p_verweduw",
-		description: "Perc. weduw"
+		description: "Perc. widow"
 	},
 
 	{
 		value: "p_surinam",
-		description: "Perc. Surninaams"
+		description: "Perc. Surninamese"
 	}, {
 		value: "p_ant_aru",
-		description: "Perc. Antiliaans"
+		description: "Perc. Antillian"
 	}, {
 		value: "p_marokko",
-		description: "Perc. Marokaans"
+		description: "Perc. Maroccan"
 	}, {
 		value: "p_turkije",
-		description: "Perc. Turks"
+		description: "Perc. Turkish"
 	}, {
 		value: "p_west_al",
-		description: "Perc. west. allochtoon"
+		description: "Perc. west. foreign"
 	}, {
 		value: "p_n_w_al",
-		description: "Perc. niet west. allochtoon"
+		description: "Perc. not west. foreign"
 	}, {
 		value: "p_over_nw",
-		description: "Perc. overig niet west."
+		description: "Perc. other not west."
 	},
 
 	{
 		value: "p_00_14_jr",
-		description: "Perc. 0 - 14 jaar"
+		description: "Perc. 0 - 14 years"
 	}, {
 		value: "p_15_24_jr",
-		description: "Perc. 15 - 24 jaar"
+		description: "Perc. 15 - 24 years"
 	}, {
 		value: "p_25_44_jr",
-		description: "Perc. 25 - 44 jaar"
+		description: "Perc. 25 - 44 years"
 	}, {
 		value: "p_45_64_jr",
-		description: "Perc. 45 - 64 jaar"
+		description: "Perc. 45 - 64 years"
 	}, {
 		value: "p_65_eo_jr",
-		description: "Perc. 65+ jaar"
+		description: "Perc. 65+ years"
 	},
 
 
 	{
 		value: "opp_tot",
-		description: "Opp. totaal"
+		description: "Total area"
 	}, {
 		value: "opp_land",
-		description: "Opp. land"
+		description: "Land area"
 	}, {
 		value: "opp_water",
-		description: "Opp. water"
+		description: "Water area"
 	},
 ];

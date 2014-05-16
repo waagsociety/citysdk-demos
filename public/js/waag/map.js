@@ -1044,6 +1044,10 @@ WAAG.Map = function Map(domains) {
 			var totCapacity=parseInt(g.data.LongCapacity)+parseInt(g.data.ShortCapacity);
 			
 			
+			if(g.data.FreeSpaceShort!=true){
+				label+="Data source interupted :-("
+				return label;
+			}
 			label +="Type: "+g.data.Type+"<br>"	
 			label +="Free space short parking: "+g.data.FreeSpaceShort+"<br>"	
 			label +="Free space longterm parking: "+g.data.FreeSpaceLong+"<br>"	

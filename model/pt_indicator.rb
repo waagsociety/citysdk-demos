@@ -42,10 +42,33 @@ module PtIndicator
       return "PtIndicator:#{admr}:#{param}"    
     end
     
-    def self.__get_actuals admr
-                                   
-      #todo: make into something like Cache.instance.function_locked? 1800
-      return if Cache.instance.locked? "__get_actuals", admr, 1800 #not more often then every 30 mins
+    #rate limited call to get_actual data
+    def self.get_actuals admr
+      Cache.instance.cached_call(self.method(:_get_actuals), 1800, admr) #use this as a rate limiter           
+    end
+    
+    #rate limited call to get_actual data
+    def self.get_scheduled_now admr
+      Cache.instance.cached_call(self.method(:_get_scheduled_now), 1800, admr) #use this as a rate limiter           
+    end
+    
+    #make sure cache gets cleared!!  
+    def self.get_schedules admr
+      recs = Client.instance.get_all_records "/#{admr}/ptlines?", 500, (3600 * 24), :cache_mode_none
+       
+      #cache all schedules for 1 hour but we hope to update them every 5 minutes
+      recs.each_with_index do |line, line_index|
+        cdk_id = line[:cdk_id]
+        begin
+          $logger.debug "#{line_index+1}/#{recs.length}"
+          response = Client.instance.cached_request "/#{cdk_id}/select/schedule", (3600 * 24), :cache_mode_none   
+        rescue Exception => e
+          $logger.error "Caught exception in #{PtIndicator}.prepare : #{e.message}"
+        end
+      end 
+    end
+    
+    def self._get_actuals admr
       
       $logger.info "***** get actuals"
       
@@ -72,11 +95,11 @@ module PtIndicator
         end
       end                                                
       
-      __open_ov_request_actuals open_ov_lines, admr      
+      _open_ov_request_actuals open_ov_lines, admr      
     end
                                                           
     #admr is only needed for the cache keys
-    def self.__open_ov_request_actuals open_ov_lines, admr
+    def self._open_ov_request_actuals open_ov_lines, admr
       
       page_size = 50
       offset = 0
@@ -136,29 +159,11 @@ module PtIndicator
 
     end
     
-    #make sure cache gets cleared!!  
-    def self.__get_schedules admr
-      recs = Client.instance.get_all_records "/#{admr}/ptlines?", 500, (3600 * 24), :cache_mode_none
-       
-      #cache all schedules for 1 hour but we hope to update them every 5 minutes
-      recs.each_with_index do |line, line_index|
-        cdk_id = line[:cdk_id]
-        begin
-          $logger.debug "#{line_index+1}/#{recs.length}"
-          response = Client.instance.cached_request "/#{cdk_id}/select/schedule", (3600 * 24), :cache_mode_none   
-        rescue Exception => e
-          $logger.error "Caught exception in #{PtIndicator}.prepare : #{e.message}"
-        end
-      end 
-    end
-    
     #http://127.0.0.1:4567/transport.pt.delay/admr.nl.amsterdam_stadsdeel_oost_ijburg_zuid/live
     #do this daily
-    def self.__get_scheduled_now admr
+    def self._get_scheduled_now admr
       
-       return if Cache.instance.locked? "__get_scheduled_now", admr, 300 #not more often then every 5 mins
-       
-       $logger.info "**** __get_scheduled_now"
+       $logger.info "**** get_scheduled_now"
                                  
        trips_scheduled_now = Hash.new
        lines_scheduled_now = Hash.new

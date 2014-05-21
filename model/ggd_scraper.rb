@@ -10,7 +10,7 @@ module GgdScraper
     def self.scrape admr
       case admr        
       when "admr.nl.amsterdam"
-        self.__scrape_amsterdam
+        self._scrape_amsterdam
       end
     end
     
@@ -30,7 +30,7 @@ module GgdScraper
       return (eval Cache.instance.redis.get self.get_cache_key(admr,"date")).to_i
     end   
        
-    def self.__get_average doc, sel
+    def self._get_average doc, sel
       rows = doc.css(sel) 
       total = 0
       count = 0
@@ -45,14 +45,14 @@ module GgdScraper
       return total/count
     end
     
-    def self.__scrape_amsterdam 
+    def self._scrape_amsterdam 
       admr = "admr.nl.amsterdam" 
       resp = Faraday.get "http://www.luchtmetingen.amsterdam.nl"
       d = Nokogiri::HTML(resp.body)
       last_measurement = d.css(".laatstemeting")
       date = Time.parse(last_measurement.text)      
-      pm10 = __get_average d, ".col2"  
-      no2 = __get_average d, ".col3" 
+      pm10 = _get_average d, ".col2"  
+      no2 = _get_average d, ".col3" 
       
       Cache.instance.redis.set self.get_cache_key(admr, "pm10"), pm10.to_s 
       Cache.instance.redis.set self.get_cache_key(admr, "no2"), no2.to_s 

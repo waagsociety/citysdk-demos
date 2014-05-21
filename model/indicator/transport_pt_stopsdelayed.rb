@@ -24,7 +24,7 @@ class TransportPtStopsdelayed < Indicator
    end
    
    def prepare admr  
-     PtIndicator::__get_actuals admr
+     PtIndicator::get_actuals admr
    end
    
    def calculate admr

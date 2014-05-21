@@ -1,6 +1,7 @@
 require "singleton" 
 require "cgi"
 require "uri"
+require "citysdk"
 require_relative "cache.rb" 
 
 class CitySDK::API

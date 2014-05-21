@@ -5,10 +5,13 @@ require "time"
 require 'rexml/document'
 
 module P2000Feed 
-    
+              
     def self.fetch
-      
-      return if Cache.instance.locked? "P2000Feed::fetch", "", 100
+      Cache.instance.cached_call(self.method(:_fetch), 300) #use this as a rate limiter      
+    end
+    
+    #get all data from smartcitizen.me
+    def self._fetch
       
       $logger.info "prepare p2000"                     
       resp = Faraday.get "http://feeds.livep2000.nl"

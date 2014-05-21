@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 module CdkUtils  
   
    def self.distance a, b

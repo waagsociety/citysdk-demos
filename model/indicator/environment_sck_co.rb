@@ -14,6 +14,10 @@ class EnvironmentCoNoise < Indicator
       return "co"
    end
    
+   def prepare admr  
+     SCKFeed.fetch
+   end
+   
    def get_description
      return "average co of in this region as measured by the crowd"
    end

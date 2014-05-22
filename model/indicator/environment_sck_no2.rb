@@ -14,6 +14,10 @@ class EnvironmentSckNo2 < Indicator
       return "no2"
    end
    
+   def prepare admr  
+     SCKFeed.fetch
+   end
+   
    def get_description
      return "average no2 of in this region as measured by the crowd"
    end

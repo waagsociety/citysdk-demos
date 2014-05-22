@@ -12,6 +12,10 @@ class EnvironmentSckLight < Indicator
      return "light"
    end
    
+   def prepare admr  
+     SCKFeed.fetch
+   end
+   
    def get_description
      return "average light in this region as measured by the crowd"
    end

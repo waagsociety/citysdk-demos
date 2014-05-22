@@ -12,6 +12,10 @@ class EnvironmentSckTemperature < Indicator
      return "temperature"
    end
    
+   def prepare admr  
+     SCKFeed.fetch
+   end
+   
    def get_description
      return "average temperature of in this region as measured by the crowd"
    end

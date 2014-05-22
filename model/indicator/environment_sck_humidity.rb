@@ -12,6 +12,10 @@ class EnvironmentSckHumidity < Indicator
       return "humidity"
    end
    
+   def prepare admr  
+     SCKFeed.fetch
+   end
+   
    def get_description
      return "average humidity in this region as measured by the crowd"
    end

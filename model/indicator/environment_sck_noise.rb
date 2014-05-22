@@ -10,7 +10,11 @@ class EnvironmentSckNoise < Indicator
    end
    
    def get_name
-      return "noise"
+     return "noise"
+   end
+   
+   def prepare admr  
+     SCKFeed.fetch
    end
    
    def get_description

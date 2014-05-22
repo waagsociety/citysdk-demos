@@ -87,42 +87,6 @@ class Indicator
      raise "not implemented"
    end 
    
-   #descend into an hash with the specified path                               
-   def hash_get_path hash, path
-
-     def descend record, path
-        symbol = path.shift
-        obj = record[symbol] 
-        #raise "non existing key #{symbol.to_s} in hash #{record} " if obj == nil
-        $logger.error("non existing key #{symbol.to_s} in hash #{record} ") if obj == nil
-
-        if path.length > 0
-          obj = descend obj, path                                      
-        end
-        return obj
-     end
-
-     value = nil
-     begin
-       value = descend hash, path.dup
-     rescue Exception => e
-       $logger.error e.message
-     end
-     return value  
-   end
-
-   #retrieve an array of objects by descending into each hash in the array with the specified
-   def m_hash_get_path records, path
-     values = Array.new
-
-     records.each do |record|
-       deep_value = hash_get_path record, path
-       values.push(deep_value)
-     end
-
-     return values     
-   end
-   
    def create_record admr, value, time
      key = self.get_key admr
      record = { "timestamp" => time, key => value}
@@ -174,26 +138,7 @@ class Indicator
       return json
    end
    
-   #calculate the average for value in array 
-   #return null when unable to calculate (no records or no relevant info in records)
-   #ignore "skip" values and null by default
-   def calculate_average array, skip = []
-     acc = 0
-     num = 0
-
-     array.each do |value|
-       if value != nil
-         v = value.to_f
-         if !(skip.include? v)
-           acc = acc + v
-           num = num + 1
-         end 
-       end    
-     end          
-
-     avg = acc/num rescue nil                                     
-     return avg 
-   end
+   
    
    #should be called at interval to cache requests for calculate
    def prepare admr

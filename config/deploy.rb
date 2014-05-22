@@ -29,6 +29,7 @@ namespace :deploy do
   
   # we are using Passenger
   task :restart, :roles => :app, :except => { :no_release => true } do
+    run "export LC_CTYPE=en_US.UTF-8"
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
   end
  

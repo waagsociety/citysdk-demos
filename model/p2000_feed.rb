@@ -1,6 +1,7 @@
 require "faraday"
 require_relative "client.rb"
-require_relative "cache.rb" 
+require_relative "cache.rb"
+require_relative "cdk_utils.rb" 
 require "time" 
 require 'rexml/document'
 

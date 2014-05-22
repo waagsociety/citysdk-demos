@@ -1,6 +1,7 @@
 require_relative "indicator.rb"
 require_relative "client.rb"
 require_relative "cache.rb"
+require_relative "cdk_utils.rb"
 require "cgi"
 require "faraday"
 require "json"
@@ -234,31 +235,36 @@ module PtIndicator
     end #process
     
     def self.get_trips_active admr
-      return eval Cache.instance.redis.get self.get_cache_key(admr,"trips_active")
+      val = eval Cache.instance.redis.get self.get_cache_key(admr,"trips_active") rescue nil
+      return val 
     end           
 
     def self.get_lines_active admr
-      return eval Cache.instance.redis.get self.get_cache_key(admr,"lines_active")
+      val = eval Cache.instance.redis.get self.get_cache_key(admr,"lines_active") rescue nil
+      return val
     end
 
     def self.get_stops_active admr
-      return eval Cache.instance.redis.get self.get_cache_key(admr,"stops_active")
+      val = eval Cache.instance.redis.get self.get_cache_key(admr,"stops_active") rescue nil
+      return val
     end
 
     def self.get_on_time_percentage admr
-      return eval Cache.instance.redis.get self.get_cache_key(admr,"on_time_percentage")
+      val = eval Cache.instance.redis.get self.get_cache_key(admr,"on_time_percentage") rescue nil
+      return val
     end
     
     def self.get_avg_delay admr
-      return eval Cache.instance.redis.get self.get_cache_key(admr,"avg_delay")
+      val = eval Cache.instance.redis.get self.get_cache_key(admr,"avg_delay") rescue nil
+      return val
     end  
     
     def self.get_delayed_stops admr
       delays = Cache.instance.redis.zrange self.get_cache_key(admr,"delayed_stops"), 0, -1 
       result = Array.new
       if delays
-        delays.each do |str| 
-           result.push eval(str)
+        delays.each do |str|
+           result.push eval(str) if str
         end 
       end
       return result 

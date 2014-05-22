@@ -2,6 +2,7 @@
 
 require_relative "../indicator.rb"
 require_relative "../client.rb"
+require_relative "../sck_feed.rb" 
                                
 class EnvironmentSckNo2 < Indicator
        
@@ -26,22 +27,8 @@ class EnvironmentSckNo2 < Indicator
    end
    
    def calculate admr
-     $logger.debug "calculating key #{self.get_id}:#{admr}"
-     
-     #get data from source
-     cdk_req = "/#{admr}/nodes?layer=sck" 
-     results = Client.instance.get_all_records cdk_req
-                   
-     #retrieve the property we're interested in  
-     no2s = self.m_hash_get_path results, [:layers,:sck,:data,:no2]  
-      
-     #do calculations
-     no2 = self.calculate_average no2s
-     
-     #dont cache the raw results if the lead to a nil value
-     Client.instance.clear_cache_records cdk_req if no2 == nil
-
-     return no2
+     val = SCKFeed.process "admr.nl.amsterdam", "no2" 
+     return val
    end
   
 end

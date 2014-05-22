@@ -4,6 +4,7 @@ require "nokogiri"
 require "faraday"
 require 'logger'
 require_relative "cache.rb"
+require_relative "cdk_utils.rb"
 
 module GgdScraper 
     
@@ -19,15 +20,18 @@ module GgdScraper
     end
     
     def self.get_pm10 admr
-      return (eval Cache.instance.redis.get self.get_cache_key(admr,"pm10")).to_f
+      val = eval Cache.instance.redis.get self.get_cache_key(admr,"pm10") rescue nil
+      return val
     end
        
     def self.get_no2 admr
-      return (eval Cache.instance.redis.get self.get_cache_key(admr,"no2")).to_f
+      val = eval Cache.instance.redis.get self.get_cache_key(admr,"no2") rescue nil
+      return val
     end
                
     def self.get_date admr
-      return (eval Cache.instance.redis.get self.get_cache_key(admr,"date")).to_i
+      val = eval Cache.instance.redis.get self.get_cache_key(admr,"date") rescue nil
+      return val
     end   
        
     def self._get_average doc, sel

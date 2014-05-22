@@ -1,4 +1,5 @@
 #encoding: utf-8 
+#export LC_CTYPE=en_US.UTF-8 helps
 
 require 'rubygems'
 require 'sinatra'  
@@ -11,8 +12,8 @@ require_relative 'model/pt_indicator.rb'
 FileUtils.mkdir_p "log"
                    
 #global stuff
-$logger = Logger.new("log/dashboard.log")
-$logger.level = Logger::ERROR
+$logger = Logger.new(STDOUT)
+$logger.level = Logger::DEBUG
 $indicators = Hash.new   
 
 set :server, 'webrick'

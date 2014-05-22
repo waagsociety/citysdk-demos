@@ -52,7 +52,7 @@ class TrafficCarPressure < Indicator
      end
                                 
      #do calculations
-     pressure = self.calculate_average pressures
+     pressure = CdkUtils.calculate_average pressures
                           
      #return percentage
      return (pressure ? pressure * 100 : nil)

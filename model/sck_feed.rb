@@ -82,7 +82,7 @@ module SCKFeed
     
     #get sensors ids in this adrm
     cdk_req = "/#{admr}/nodes?layer=sck" 
-    results = Client.instance.get_all_records cdk_req
+    results = Client.instance.get_all_records cdk_req, 500, (3600 * 2) #store for long time, not much is gonna change
                                      
     values = Array.new
     

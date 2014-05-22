@@ -59,7 +59,7 @@ module CdkUtils
        symbol = path.shift
        obj = record[symbol] 
        #raise "non existing key #{symbol.to_s} in hash #{record} " if obj == nil
-       $logger.error("non existing key #{symbol.to_s} in hash #{record} ") if obj == nil
+       $logger.warn("non existing key #{symbol.to_s} in hash #{record} ") if obj == nil
 
        if path.length > 0
          obj = self._descend obj, path                                      

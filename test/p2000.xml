@@ -1,0 +1,449 @@
+<?xml version="1.0"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" version="2.0">
+	<channel>
+		<title>Livep2000.nl RSS feeds</title>
+		<link>http://feeds.livep2000.nl</link>
+		<description>Livep2000 RSS feeds</description>
+		<language>nl-nl</language>
+		<pubDate>Fri, 14 Feb 2014 16:24:01 +0100</pubDate>
+		<lastBuildDate>Fri, 14 Feb 2014 16:24:01 +0100</lastBuildDate>
+		<generator>Socket.io Node.js application By R. Winkel, I. Biacsics</generator>
+		<atom:link href="http://monitor.livep2000.nl/feeds/" rel="self" type="application/rss+xml"/>
+		<item>
+			<title><![CDATA[A1 4921LC 5 : HAG MADE HET VIERENDEEL HET VIERENDEEL 5 HAG MADE HET VIERENDEEL MADE 11482~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141623500220</link>
+			<description><![CDATA[1220631 MKA Midden en West Brabant ( Ambu <i name=w1293 class=wb>20-131</i> Oosterhout )<br/>1220499 MKA Midden en West Brabant ( Monitorcode )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:23:50 +0100</pubDate>
+			<guid isPermaLink="false">1402141623500220</guid>
+			<geo:lat>51.6774876</geo:lat>
+			<geo:long>4.7879676</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 AMBU 17103 Westkousdijk 153 3029BX Rotterdam rt bon 13604~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141623270217</link>
+			<description><![CDATA[1420999 MKA Rotterdam-Rijnmond ( Monitorcode )<br/>1420003 MKA Rotterdam-Rijnmond ( Ambulance <i name=w1175 class=wb>17-103</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:23:27 +0100</pubDate>
+			<guid isPermaLink="false">1402141623270217</guid>
+			<geo:lat>51.9040641</geo:lat>
+			<geo:long>4.4453647</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[PRIO 1 : Rookmelder OMS St Joris Verzorgingstehuis ST JORISSTRAAT 1 : OVD-B~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141623260122</link>
+			<description><![CDATA[1104764 BRW Brabant-Zuidoost ( OvD West )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:23:26 +0100</pubDate>
+			<guid isPermaLink="false">1402141623260122</guid>
+		</item>
+		<item>
+			<title><![CDATA[Letsel 1 Vondelstraat 54 vdg~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141623230317</link>
+			<description><![CDATA[1430020 Politie Rotterdam-Rijnmond ( Persinformatie Politie )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:23:23 +0100</pubDate>
+			<guid isPermaLink="false">1402141623230317</guid>
+			<geo:lat>51.9112036</geo:lat>
+			<geo:long>4.3364416</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B1 HELDEN ROGGELSEWEG 4642 5988BN 3~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141623200223</link>
+			<description><![CDATA[1020174 RAV Limburg-Noord ( First Responder Venlo )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:23:20 +0100</pubDate>
+			<guid isPermaLink="false">1402141623200223</guid>
+			<geo:lat>51.3190786</geo:lat>
+			<geo:long>5.9976116</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 6411HD 100 HEERLEN 7035~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141623120224</link>
+			<description><![CDATA[1023025 RAV Limburg-Zuid ( Ambu <i name=w1261 class=wb>24-125</i> Heerlen )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:23:12 +0100</pubDate>
+			<guid isPermaLink="false">1402141623120224</guid>
+			<geo:lat>50.8835941</geo:lat>
+			<geo:long>5.982808</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[PRIO 1 : Rookmelder OMS St Joris Verzorgingstehuis ST JORISSTRAAT 1 : 3841 3842~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141622590122</link>
+			<description><![CDATA[1107598 BRW Oirschot ( Monitorcode )<br/>1107546 BRW Oirschot ( Postalarm )<br/>1104799 BRW Brabant-Zuidoost ( Monitorcode )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:22:59 +0100</pubDate>
+			<guid isPermaLink="false">1402141622590122</guid>
+		</item>
+		<item>
+			<title><![CDATA[A1 13160 AMSTERDAM Bolestein 564 2~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141622570213</link>
+			<description><![CDATA[120999 Ambulance Amsterdam ( Lichtkrant )<br/>120160 Ambulance Amsterdam ( Ambu <i name=w659 class=wb>13-160</i> Amsterdam )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:22:57 +0100</pubDate>
+			<guid isPermaLink="false">1402141622570213</guid>
+			<geo:lat>52.3246115</geo:lat>
+			<geo:long>4.8596113</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B1 18181 POST PAPENDRECHT KATTESTAART 4 3355PP 4 PAPENDRECHT RITNR 5072~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141622560218</link>
+			<description><![CDATA[1423381 MKA Zuid-Holland Zuid ( Ambulance <i name=w1230 class=wb>18-181</i> Dordrecht )<br/>1423001 MKA Zuid-Holland Zuid ( Lichtkrant GMC )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:22:56 +0100</pubDate>
+			<guid isPermaLink="false">1402141622560218</guid>
+			<geo:lat>51.8321803</geo:lat>
+			<geo:long>4.7052756</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 18340 NIJVERHEIDSWEG HENDRIK-IDO-AMBACHT RITNR 5071~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141621330218</link>
+			<description><![CDATA[1423340 MKA Zuid-Holland Zuid ( First Responder <i name=w1262 class=wb>18-340</i> Zwijndrecht )<br/>1423001 MKA Zuid-Holland Zuid ( Lichtkrant GMC )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:21:33 +0100</pubDate>
+			<guid isPermaLink="false">1402141621330218</guid>
+			<geo:lat>51.8483019</geo:lat>
+			<geo:long>4.6524641</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B2 AMBU 17403 Prins Constantijnweg 2 2906ZC Capelle aan den IJssel ca bon 13603~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141621240217</link>
+			<description><![CDATA[1420999 MKA Rotterdam-Rijnmond ( Monitorcode )<br/>1420173 MKA Rotterdam-Rijnmond ( Low Care Ambulance <i name=w2125 class=wb>17-403</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:21:24 +0100</pubDate>
+			<guid isPermaLink="false">1402141621240217</guid>
+			<geo:lat>51.9386392</geo:lat>
+			<geo:long>4.5619567</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 5482BH 14 : HERTOG JAN II LAAN SCHIJNDEL Obj: Rit: 6410~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141620400221</link>
+			<description><![CDATA[1121090 CPA Brabant Noord ( Ambu <i name=w1301 class=wb>21-109</i> Den Bosch )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:20:40 +0100</pubDate>
+			<guid isPermaLink="false">1402141620400221</guid>
+			<geo:lat>51.6133081</geo:lat>
+			<geo:long>5.4461792</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 AMBU 17167 Vondelstraat 54 3131WV Vlaardingen vdg bon 13601~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141620350217</link>
+			<description><![CDATA[1420999 MKA Rotterdam-Rijnmond ( Monitorcode )<br/>1420067 MKA Rotterdam-Rijnmond ( Ambulance <i name=w1216 class=wb>17-167</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:20:35 +0100</pubDate>
+			<guid isPermaLink="false">1402141620350217</guid>
+			<geo:lat>51.9112036</geo:lat>
+			<geo:long>4.3364416</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 AMBU 17167 Vondelstraat 54 3131WV Vlaardingen vdg bon 13601~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141620310217</link>
+			<description><![CDATA[1420999 MKA Rotterdam-Rijnmond ( Monitorcode )<br/>1420067 MKA Rotterdam-Rijnmond ( Ambulance <i name=w1216 class=wb>17-167</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:20:31 +0100</pubDate>
+			<guid isPermaLink="false">1402141620310217</guid>
+			<geo:lat>51.9112036</geo:lat>
+			<geo:long>4.3364416</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 HUISARTSENPRAKTIJK GENDT DE KRUIGANG 1 GENDT 6691PK 1 11986~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141619570207</link>
+			<description><![CDATA[920103 CPA Gelderland-Midden ( Ambulance <i name=w1302 class=wb>07-103</i> Arnhem )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:19:57 +0100</pubDate>
+			<guid isPermaLink="false">1402141619570207</guid>
+			<geo:lat>51.8803748</geo:lat>
+			<geo:long>5.9726241</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 Van Zeggelenlaan 358 DHG Vtg: 15109 Ritnr: 15678~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141619440215</link>
+			<description><![CDATA[1520009 RAV Haaglanden ( Ambulance <i name=w134 class=wb>15-109</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:19:44 +0100</pubDate>
+			<guid isPermaLink="false">1402141619440215</guid>
+			<geo:lat>52.0525529</geo:lat>
+			<geo:long>4.3194492</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B 13401 AMSTERDAM Oosterpark 9 OLVG B8 neurologie/neuro chir~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141619420213</link>
+			<description><![CDATA[120999 Ambulance Amsterdam ( Lichtkrant )<br/>120401 Ambulance Amsterdam ( Zorgambulance <i name=w3661 class=wb>13-401</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:19:42 +0100</pubDate>
+			<guid isPermaLink="false">1402141619420213</guid>
+			<geo:lat>52.3599918</geo:lat>
+			<geo:long>4.9160473</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 AMBU 17167 Westkousdijk 153 3029BX Rotterdam rt bon 13600~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141619170217</link>
+			<description><![CDATA[1420999 MKA Rotterdam-Rijnmond ( Monitorcode )<br/>1420067 MKA Rotterdam-Rijnmond ( Ambulance <i name=w1216 class=wb>17-167</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:19:17 +0100</pubDate>
+			<guid isPermaLink="false">1402141619170217</guid>
+			<geo:lat>51.9040641</geo:lat>
+			<geo:long>4.4453647</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[PRIO 3 9193 7234 GRENSWEG BERGEN OP ZOOM Object (Gevonden vaten) (INC: 07)~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141619160120</link>
+			<description><![CDATA[1201999 BRW Midden en West Brabant ( Monitorcode )<br/>1201923 BRW Bergen op Zoom ( Lichtkrant )<br/>1201379 BRW Bergen op Zoom ( Kazernetechniek )<br/>1201371 BRW Bergen op Zoom ( TS-7232 )<br/>1200322 BRW Bergen op Zoom ( BvD )<br/>1200312 BRW Bergen op Zoom ( AOV )<br/>1200310 BRW Midden en West Brabant<br/>1200046 BRW MW-Brabant ( Alarm OvD Roosendaal )<br/>1200045 BRW MW-Brabant ( Alarm OvD Bergen op Zoom-Roosendaal-Woensdrecht )<br/>1200008 BRW Midden en West Brabant ( ROGS Infocode )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:19:16 +0100</pubDate>
+			<guid isPermaLink="false">1402141619160120</guid>
+			<geo:lat>51.5133898</geo:lat>
+			<geo:long>4.2904105</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B1 6419PC 5 HEERLEN 7034~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141619100224</link>
+			<description><![CDATA[1023119 RAV Limburg-Zuid ( Ambu <i name=w3684 class=wb>24-119</i> Heerlen )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:19:10 +0100</pubDate>
+			<guid isPermaLink="false">1402141619100224</guid>
+			<geo:lat>50.8689598</geo:lat>
+			<geo:long>5.9758296</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 (DIA) 12147 DREEF HAARLEM~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141618530212</link>
+			<description><![CDATA[126999 MKA Kennemerland ( Monitorcode )<br/>126147 MKA Kennemerland ( Ambu <i name=w1234 class=wb>12-147</i> Haarlem )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:18:53 +0100</pubDate>
+			<guid isPermaLink="false">1402141618530212</guid>
+			<geo:lat>52.3737144</geo:lat>
+			<geo:long>4.6298686</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 (DIA) 12147 DREEF HAARLEM~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141618530212</link>
+			<description><![CDATA[126999 MKA Kennemerland ( Monitorcode )<br/>126147 MKA Kennemerland ( Ambu <i name=w1234 class=wb>12-147</i> Haarlem )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:18:53 +0100</pubDate>
+			<guid isPermaLink="false">1402141618530212</guid>
+			<geo:lat>52.3737144</geo:lat>
+			<geo:long>4.6298686</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B2 18473 ASZZ.ACUTE ZORG LANGEWEG 336 3331LZ 336 ZWIJNDRECHT RITNR 5070~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141618290218</link>
+			<description><![CDATA[1423373 MKA Zuid-Holland Zuid ( Ambulance <i name=w1984 class=wb>18-473</i> B vervoer Papendrecht )<br/>1423001 MKA Zuid-Holland Zuid ( Lichtkrant GMC )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:18:29 +0100</pubDate>
+			<guid isPermaLink="false">1402141618290218</guid>
+			<geo:lat>51.8277475</geo:lat>
+			<geo:long>4.6302556</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 4681CV 18 : TANTE LOUISE VIVENSIS BELTMOLEN DE AMBACHT 18 TANTE LOUISE VIVENSIS BEL NIEUW-VOSSEMEER 11481~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141617460220</link>
+			<description><![CDATA[1220601 MKA Midden en West Brabant ( Ambu <i name=w1346 class=wb>20-101</i> Bergen op Zoom )<br/>1220499 MKA Midden en West Brabant ( Monitorcode )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:17:46 +0100</pubDate>
+			<guid isPermaLink="false">1402141617460220</guid>
+		</item>
+		<item>
+			<title><![CDATA[Prio: 1 Letsel Nachtwachtlaan AMSTERDAM~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141617330313</link>
+			<description><![CDATA[130007 Politie Amsterdam-Amstelland ( Persalarmeringen )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:17:33 +0100</pubDate>
+			<guid isPermaLink="false">1402141617330313</guid>
+			<geo:lat>52.3591531</geo:lat>
+			<geo:long>4.8440509</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 DHZ Spoedpoli Prof. Lorentzlaan 76 3707HL 76 Zeist~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141617080209</link>
+			<description><![CDATA[726148 RAV Utrecht ( Ambu <i name=w3275 class=wb>09-148</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:17:08 +0100</pubDate>
+			<guid isPermaLink="false">1402141617080209</guid>
+			<geo:lat>52.0920728</geo:lat>
+			<geo:long>5.2615519</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 Steunpunt Montfoort Willeskop - N228 94 3417ME 94 Montfoort~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141616590209</link>
+			<description><![CDATA[726128 RAV Utrecht ( Ambu <i name=w3293 class=wb>09-128</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:16:59 +0100</pubDate>
+			<guid isPermaLink="false">1402141616590209</guid>
+			<geo:lat>52.0353778</geo:lat>
+			<geo:long>4.9357148</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[PRIO 1 AUTOMATISCHE BRANDMELDER #0301# OVERSPAARNE LANSIERSSTRAAT 25 HAARLEM [ 3030 ]~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141616240112</link>
+			<description><![CDATA[108999 BRW Kennemerland ( Monitorcode )<br/>107086 BRW Haarlem-West ( Intern Alarm )<br/>107084 BRW Haarlem-West ( Kazernetechniek )<br/>107081 BRW Haarlem-West ( Lichtkrant Kazerne )<br/>107011 BRW Haarlem-West ( Beroepsploeg )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:16:24 +0100</pubDate>
+			<guid isPermaLink="false">1402141616240112</guid>
+			<geo:lat>52.3927118</geo:lat>
+			<geo:long>4.6392991</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[CONTACT MKB AUB~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141616180117</link>
+			<description><![CDATA[1400500 BRW Rotterdam-Haven ( OvD )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:16:18 +0100</pubDate>
+			<guid isPermaLink="false">1402141616180117</guid>
+		</item>
+		<item>
+			<title><![CDATA[A1 13117 AMSTERDAM Nachtwachtlaan 1 th~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141616070213</link>
+			<description><![CDATA[120999 Ambulance Amsterdam ( Lichtkrant )<br/>120117 Ambulance Amsterdam ( Ambu <i name=w1496 class=wb>13-117</i> Amsterdam )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:16:07 +0100</pubDate>
+			<guid isPermaLink="false">1402141616070213</guid>
+		</item>
+		<item>
+			<title><![CDATA[B1 6419PC 5 HEERLEN 7033~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141616060224</link>
+			<description><![CDATA[1023020 RAV Limburg-Zuid ( Ambu <i name=w1391 class=wb>24-120</i> Heerlen )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:16:06 +0100</pubDate>
+			<guid isPermaLink="false">1402141616060224</guid>
+			<geo:lat>50.8689598</geo:lat>
+			<geo:long>5.9758296</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B1 Haga-LEY CCU (2e) / Leyweg 275 DHG Vtg: 15112 Ritnr: 15677~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141615500215</link>
+			<description><![CDATA[1520012 RAV Haaglanden ( Ambulance <i name=w145 class=wb>15-112</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:15:50 +0100</pubDate>
+			<guid isPermaLink="false">1402141615500215</guid>
+			<geo:lat>52.0566289</geo:lat>
+			<geo:long>4.2666688</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B1 6229HX 25 MAASTRICHT 7032~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141615440224</link>
+			<description><![CDATA[1023401 RAV Limburg-Zuid ( Zorgambulance 24-401 )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:15:44 +0100</pubDate>
+			<guid isPermaLink="false">1402141615440224</guid>
+			<geo:lat>50.8329228</geo:lat>
+			<geo:long>5.7120706</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 AMBU 17126 Poolsterstraat 92 A 3067LX Rotterdam rt bon 13599~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141615140217</link>
+			<description><![CDATA[1420999 MKA Rotterdam-Rijnmond ( Monitorcode )<br/>1420026 MKA Rotterdam-Rijnmond ( Ambulance <i name=w1165 class=wb>17-126</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:15:14 +0100</pubDate>
+			<guid isPermaLink="false">1402141615140217</guid>
+			<geo:lat>51.949168</geo:lat>
+			<geo:long>4.554752</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 13198 PURMEREND Burg. D. Kooimanweg 10 C~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141615030213</link>
+			<description><![CDATA[120999 Ambulance Amsterdam ( Lichtkrant )<br/>120198 Ambulance Amsterdam ( Ambu <i name=w1204 class=wb>13-198</i> Purmerend )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:15:03 +0100</pubDate>
+			<guid isPermaLink="false">1402141615030213</guid>
+			<geo:lat>52.5097571</geo:lat>
+			<geo:long>4.957698</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B1 AZN MVIC Koekoekslaan 1 3435CM 1 Nieuwegein~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141614350209</link>
+			<description><![CDATA[726130 RAV Utrecht ( Ambu <i name=w3308 class=wb>09-130</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:14:35 +0100</pubDate>
+			<guid isPermaLink="false">1402141614350209</guid>
+			<geo:lat>52.0253236</geo:lat>
+			<geo:long>5.0789697</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B1 19134 S-GRAVENPOLDERSEWEG GOES rit 4694 ADRZG afd SEH~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141614140219</link>
+			<description><![CDATA[1320134 RAV Zeeland Ambulance <i name=w2207 class=wb>19-134</i> ( Terneuzen )<br/>1320001 RAV Zeeland ( Lichtkrant MKA Middelburg )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:14:14 +0100</pubDate>
+			<guid isPermaLink="false">1402141614140219</guid>
+			<geo:lat>51.494644</geo:lat>
+			<geo:long>3.9058239</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 Van Berckelweg - N444 54 A NWK : (Post Noordwijk) Vtg: 16103 Ritnr: 8141~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141614070216</link>
+			<description><![CDATA[1523103 CPA Hollands-Midden ( Katwijk Ambu <i name=w3013 class=wb>16-103</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:14:07 +0100</pubDate>
+			<guid isPermaLink="false">1402141614070216</guid>
+			<geo:lat>52.229388</geo:lat>
+			<geo:long>4.465909</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[Prio 1 aanrijding met letsel BURG D KOOIMANWEG 10 C PURMEREND~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141613330311</link>
+			<description><![CDATA[133501 Politie Zaanstreek-Waterland ( Persinfo )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:13:33 +0100</pubDate>
+			<guid isPermaLink="false">1402141613330311</guid>
+		</item>
+		<item>
+			<title><![CDATA[B1 12181 SPAARNEPOORT HOOFDDORP~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141613050212</link>
+			<description><![CDATA[126999 MKA Kennemerland ( Monitorcode )<br/>126181 Ambulance Amsterdam-Kennemerland ( Ambu <i name=w119 class=wb>12-181</i> VZA Hoofddorp )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:13:05 +0100</pubDate>
+			<guid isPermaLink="false">1402141613050212</guid>
+			<geo:lat>52.3247666</geo:lat>
+			<geo:long>4.6542177</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 Rijnmond 3 KWK : Vtg: 16102 Ritnr: 8140~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141612550216</link>
+			<description><![CDATA[1523102 CPA Hollands-Midden ( Katwijk Ambu <i name=w1487 class=wb>16-102</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:12:55 +0100</pubDate>
+			<guid isPermaLink="false">1402141612550216</guid>
+			<geo:lat>52.2093279</geo:lat>
+			<geo:long>4.3983617</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 13196 PURMEREND Burg. D. Kooimanweg 10 C~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141612440213</link>
+			<description><![CDATA[120999 Ambulance Amsterdam ( Lichtkrant )<br/>120196 Ambulance Amsterdam ( Ambu <i name=w1395 class=wb>13-196</i> Purmerend )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:12:44 +0100</pubDate>
+			<guid isPermaLink="false">1402141612440213</guid>
+			<geo:lat>52.5097571</geo:lat>
+			<geo:long>4.957698</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B1 Leemans 32 3825ML 32 Amersfoort~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141612420209</link>
+			<description><![CDATA[726135 RAV Utrecht ( Ambu <i name=w3023 class=wb>09-135</i> Amersfoort )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:12:42 +0100</pubDate>
+			<guid isPermaLink="false">1402141612420209</guid>
+			<geo:lat>52.1948912</geo:lat>
+			<geo:long>5.4293985</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 12158 GENERAAL CRONJESTRAAT HAARLEM~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141612180212</link>
+			<description><![CDATA[126999 MKA Kennemerland ( Monitorcode )<br/>126158 Witte Kruis Ambulancezorg ( Ambu <i name=w1944 class=wb>12-158</i> Velsen )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:12:18 +0100</pubDate>
+			<guid isPermaLink="false">1402141612180212</guid>
+			<geo:lat>52.3925693</geo:lat>
+			<geo:long>4.6409323</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 AMBU 17172 Blankenburg 107 Rozenburg Zh rzb bon 13598~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141612030217</link>
+			<description><![CDATA[1420999 MKA Rotterdam-Rijnmond ( Monitorcode )<br/>1420072 MKA Rotterdam-Rijnmond ( Ambulance <i name=w1940 class=wb>17-172</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:12:03 +0100</pubDate>
+			<guid isPermaLink="false">1402141612030217</guid>
+		</item>
+		<item>
+			<title><![CDATA[B2 UMC HCK Heidelberglaan 100 3584CX 100 Utrecht~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141611420209</link>
+			<description><![CDATA[726585 RAV Utrecht ( Ambu <i name=w3285 class=wb>09-485</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:11:42 +0100</pubDate>
+			<guid isPermaLink="false">1402141611420209</guid>
+			<geo:lat>52.0857988</geo:lat>
+			<geo:long>5.1788155</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[P 1 Gebouwbrand woning (VK: 20) Peperstraat 9 DLT 9591 7330 5550 5430~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141611370115</link>
+			<description><![CDATA[1500520 BRW Pijnacker-Nootdorp ( Lichtkrant )<br/>1500519 BRW Delft ( Lichtkrant )<br/>1500412 BRW Pijnacker-Nootdorp ( Kazernealarm )<br/>1500371 BRW Delft ( Kazernealarm )<br/>1500156 BRW Haaglanden<br/>1500144 BRW Leidschendam-Voorburg ( Bevelvoerders )<br/>1500050 BRW Haaglanden ( OvD )<br/>1500004 BRW Haaglanden ( Koppelingscode MDT )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:11:37 +0100</pubDate>
+			<guid isPermaLink="false">1402141611370115</guid>
+			<geo:lat>52.0104126</geo:lat>
+			<geo:long>4.357685</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A1 18187 (DIA: ) ANTONIUSLAAN/AELBERT CUYPLAAN HENDRIK-IDO-AMBACHT RITNR 5069~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141611200218</link>
+			<description><![CDATA[1423387 MKA Zuid-Holland Zuid ( Ambulance <i name=w1491 class=wb>18-187</i> Zwijndrecht )<br/>1423001 MKA Zuid-Holland Zuid ( Lichtkrant GMC )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:11:20 +0100</pubDate>
+			<guid isPermaLink="false">1402141611200218</guid>
+			<geo:lat>51.8451949</geo:lat>
+			<geo:long>4.6443733</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[B2 SEH MCH-We / Lijnbaan 32 DHG Vtg: 15438 Ritnr: 15676~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141611140215</link>
+			<description><![CDATA[1520438 RAV Haaglanden ( Zorgambulance <i name=w804 class=wb>15-438</i> )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:11:14 +0100</pubDate>
+			<guid isPermaLink="false">1402141611140215</guid>
+			<geo:lat>52.0740701</geo:lat>
+			<geo:long>4.299593</geo:long>
+		</item>
+		<item>
+			<title><![CDATA[A2 : VONDELSTRAAT BREDA 11480~]]></title>
+			<link>http://monitor.livep2000.nl?SPI=1402141610550220</link>
+			<description><![CDATA[1220842 MKA Midden en West Brabant ( Rapid Responder 30-342 Breda-Noord )<br/>1220499 MKA Midden en West Brabant ( Monitorcode )<br/>]]></description>
+			<pubDate>Fri, 14 Feb 2014 16:10:55 +0100</pubDate>
+			<guid isPermaLink="false">1402141610550220</guid>
+			<geo:lat>51.5781026</geo:lat>
+			<geo:long>4.7662692</geo:long>
+		</item>
+	</channel>
+</rss>

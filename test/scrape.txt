@@ -1,0 +1,5 @@
+curl "https://maps.googleapis.com/maps/api/geocode/json?address=Zegveld-Oude%20Meije&sensor=false"
+
+http://www.lml.rivm.nl/data/tabel/tabel036.html      
+
+http://www.luchtmetingen.amsterdam.nl

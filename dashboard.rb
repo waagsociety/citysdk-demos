@@ -13,7 +13,7 @@ FileUtils.mkdir_p "log"
                    
 #global stuff
 $logger = Logger.new(STDOUT)
-$logger.level = Logger::DEBUG
+$logger.level = Logger::ERROR
 $indicators = Hash.new   
 
 set :server, 'webrick'

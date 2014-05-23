@@ -7,7 +7,7 @@
 ### install required gems
 - projroot$ gem install bundler
 - projroot$ bundle install
-                         
+
 ### install other components
 - install redis 2.8 [http://redis.io/download](http://redis.io/download)
                                  

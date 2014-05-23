@@ -1,10 +1,10 @@
 require "uri"
 require 'twitter'
                   
-ACCESS_TOKEN = "1498026158-8zLBS2E2k7FXrDGhJIsd3C3EuZ7gKrvxG8OsONl"
-ACCESS_TOKEN_SECRET = "mrrmSBaeK51pc3y5yL8n17Rlm8iJlM7ybpSkkr0ME" 
-CONSUMER_KEY = "ONEnIRxwTHZzfKxp4wCvw"
-CONSUMER_KEY_SECRET = "Onpjz5xOQ035xBrkQ4ADusMNcjNHcmsneI6OSdRghg"                  
+ACCESS_TOKEN = "972572942-REEZ3uzPRnYfgcott2IdjmaoPV2iRgadIHRdpY3B"
+ACCESS_TOKEN_SECRET = "p5oDslEEagxnE0ZGpeeS0wEn7wP6X8o2OadI9cQl4ytTN" 
+CONSUMER_KEY = "iJZwlQ8P6Rdn0xEQI5OgkVJsY"
+CONSUMER_KEY_SECRET = "btQESXVtTWp2XPa4RERajwsMyckGRPefHt3loEzc81aFFuj4Ss"                  
 
 begin
    @twitter_client = Twitter::REST::Client.new(

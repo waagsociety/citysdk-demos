@@ -5,7 +5,6 @@ require 'rubygems'
 require 'sinatra'  
 require 'logger'
 require 'citysdk'  
-require 'rufus-scheduler' 
 require_relative 'model/cache.rb'
 require_relative 'model/pt_indicator.rb'
    

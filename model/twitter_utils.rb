@@ -4,12 +4,8 @@ require "singleton"
 require 'twitter'       
 require_relative "client.rb"
 require_relative "cdk_utils.rb"
-
-ACCESS_TOKEN = "1498026158-8zLBS2E2k7FXrDGhJIsd3C3EuZ7gKrvxG8OsONl"
-ACCESS_TOKEN_SECRET = "mrrmSBaeK51pc3y5yL8n17Rlm8iJlM7ybpSkkr0ME" 
-CONSUMER_KEY = "ONEnIRxwTHZzfKxp4wCvw"
-CONSUMER_KEY_SECRET = "Onpjz5xOQ035xBrkQ4ADusMNcjNHcmsneI6OSdRghg"
-
+require_relative "../config/settings.rb"
+                                       
 class TwitterUtils
     
    include Singleton

@@ -27,13 +27,7 @@ class TrafficCarParking < Indicator
       return "%"
    end 
    
-   def accumulate numbers
-     total = 0
-     numbers.each do |n|
-       total += (n.to_i > 0 ? n.to_i : 0)
-     end              
-     return total     
-   end
+   
    
    def calculate admr
      $logger.debug "calculating key #{self.get_id}:#{admr}"
@@ -42,15 +36,15 @@ class TrafficCarParking < Indicator
      results = Client.instance.get_all_records "/#{admr}/nodes?layer=divv.parking.capacity"
                    
      #retrieve the property we're interested in  
-     free_short = self.m_hash_get_path results, [:layers,:"divv.parking.capacity",:data,:FreeSpaceShort]
-     free_long = self.m_hash_get_path results, [:layers,:"divv.parking.capacity",:data,:FreeSpaceLong]
-     capicity_short = self.m_hash_get_path results, [:layers,:"divv.parking.capacity",:data,:ShortCapacity]
-     capicity_long = self.m_hash_get_path results, [:layers,:"divv.parking.capacity",:data,:LongCapacity]
+     free_short = CdkUtils.m_hash_get_path results, [:layers,:"divv.parking.capacity",:data,:FreeSpaceShort]
+     free_long = CdkUtils.m_hash_get_path results, [:layers,:"divv.parking.capacity",:data,:FreeSpaceLong]
+     capicity_short = CdkUtils.m_hash_get_path results, [:layers,:"divv.parking.capacity",:data,:ShortCapacity]
+     capicity_long = CdkUtils.m_hash_get_path results, [:layers,:"divv.parking.capacity",:data,:LongCapacity]
      
-     f_s = self.accumulate free_short
-     f_l = self.accumulate free_long
-     c_s = self.accumulate capicity_short
-     c_l = self.accumulate capicity_long
+     f_s = CdkUtils.accumulate free_short
+     f_l = CdkUtils.accumulate free_long
+     c_s = CdkUtils.accumulate capicity_short
+     c_l = CdkUtils.accumulate capicity_long
       
      #do calculations
      result = nil

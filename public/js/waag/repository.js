@@ -1,14 +1,12 @@
 var domainList;
-//http://loosecontrol.tv:4567/transport.car.pressure/admr.nl.amsterdam/live;
 var apiUrlSDK = "http://api.citysdk.waag.org/";
 var apiGeom = "&geom&per_page=1000";
-//var apiUrlDB = "http://195.169.149.30/";
-var apiUrlDB = "http://citydashboard.waag.org/";
+var apiUrlDB = ""; //use http://citydashboard.waag.org/ to connect to public instance
 var admr = "admr.nl.amsterdam";
 var admrHeader="Amsterdam (beta)"
 var assetsImages = "images/images/";
 var assetsSvg = "images/svg/";
-var mainMapUrl = "http://citydashboard.waag.org/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&geom&per_page=1000";
+var mainMapUrl = apiUrlDB + "/cache/3600/admr.nl.amsterdam/regions?admr::admn_level=5&geom&per_page=1000";
 var dNow = new Date();
 var timeNow = dNow.getTime();
 var dayNow = dNow.getDay();

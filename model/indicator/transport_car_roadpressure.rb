@@ -35,7 +35,7 @@ class TrafficCarPressure < Indicator
      results = Client.instance.get_all_records "/#{admr}/routes?layer=divv.traffic"
                    
      #retrieve the property we're interested in  
-     sensors = self.m_hash_get_path results, [:layers,:"divv.traffic",:data]
+     sensors = CdkUtils.m_hash_get_path results, [:layers,:"divv.traffic",:data]
       
      #calc pressure for each sensor as 1 - speed / max_speed
      pressures = Array.new 
@@ -52,7 +52,7 @@ class TrafficCarPressure < Indicator
      end
                                 
      #do calculations
-     pressure = self.calculate_average pressures
+     pressure = CdkUtils.calculate_average pressures
                           
      #return percentage
      return (pressure ? pressure * 100 : nil)

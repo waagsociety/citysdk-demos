@@ -30,10 +30,10 @@ class TrafficCarSpeed < Indicator
      results = Client.instance.get_all_records "/#{admr}/routes?layer=divv.traffic"
                    
      #retrieve the property we're interested in  
-     speeds = self.m_hash_get_path results, [:layers,:"divv.traffic",:data,:velocity]
+     speeds = CdkUtils.m_hash_get_path results, [:layers,:"divv.traffic",:data,:velocity]
       
      #do calculations
-     speed = self.calculate_average speeds, [-1] #skip the -1 values in the array
+     speed = CdkUtils.calculate_average speeds, [-1] #skip the -1 values in the array
      
      return speed
    end

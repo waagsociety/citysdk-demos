@@ -1,5 +1,6 @@
 require_relative "../indicator.rb"
 require_relative "../client.rb"
+require_relative "../sck_feed.rb" 
                                
 class EnvironmentSckHumidity < Indicator
        
@@ -9,6 +10,10 @@ class EnvironmentSckHumidity < Indicator
    
    def get_name
       return "humidity"
+   end
+   
+   def prepare admr  
+     SCKFeed.fetch
    end
    
    def get_description
@@ -24,18 +29,8 @@ class EnvironmentSckHumidity < Indicator
    end
    
    def calculate admr
-     $logger.debug "calculating key #{self.get_id}:#{admr}"
-     
-     #get data from source
-     results = Client.instance.get_all_records "/#{admr}/nodes?layer=sck"
-                   
-     #retrieve the property we're interested in  
-     humidities = self.m_hash_get_path results, [:layers,:sck,:data,:humidity]  
-      
-     #do calculations
-     humidity = self.calculate_average humidities
-
-     return humidity
+     val = SCKFeed.process "admr.nl.amsterdam", "hum" 
+     return val
    end
   
 end

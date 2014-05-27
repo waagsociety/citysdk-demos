@@ -1,6 +1,9 @@
+#encoding: utf-8
+
 require "singleton" 
 require "cgi"
 require "uri"
+require "citysdk"
 require_relative "cache.rb" 
 
 class CitySDK::API
@@ -62,14 +65,15 @@ class Client
    #get all records for this request by getting per_page
    #cache_ttl 0 forces to get the result not from cache (clear cache)
    def get_all_records req, per_page = 500, cache_ttl = 300, cache_mode = :cache_mode_normal
-     
+        
+     #return cache if we have cache and want cache
      if cache_mode != :cache_mode_none
        if Cache.instance.redis.exists req
          $logger.debug("get cached result from redis for key : #{req}") 
          cache = Cache.instance.redis.get(req)
          return JSON.parse(cache,{:symbolize_names => true})
        end
-       return nil if :cache_mode_force == true 
+       return nil if :cache_mode_force == true #return if we want only cache
      end
      
      #do paged request to get all
@@ -109,7 +113,8 @@ class Client
      rescue Exception => e
        $logger.error("City SDK : #{e.message}") 
      end
-       
+            
+     #cache the results for this if there are any
      if all.length 
        $logger.debug("writing key to redis : #{req}")                                    
        Cache.instance.redis.set(req,JSON.generate(all),{:ex => (cache_ttl > 0 ? cache_ttl : 1)})
@@ -117,11 +122,11 @@ class Client
 
      $logger.info("#{req} : #{all.length} results")
      return all
+   end 
+   
+   def clear_cache_records req
+     Cache.instance.redis.del(req)  
    end
-   
-   
-   
-   
    
    
 end

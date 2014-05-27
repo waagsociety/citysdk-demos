@@ -1,17 +1,20 @@
-#encoding: utf-8 
+#encoding: utf-8                                    
 
+require 'fileutils'
 require 'rubygems'
 require 'sinatra'  
 require 'logger'
 require 'citysdk'  
-require 'rufus-scheduler' 
 require_relative 'model/cache.rb'
-require_relative 'model/pt_indicator.rb'
-   
-FileUtils.mkdir_p "log"
+ 
+#copy the example.settings if we don't have settings
+if !File.exists? File.dirname(__FILE__) + "/config/settings.rb"
+  puts "creating settings file"
+  FileUtils.cp File.dirname(__FILE__) + "/config/example.settings.rb", File.dirname(__FILE__) + "/config/settings.rb"
+end
                    
 #global stuff
-$logger = Logger.new("log/dashboard.log")
+$logger = Logger.new(STDOUT)
 $logger.level = Logger::ERROR
 $indicators = Hash.new   
 

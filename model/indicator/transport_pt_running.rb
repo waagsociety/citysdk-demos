@@ -20,7 +20,7 @@ class TransportPtRunning < Indicator
    end
    
    def prepare admr  
-     PtIndicator::__get_scheduled_now admr
+     PtIndicator::get_scheduled_now admr
    end
    
    def calculate admr

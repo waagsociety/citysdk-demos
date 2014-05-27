@@ -41,7 +41,7 @@ namespace :background do
   end 
 
   task :daily do
-    PtIndicator::__get_schedules "admr.nl.amsterdam"
+    PtIndicator::get_schedules "admr.nl.amsterdam"
   end
 
 end

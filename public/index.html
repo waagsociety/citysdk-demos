@@ -52,21 +52,28 @@
 	<div class="menu_container">		
 		<div id="menu_bar">
 			<h1>City Dashboard</h1>
-				<div class="hLine" style="width:210px"></div>
-				<h2 id="admr">Amsterdam (beta)</h2>
-				<div class="vLine" style="left:260px"></div>
-				<div id="btn_main_info" onclick="setInfoPage()">
+			<div class="hLine" style="width:210px"></div>
+			<h2 id="admr">Amsterdam (beta)</h2>
+			<div class="vLine" style="left:260px"></div>
+			<div class="vLine" style="left:510px"></div>
+			<div class="vLine" style="left:640px"></div>
+			<div id="btn_main_info" onclick="setInfoPage()">
 				<img style="position:relative; top:0.5em;" src="images/svg/icon_info.svg" width="36" height="36" />
 				<h3 style="position:relative; left:0.18em; top:0.5em;">info</h3>
+			</div>
+			<div id="btn_menu_settings" onclick="setSettingsPanel()">
+				<img style="position:relative; top:0.55em;" src="images/svg/icon_menu.svg" width="36" height="36" />
+				<h3 style="position:relative; left:-0.55em; top:0.45em;">settings</h3>
+			</div>					
 		</div>
-		<div class="vLine" style="left:640px"></div>
-	</div>
 </div>
-	<div id="info_page">
+
+<div id="info_page">
  	<div id="info_content"></div>	
 	<div class="hLine" style="width:100%"></div>
 	<img src="images/logos.png" id="partners" alt="partners">
 </div>
+<div id="menu_settings">Choose your color scheme</div>
 
 	<script type="text/javascript">
 		

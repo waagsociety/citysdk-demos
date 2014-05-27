@@ -25,6 +25,7 @@ var dashBoardData = [];
 //http://loosecontrol.tv:4567/dashboard
 
 function getInitialData() {
+		
 	var apiCall = "transport.car.pressure";
 
 	d3.json(apiUrlDB + "dashboard", function(results) {
@@ -658,5 +659,8 @@ var cbsLayers = [{
 	}, {
 		value: "opp_water",
 		description: "Water area"
-	},
+	}
 ];
+
+
+

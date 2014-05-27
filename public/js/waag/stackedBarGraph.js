@@ -1,4 +1,4 @@
-WAAG.StackedBarGraph = function StackedBarGraph(properties, _subDomain, domainColor) {
+WAAG.StackedBarGraph = function StackedBarGraph(properties, _subDomain) {
 
 	//console.log("bargraph contructor");
 
@@ -13,9 +13,11 @@ WAAG.StackedBarGraph = function StackedBarGraph(properties, _subDomain, domainCo
 
 	var xaxis, yaxis, svgDomain;
 	var activeIndex = 0;
-
+	var domainColor=getColor(properties.domainIndex);
+	var data;
+	
 	function init() {
-		var data = properties.tickerData.data[0].kciData;
+		data = properties.tickerData.data[0].kciData;
 
 		data.forEach(function(d) {
 			d.children.forEach(function(c, i) {
@@ -225,11 +227,19 @@ WAAG.StackedBarGraph = function StackedBarGraph(properties, _subDomain, domainCo
 			}
 
 		})
+		data=_properties.tickerData.data[index].kciData;
 
-		updateGraph(_properties.tickerData.data[index].kciData, properties.tickerData.data[index].description, properties.tickerData.data[index].units);
+		updateGraph(data, properties.tickerData.data[index].description, properties.tickerData.data[index].units);
+	}
+	
+	updateColors = function(){
+
+		domainColor=getColor(properties.domainIndex)
+		updateGraph(data, properties.tickerData.data[activeIndex].description, properties.tickerData.data[activeIndex].units);
 	}
 
 	this.updateDataSet = updateDataSet;
+	this.updateColors = updateColors;
 	init();
 	return this;
 

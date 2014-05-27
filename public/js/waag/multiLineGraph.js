@@ -1,4 +1,4 @@
-WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColor) {
+WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain) {
 
 	//console.log("linegraph contructor");
 
@@ -17,6 +17,7 @@ WAAG.MultiLineGraph = function MultiLineGraph(properties, _subDomain, domainColo
 	var activeIndex = 0;
 	var focus;
 	var overlay;
+	var domainColor=getColor(properties.domainIndex);
 
 	function init() {
 

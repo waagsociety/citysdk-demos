@@ -1,4 +1,4 @@
-WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
+WAAG.LineGraph = function LineGraph(properties, _subDomain) {
 
 	//console.log("linegraph contructor");
 
@@ -14,6 +14,7 @@ WAAG.LineGraph = function LineGraph(properties, _subDomain, domainColor) {
 	var x, y, xaxis, yaxis, line, svgDomain;
 	var activeIndex = 0;
 	var focus;
+	var domainColor=getColor(properties.domainIndex);
 
 	function init() {
 

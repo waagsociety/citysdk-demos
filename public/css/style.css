@@ -4,7 +4,8 @@ html, body {
   padding: 0;
   margin: 0;
   /*overflow: hidden;*/
-  background-color: #F9F1EA; 
+  /*background-color: #F9F1EA;*/
+  background-color: #f6f6f6; 
   /*font-family: "Helvetica Neue", Helvetica, Arial, freesans, sans-serif; */ 
   font-family: 'Gudea', sans-serif;
   color:#666;
@@ -105,7 +106,7 @@ input[type=checkbox]:checked + label:before {
   top:0em;
   height: 6.5em;
   width:100%;
-  background-color:#FEE6CE;
+  background-color: #f6f6f6; 
   z-index:250;
   -webkit-box-shadow: 0px 4px 8px -4px black;
   -moz-box-shadow: 0px 4px 8px -4px black;
@@ -116,15 +117,26 @@ input[type=checkbox]:checked + label:before {
   position:absolute;
   top:-100em;
   width:100%;
-/*  background-color:#FEE6CE;*/
-  background-color:#fff3e8;
+  background-color: #f6f6f6; 
   z-index:225;
   -webkit-box-shadow: 0px 4px 8px -4px black;
   -moz-box-shadow: 0px 4px 8px -4px black;
   box-shadow: 0px 4px 8px -4px black;
 
+}
+#menu_settings {
+  position:absolute;
+  top:-100em;
+  width:14%;
+  right:128px;
+  padding:10px;
+  background-color: #f6f6f6; 
+  z-index:230;
+  font-size: 0.8em;
+  -webkit-box-shadow: 0px 4px 8px -4px black;
+  -moz-box-shadow: 0px 4px 8px -4px black;
+  box-shadow: 0px 4px 8px -4px black;
 
-  
 }
 
 #info_page #partners{
@@ -141,8 +153,17 @@ input[type=checkbox]:checked + label:before {
   position:absolute;
   padding:1em;
   padding-top:8px;
+  height:4em;
   
     
+}
+
+.menu_container #btn_menu_settings{
+  position:relative;
+  top:-10em;
+  left:540px;
+  width:64px;
+  height:64px;
 }
 
 .menu_container #btn_main_info{
@@ -153,13 +174,7 @@ input[type=checkbox]:checked + label:before {
   height:64px;
 }
 
-.menu_container #btn_info{
-  position:relative;
-  top:1em;
-  left:640px;
-  width:48px;
-  height:48px;
-}
+
 
 #menu_bar h1 {
 
@@ -360,7 +375,7 @@ li #inActive{
 
 .map_container{
   position:absolute;
-  background-color: #f3ece5;
+  background-color: #f8f8f8;
   z-index:200;
   height:576px;
   width:768px;
@@ -377,7 +392,7 @@ li #inActive{
   position:absolute;
   height: 4em;
   width:96%;
-  background-color:#FEE6CE;
+  background-color: #f6f6f6; 
   padding:1em;
   
   -webkit-box-shadow: 0px -4px 8px -4px black;

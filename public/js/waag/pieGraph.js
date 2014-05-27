@@ -1,4 +1,4 @@
-WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor) {
+WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType) {
 
 	var width = 150;
 	var height = 150;
@@ -9,11 +9,14 @@ WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor
 	var labelR = r + 30; // radius for label anchor
 	var arc, pie;
 	var donut;
+	var data;
+	var activeLayer;
+	var domainColor=getColor(properties.domainIndex);
 
 	function init() {
 
 		var defaultLayer = properties.tickerData.layers[0].value;
-		var data = prepareDataSet(defaultLayer);
+		data = prepareDataSet(defaultLayer);
 		var subDomain = _subDomain;
 
 		svgDomain = subDomain.append("svg")
@@ -153,7 +156,7 @@ WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor
 		var time = 250 + (Math.random() * 750);
 		donut.data(pie(data));
 		donut.transition()
-		//.style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer(d.value)]})
+		.style("fill", function(d){ return colorbrewer[colorScheme]['9'][quantizeBrewer(d.value)]})
 		.duration(time).attrTween("d", arcTween); // redraw the arcs
 
 	}
@@ -172,14 +175,20 @@ WAAG.PieGraph = function PieGraph(properties, _subDomain, donutType, domainColor
 
 
 	updateDataSet = function(_properties, layer) {
-
+		activeLayer=layer;
 		console.log("updating data set " + layer);
-		var data = prepareDataSet(layer);
-
+		data = prepareDataSet(layer);
+		updatePie(data);
+	}
+	
+	updateColors = function() {
+		console.log("updating pie charts colors")
+		//data = prepareDataSet(activeLayer);
 		updatePie(data);
 	}
 
 	this.updateDataSet = updateDataSet;
+	this.updateColors = updateColors;
 	init();
 	return this;
 

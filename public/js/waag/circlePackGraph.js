@@ -1,4 +1,4 @@
-WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
+WAAG.CirclePack = function CirclePack(properties, _subDomain) {
 
 	//console.log("linegraph contructor");
 
@@ -15,12 +15,16 @@ WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
 	var activeIndex = 0;
 	var pack;
 	var circlePackSize = 140;
+	var data;
+	var activeLayer;
+	var domainColor=getColor(properties.domainIndex);
 	// var quantizeBrewer;
 	// var min, max;
 
 	function init() {
 		var defaultLayer = properties.tickerData.layers[0].value;
-		var data = prepareDataSet(defaultLayer);
+		activeLayer=defaultLayer;
+		data = prepareDataSet(defaultLayer);
 
 		var subDomain = _subDomain;
 
@@ -155,11 +159,17 @@ WAAG.CirclePack = function CirclePack(properties, _subDomain, domainColor) {
 	updateDataSet = function(_properties, layer) {
 
 		console.log("updating data set " + layer);
-		var data = prepareDataSet(layer);
+		activeLayer=layer;
+		data = prepareDataSet(activeLayer);
 		updateGraph(data);
 	}
-
+	
+	updateColors = function(){
+		updateGraph(data);
+	}
+	
 	this.updateDataSet = updateDataSet;
+	this.updateColors = updateColors;
 	init();
 	return this;
 

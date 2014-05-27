@@ -1,4 +1,4 @@
-WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, domainColor) {
+WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType) {
 
 	var width = 150;
 	var height = 150;
@@ -12,10 +12,11 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
 	var partition;
 
 	var tickData;
-
+	var domainColor=getColor(properties.domainIndex);
+	var data;
 	function init() {
 
-		var data = prepareDataSet(properties.tickerData.data[0].kciData, properties.tickerData.data[0].description);
+		data = prepareDataSet(properties.tickerData.data[0].kciData, properties.tickerData.data[0].description);
 		var subDomain = _subDomain;
 
 		svgDomain = subDomain.append("svg")
@@ -202,8 +203,34 @@ WAAG.SunburstGraph = function SunburstGraph(properties, _subDomain, donutType, d
 		// 
 		// updatePie(data);
 	}
+	
+	updateColors = function (){
+		domainColor=getColor(properties.domainIndex);
+		var path = svgDomain.datum(data).selectAll("path")
+			.style("stroke", function(d) {
+				if ((d.children ? d : d.parent).hour > hNow) {
+					return "#666";
+				} else {
+					return domainColor;
+				}
+			})
+			.style("fill", function(d) {
+				if ((d.children ? d : d.parent).hour > hNow) {
+					return domainColor;
+				} else {
+					return "#666";
+				}
+
+			})
+		
+		
+		
+		
+		//updateGraph(data);
+	}
 
 	this.updateDataSet = updateDataSet;
+	this.updateColors = updateColors;
 	init();
 	return this;
 

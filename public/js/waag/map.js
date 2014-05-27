@@ -122,7 +122,7 @@ WAAG.Map = function Map(domains) {
 		container.append("div")
 			.attr("id", "layerOverlay")
 			.style("position", "absolute")
-			.style("background-color", "#F9F1EA")
+			.style("background-color", "#f6f6f6")
 			.style("top", 0 + "px")
 			.style("left", -mapWidth + "px")
 			.style("height", mapHeight + "px")

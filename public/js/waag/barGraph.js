@@ -1,7 +1,7 @@
-WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
-
-	//console.log("bargraph contructor");
-
+WAAG.BarGraph = function BarGraph(properties, _subDomain) {
+	var domainColor=getColor(properties.domainIndex);
+	
+	console.log("bar graph props :"+properties.domainColor)
 	var margin = {
 		top: 20,
 		right: 40,
@@ -13,10 +13,11 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 
 	var xaxis, yaxis, svgDomain;
 	var activeIndex = 0;
-
+	var data;
+	
 	function init() {
 
-		var data = properties.tickerData.data[0].kciData;
+		data = properties.tickerData.data[0].kciData;
 
 		var subDomain = _subDomain;
 		svgDomain = subDomain.append("svg")
@@ -123,12 +124,6 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 		svgDomain.select("#y_axis_label")
 			.html(description + " " + yUnits)
 
-		// svgDomain.select("#y_axis_units")
-		//     .text(maxRound+" "+yUnits);
-		//     
-		// svgDomain.select("#y_axis_units_min")
-		//     .text(parseInt(min));
-
 		var vis = svgDomain.selectAll(".bar").data(data, function(d, i) {
 			return d.description + "_" + i;
 		});
@@ -193,6 +188,11 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 					return domainColor
 				}
 			})
+			// .style("fill-opacity", function(d) {
+			// 	if (isNaN(d.value) || !d.value || d.value == null || d.hour > hNow) {
+			// 		return 0;
+			// 	}
+			// })
 			.style("stroke", function(d) {
 				if (isNaN(d.value) || !d.value || d.value == null) {
 					return domainColor
@@ -244,11 +244,20 @@ WAAG.BarGraph = function BarGraph(properties, _subDomain, domainColor) {
 			}
 
 		})
+		data=_properties.tickerData.data[activeIndex].kciData;
+		updateGraph(data, properties.tickerData.data[activeIndex].description, properties.tickerData.data[activeIndex].units);
+	}
+	
+	updateColors = function(){
 
-		updateGraph(_properties.tickerData.data[index].kciData, properties.tickerData.data[index].description, properties.tickerData.data[index].units);
+		domainColor=getColor(properties.domainIndex)
+		updateGraph(data, properties.tickerData.data[activeIndex].description, properties.tickerData.data[activeIndex].units);
 	}
 
 	this.updateDataSet = updateDataSet;
+	this.updateColors = updateColors;
+	
+	
 	init();
 	return this;
 

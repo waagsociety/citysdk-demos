@@ -5,6 +5,8 @@ WAAG.Domain = function Domain(_propertiesAll) {
 	var domainInfo;
 	var infoActive = false;
 	var domainHeader;
+	var domainGraphA, domainGraphB;
+	
 	
 	var margin = {
 		top: 20,
@@ -20,9 +22,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
 
 	function init() {
 
-		var isEven = function(index) {
-			return (index % 2 == 0) ? true : false;
-		};
+		
 		console.log("is even " + parseInt(properties.index / colorStepper) + " :" + isEven(parseInt(properties.index / colorStepper)))
 
 		var stage = d3.select("#stage")
@@ -36,7 +36,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
 				} else {
 					domainColor = colorbrewer[colorScheme]['9'][colorStepper - properties.index % (colorStepper)];
 				}
-
+				
 				return domainColor;
 			})
 			.style("top", menuHeight + (properties.index * widgetHeight) + "px")
@@ -83,12 +83,11 @@ WAAG.Domain = function Domain(_propertiesAll) {
 			.style("height", widgetHeight - 96 + "px");
 
 
-		if (properties.map) {
+ 		if (properties.map) {
 			domainHeader.append("object")
 				.attr("class", "mapIcon")
 				.attr("data", "images/svg/icon_map-small.svg")
 				.attr("type", "image/svg+xml")
-
 
 			domainHeader.append("div")
 				.attr("class", "mapIcon")
@@ -120,11 +119,13 @@ WAAG.Domain = function Domain(_propertiesAll) {
 			.on("mouseout", function(d) {
 				d3.select("body").style("cursor", "default");
 			});
-
+			
 		if (properties.subDomains[0] != false) {
+			properties.subDomains[0].domainIndex=properties.index;
 			setDomainA(properties.subDomains[0]);
 		}
 		if (properties.subDomains[1] != false) {
+			properties.subDomains[1].domainIndex=properties.index;
 			setDomainB(properties.subDomains[1]);
 		}
 
@@ -133,11 +134,9 @@ WAAG.Domain = function Domain(_propertiesAll) {
 	function setInfo(properties) {
 
 		if (infoActive) {
-
 			domainInfo.transition()
 				.duration(500)
 				.style("top", -widgetHeight + "px")
-
 
 			infoActive = false;
 		} else {
@@ -153,7 +152,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
 
 
 	function setDomainA(_properties) {
-
+		_properties.domainColor=domainColor;
 		if (_properties.active == false) {
 			return;
 		}
@@ -186,7 +185,6 @@ WAAG.Domain = function Domain(_propertiesAll) {
 				console.log("temp live =" + result);
 				var value = result["environment.sck.temperature:admr.nl.amsterdam"].toFixed(1);
 
-
 				domain.append("object")
 					.attr("id", "tempGraph")
 					.attr("data", "images/svg/icon_tempGraph.svg")
@@ -209,7 +207,7 @@ WAAG.Domain = function Domain(_propertiesAll) {
 
 
 	function setDomainB(_properties) {
-
+		_properties.domainColor=domainColor;
 		if (_properties == false) {
 			return;
 		}
@@ -387,31 +385,28 @@ WAAG.Domain = function Domain(_propertiesAll) {
 
 	function setGraph(_properties, subDomain) {
 
-		var graph;     
+		    
 		
 		if (_properties.graphType == "bar") {
-			graph = new WAAG.BarGraph(_properties, subDomain, domainColor);
+			graph = new WAAG.BarGraph(_properties, subDomain);
 		} else if (_properties.graphType == "line") {
-			graph = new WAAG.LineGraph(_properties, subDomain, domainColor);
+			graph = new WAAG.LineGraph(_properties, subDomain);
 		} else if (_properties.graphType == "multiline") {
-			graph = new WAAG.MultiLineGraph(_properties, subDomain, domainColor);
+			graph = new WAAG.MultiLineGraph(_properties, subDomain);
 		} else if (_properties.graphType == "area") {     
-			console.log("area graph")
-			console.log(_properties)
-			
-			graph = new WAAG.AreaGraph(_properties, subDomain, domainColor);
+			graph = new WAAG.AreaGraph(_properties, subDomain);
 		} else if (_properties.graphType == "circlepack") {
-			graph = new WAAG.CirclePack(_properties, subDomain, domainColor);
+			graph = new WAAG.CirclePack(_properties, subDomain);
 		} else if (_properties.graphType == "donut") {
-			graph = new WAAG.PieGraph(_properties, subDomain, true, domainColor);
+			graph = new WAAG.PieGraph(_properties, subDomain, true);
 		} else if (_properties.graphType == "pie") {
-			graph = new WAAG.PieGraph(_properties, subDomain, false, domainColor);
+			graph = new WAAG.PieGraph(_properties, subDomain, false);
 		} else if (_properties.graphType == "donutStacked") {
-			graph = new WAAG.PieGraphStacked(_properties, subDomain, true, domainColor);
+			graph = new WAAG.PieGraphStacked(_properties, subDomain, true);
 		} else if (_properties.graphType == "sunburst") {
-			graph = new WAAG.SunburstGraph(_properties, subDomain, true, domainColor);
+			graph = new WAAG.SunburstGraph(_properties, subDomain, true);
 		} else if (_properties.graphType == "stackedBar") {
-			graph = new WAAG.StackedBarGraph(_properties, subDomain, domainColor);
+			graph = new WAAG.StackedBarGraph(_properties, subDomain);
 		}
 
 		if (_properties.tickerData.live) {
@@ -419,6 +414,8 @@ WAAG.Domain = function Domain(_propertiesAll) {
 		} else {
 			createSelectList(_properties, subDomain, graph);
 		}
+		
+		updatableGraphs.push(graph);
 
 
 	};
@@ -552,7 +549,6 @@ WAAG.Domain = function Domain(_propertiesAll) {
 				domain.selectAll(".bullet").attr("id",
 					function(o) {
 						if (o.kci == activeKci) {
-
 							return "inActive"
 						} else {
 
@@ -696,8 +692,6 @@ WAAG.Domain = function Domain(_propertiesAll) {
 			.text(function(d) {
 				return d.description
 			})
-
-
 
 	};
 

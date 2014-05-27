@@ -1128,10 +1128,21 @@ WAAG.Map = function Map(domains) {
 		console.log("cbs layer not active");
 
 	};
+	
+	updateColors = function(){
+		
+		for(var i=0; i<cachedLayers.length; i++){
+			if(cachedLayers[i].mapActive){
+				setMap(cachedLayers[i]);
+			}
+		}
+		
+	}
 
 	init();
 	this.addDomainLayer = addDomainLayer;
 	this.updateCbs = updateCbs;
+	this.updateColors=updateColors;
 	return this;
 
 };

@@ -263,6 +263,8 @@ function updateMainColors(){
 		}
 		
 	}
+	
+	map.updateColors();
 
 }
 
